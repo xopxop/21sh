@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:18:23 by dthan             #+#    #+#             */
-/*   Updated: 2020/03/27 22:25:51 by dthan            ###   ########.fr       */
+/*   Updated: 2020/03/31 17:59:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		ft_promt(env);
-		if ((ret = get_next_line(STDERR_FILENO, &line)) <= 0)
+		if ((ret = get_next_line(0, &line)) <= 0)
 			return (EXIT_FAILURE);
 		tokens = ft_strsplit(line, ' ');
 		env = ft_execute(tokens, env);

@@ -6,12 +6,12 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 06:48:00 by dthan             #+#    #+#             */
-/*   Updated: 2020/02/21 06:48:01 by dthan            ###   ########.fr       */
+/*   Updated: 2020/03/31 17:31:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_CTYPE_H
-# define FT_CTPE_H
+# define FT_CTYPE_H
 # include "libft.h"
 
 int ft_isalpha(int c);
