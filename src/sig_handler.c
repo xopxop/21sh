@@ -21,9 +21,11 @@ int			is_eof(char *line)
 
 static void	sig_int_handler(int sig)
 {
-	int		a;
+//	int		a;
 
-	a = sig;
+//	a = sig;
+// using (void)sign to turn off unused parameter warning
+	(void)sig;
 	ft_putchar('\n');
 	get_prompt();
 	signal(SIGINT, sig_int_handler);
@@ -31,9 +33,11 @@ static void	sig_int_handler(int sig)
 
 static void	sig_tstp_handler(int sig)
 {
-	int		a;
+//	int		a;
 
-	a = sig;
+//	a = sig;
+// using (void)sign to turn off unused parameter warning
+	(void)sig;
 	ft_putchar('\n');
 	get_prompt();
 	signal(SIGTSTP, sig_tstp_handler);

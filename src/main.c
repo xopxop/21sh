@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:56:27 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/31 22:22:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "../includes/sh.h"
 
 void		get_prompt(void)
 {
@@ -19,7 +19,7 @@ void		get_prompt(void)
 	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
-	ft_putstr("21sh ");
+	ft_putstr("Minishell ");
 	if ((home = get_env("HOME=", VAL)))
 		/*'get_env' function is simillar with your 'ft_find_env'
 		  but the diffrence is, it takes extra parameter 'VAL' or 'KEY'
@@ -63,6 +63,9 @@ static char	**set_env(char **sample)
 	i = -1;
 	while (sample[++i])
 	{
+		// from du: i think you should need a bigger bufer for the env for the future, 
+		//because, this PATH_MAX macro just for the length of the path, we all so have
+		//the name of the variable plus '=' as well.
 		env[i] = (char*)malloc(sizeof(char) * PATH_MAX);
 		ft_strcat(env[i], sample[i]);
 	}
@@ -70,7 +73,7 @@ static char	**set_env(char **sample)
 	return (env);
 }
 
-static int	shell(void)
+static int	minishell(void)
 {
 	char	*line;
 
@@ -97,8 +100,8 @@ static int	shell(void)
 
 int			main(int ac, char **av, char **envp)
 {
-	ac = 0;
-	av = NULL;
+	(void)ac;
+	(void)av;
 	g_env = set_env(envp);
-	return (shell());
+	return (minishell());
 }
