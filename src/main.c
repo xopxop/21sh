@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/31 22:22:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 14:56:27 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "sh.h"
 
 void		get_prompt(void)
 {
@@ -19,7 +19,7 @@ void		get_prompt(void)
 	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
-	ft_putstr("Minishell ");
+	ft_putstr("21sh ");
 	if ((home = get_env("HOME=", VAL)))
 		/*'get_env' function is simillar with your 'ft_find_env'
 		  but the diffrence is, it takes extra parameter 'VAL' or 'KEY'
@@ -70,7 +70,7 @@ static char	**set_env(char **sample)
 	return (env);
 }
 
-static int	minishell(void)
+static int	shell(void)
 {
 	char	*line;
 
@@ -100,5 +100,5 @@ int			main(int ac, char **av, char **envp)
 	ac = 0;
 	av = NULL;
 	g_env = set_env(envp);
-	return (minishell());
+	return (shell());
 }

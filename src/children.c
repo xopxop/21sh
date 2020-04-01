@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 20:53:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 14:54:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "sh.h"
 
 void		make_child_not_env(t_cmd *c)
 {

@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 12:45:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 14:55:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "sh.h"
 
 static int	is_in_path_sub2(char *str, t_cmd *c)
 {

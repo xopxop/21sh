@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/31 22:06:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 14:55:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "sh.h"
 
 static int		is_builtin(char *comm)
 {
