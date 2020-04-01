@@ -52,3 +52,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#dthan ignore some libft files
+libft/src/ft_isalnum.c
+libft/src/ft_isalpha.c
+libft/src/ft_isdigit.c
+libft/src/ft_isprint.c
+libft/src/ft_putnbr.c
+libft/src/ft_putnbr_fd.c
