@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:03:11 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/28 19:03:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 15:50:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 void	print_semicolon_error(char *line)
 {

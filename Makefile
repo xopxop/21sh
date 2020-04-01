@@ -1,4 +1,4 @@
-NAME = minishell
+NAME = 21sh
 
 SRCS_PATH = src/
 LIBFT_PATH = libft/

@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:48:26 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/28 19:03:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 15:50:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 void			print_is_dir(char *str)
 {

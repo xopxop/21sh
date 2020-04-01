@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   sh.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/11 20:28:38 by ihwang           ###   ########.fr       */
+/*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
+/*   Updated: 2020/04/01 16:36:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef SH_H
+# define SH_H
 # define KEY 1
 # define VAL 0
 # define PARENT 1
@@ -21,7 +21,11 @@
 # define F_TYPE_MASK 0170000
 # define PRINT 1
 # define ER 0
+# define INSERT 0
+# define APPEND 1
 
+# include <term.h>
+# include <termios.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <signal.h>
@@ -35,6 +39,7 @@ int						g_status;
 
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
+typedef struct termios	t_term;
 
 typedef struct			s_cmd
 {
@@ -42,6 +47,15 @@ typedef struct			s_cmd
 	char				**av;
 	struct s_cmd		*next;
 }						t_cmd;
+
+typedef struct			s_l
+{
+	int					nb;
+	int					curr;
+	char				*line;
+}						t_l;
+
+   void					ft_get_line(t_l *l);
 
 void					print_semicolon_error(char *line);
 void					print_is_dir(char *str);

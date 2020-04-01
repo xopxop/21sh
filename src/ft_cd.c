@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/28 19:03:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 15:50:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 static void	cd_shaping_env(char *str)
 {

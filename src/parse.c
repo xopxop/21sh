@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/28 19:03:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 15:50:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 void			get_cmd_arg(char *cmd, t_cmd *c)
 {

@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/28 19:03:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 15:50:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 static void	add_env(char *arg)
 {

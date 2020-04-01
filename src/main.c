@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:09:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 16:36:54 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh.h"
+#include "sh.h"
 
 void		get_prompt(void)
 {
@@ -62,16 +62,16 @@ static int	shell(void)
 {
 	t_l		l;
 
-	//line = NULL;
+	ft_memset(&l, 0, sizeof(t_l));
 	while (1)
 	{
 		sig_controller(PARENT);
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
-		init_term();
+	//	init_term();
 		g_status = 0;
 		ft_get_line(&l);
 //		get_next_line(0, &line);
-		is_eof(line) ? parse_line(&line) : ft_exit(NULL, PRINT);
+		is_eof(l.line) ? parse_line(&l.line) : ft_exit(NULL, PRINT);
 	}
 	return (0);
 }
