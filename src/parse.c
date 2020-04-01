@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/31 22:10:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/28 19:03:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 void			get_cmd_arg(char *cmd, t_cmd *c)
 {
@@ -20,7 +20,6 @@ void			get_cmd_arg(char *cmd, t_cmd *c)
 	i = -1;
 	if (ft_check_d_quote(cmd))
 		split = ft_split_d_quote(cmd);
-	/* 'ft_split_d_quote' is in my libft */
 	else
 		split = ft_strsplit(cmd, ' ');
 	while (split[++i])
@@ -36,7 +35,6 @@ void			get_cmd_arg(char *cmd, t_cmd *c)
 	c->av[i] = NULL;
 	c->next = NULL;
 	ft_strlst_del(&split, i + 1);
-	/* this function is in libft */
 }
 
 t_cmd			*get_coms(char **line)
@@ -49,7 +47,6 @@ t_cmd			*get_coms(char **line)
 
 	if (ft_check_d_quote(*line))
 		cmd_lst = ft_split_shell(*line, ';');
-	/* 'ft_split_shell is in my libft */
 	else
 		cmd_lst = ft_strsplit(*line, ';');
 	ft_strdel(line);
@@ -67,11 +64,6 @@ t_cmd			*get_coms(char **line)
 	ft_strlst_del(&cmd_lst, i + 1);
 	return (coms);
 }
-
-/* I'm using linked list for tokenizing ';'
-   So we don't need to re-implement ';' in 21shell
-   and the structure that is defined in minishell.h is also for tokenizing ';'
-*/
 
 void			parse_line(char **line)
 {
@@ -92,10 +84,6 @@ void			parse_line(char **line)
 	while (c_p)
 	{
 		apply_t_d(c_p);
-		/*
-		   'apply_t_d' means interpreting tild(~) and dollar sign and
-		   expanding cmd
-		*/
 		execute_cmd(c_p, path);
 		coms = c_p;
 		c_p = c_p->next;

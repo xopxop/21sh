@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:33:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/28 19:03:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 void		cmd_del(t_cmd *c)
 {

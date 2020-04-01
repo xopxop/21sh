@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 14:03:11 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 17:44:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/28 19:03:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 void	print_semicolon_error(char *line)
 {

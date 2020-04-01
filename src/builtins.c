@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 20:52:30 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/28 19:03:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 void		ft_env(void)
 {

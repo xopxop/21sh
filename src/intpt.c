@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:35:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/28 19:03:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 static void		tild_intp(char *str)
 {

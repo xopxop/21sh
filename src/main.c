@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/31 22:22:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 14:09:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/sh.h"
 
 void		get_prompt(void)
 {
@@ -19,20 +19,8 @@ void		get_prompt(void)
 	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
-	ft_putstr("Minishell ");
+	ft_putstr("21sh ");
 	if ((home = get_env("HOME=", VAL)))
-		/*'get_env' function is simillar with your 'ft_find_env'
-		  but the diffrence is, it takes extra parameter 'VAL' or 'KEY'
-		  It gets address of very first character in env var when it comes with
-		  'KEY' macro.
-		  And if it's 'VAL', It returns first address of value
-		  For example, in this case, It returns /Users/ihwang
-		  But instead of mine, we can use builtin function 'getenv' from now on
-		  the result seems same with mine.
-		  Additionally, in minishell, every 'get_env' function is surrounded by
-		  'if' statement to protect the cases that there is no such env var.
-		  This is why I failed on evaluation.
-		*/
 	{
 		if (!ft_strcmp(pwd, home))
 			ft_putstr(pwd);
@@ -70,27 +58,20 @@ static char	**set_env(char **sample)
 	return (env);
 }
 
-static int	minishell(void)
+static int	shell(void)
 {
-	char	*line;
+	t_l		l;
 
-	line = NULL;
+	//line = NULL;
 	while (1)
 	{
 		sig_controller(PARENT);
-		/*There are two macros PARENT and CHILD for this function
-		since all the signal controlings have to be changed to default setting
-		when it comes with child process*/
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
+		init_term();
 		g_status = 0;
-		get_next_line(0, &line);
+		ft_get_line(&l);
+//		get_next_line(0, &line);
 		is_eof(line) ? parse_line(&line) : ft_exit(NULL, PRINT);
-		/*I'm using ft_exit function when user wants to exit, and even in error case.
-		  especially, ft_exit takes 'ER'macro when 'execve' is incomplete
-		  otherwise, it takes 'PRINT' macro*/
-		/*
-		   'is_eof' function is for checking if the given input is EOF or not
-		*/
 	}
 	return (0);
 }
@@ -100,5 +81,5 @@ int			main(int ac, char **av, char **envp)
 	ac = 0;
 	av = NULL;
 	g_env = set_env(envp);
-	return (minishell());
+	return (shell());
 }
