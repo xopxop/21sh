@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 18:19:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/02 00:56:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void				apply_termcap_str(char *str, int x, int y)
 {
-	(void)x;
-	(void)y;
-	ft_putstr_fd(tgetstr(str, NULL), 0);
+	if (x && y)
+		NULL;
+	else if (y)
+		ft_putstr_fd(tgoto(tgetstr(str, NULL), 0, y), 0);
+	else
+		ft_putstr_fd(tgetstr(str, NULL), 0);
 }
 
 t_term				default_term(t_term *t)
@@ -34,14 +37,17 @@ void				init_term(void)
 
 	tcgetattr(0, &t);
 	default_term(&t);
-	t.c_lflag &= ~(ICANON);
+	t.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, TCSANOW, &t);
 	if (!(tgetent(NULL, getenv("TERM"))))
+	{
+		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
 		ft_exit(NULL, ER);
-	apply_termcap_str("im", 0, 0); //insert mode start
+	}
 }
 
-/*int					bs_key(t_l *l)
+/*
+int					bs_key(t_l *l)
 {
 	int				i;
 
@@ -55,25 +61,14 @@ void				init_term(void)
 	while (++i < l->nb)
 		l->line[i] = l->line[i + 1];
 	l->nb--;
-}*/
-/*
-void				ft_goto(int v, int h)
-{
-	if (v && h)
-	{
-		ft_putstr_fd(tgoto(t
+}
 */
+
 void				left_key(t_l *l)
 {
-	int				i;
-
-	i = -1;
-	while (i++ < 4)
-		ft_putstr_fd(tgetstr("#4", NULL), 0);
-
 	if (l->curr == 0)
 		return ;
-	ft_putstr_fd(tgetstr("#4", NULL), 0);
+	apply_termcap_str("#4", 0, 0);
 	l->curr--;
 }
 
@@ -81,22 +76,22 @@ void				right_key(t_l *l)
 {
 	if (l->curr == l->nb)
 		return ;
-	ft_putstr_fd(tgetstr("%i", NULL), 0);
+	apply_termcap_str("nd", 0, 0);
 	l->curr++;
 }
 
-/*int					parse_key(char t[], t_l *l)
+int					parse_key(char t[], t_l *l)
 {
 	if (t[0] == 127 && t[1] == '\0')
 		return (bs_key(l));
-	else if (t[0] == '\n' && t[1] == '\0')
-		return (enter_key());
-	else if (t[0] == '\v' && t[1] == '\0')
-		return (ctrl_k());
-	else if (t[0] == 16 && t[1] == '\0')
-		return (ctrl_p());
+//	else if (t[0] == '\n' && t[1] == '\0')
+//		return (enter_key());
+//	else if (t[0] == '\v' && t[1] == '\0')
+//		return (ctrl_k());
+//	else if (t[0] == 16 && t[1] == '\0')
+//		return (ctrl_p());
 	return (1);
-}*/
+}
 
 void				add_char(char t[], t_l *l, int opt)
 {
@@ -118,6 +113,7 @@ void				add_char(char t[], t_l *l, int opt)
 	l->line = tmp;
 	l->nb++;
 	l->curr++;
+	ft_putstr(&l->line[l->nb - 1]);
 }
 
 void				add_key(char t[], t_l *l)
@@ -135,8 +131,7 @@ void				parse_key_esc(char t[], t_l *l)
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
 		down_key();
 		*/
-//	if (t[0] == 27 && t[1] == 91 && t[2] == 'D')
-	if (t[0] == 27)
+	if (t[0] == 27 && t[1] == 91 && t[2] == 'D')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
@@ -162,7 +157,7 @@ void				ft_get_line(t_l *l)
 	{
 		ft_bzero(tmp, sizeof(tmp));
 		read(0, tmp, sizeof(tmp));
-	//	if (!parse_key(tmp, l))
+		if (!parse_key(tmp, l))
 			parse_key_esc(tmp, l);
 	}
 

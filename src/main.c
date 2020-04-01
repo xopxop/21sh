@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 18:22:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 23:27:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,10 @@ int			main(int ac, char **av, char **envp)
 	ac = 0;
 	av = NULL;
 	g_env = set_env(envp);
+	if (!(getenv("TERM")))
+	{
+		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
+		return (-1);
+	}
 	return (shell());
 }

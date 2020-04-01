@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 18:14:03 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 23:20:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define ER 0
 # define INSERT 0
 # define APPEND 1
+# define PMPT 3
 
 # include <term.h>
 # include <termios.h>
