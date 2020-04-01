@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 16:36:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:22:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void		get_prompt(void)
 {
-	char	*user;
+	char	*usr;
 	char	*home;
 	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
 	ft_putstr("21sh ");
+	(usr = get_env("USER=", VAL)) ? ft_putstr(usr) : 0;
+	ft_putstr(" ");
 	if ((home = get_env("HOME=", VAL)))
 	{
 		if (!ft_strcmp(pwd, home))
@@ -34,9 +36,8 @@ void		get_prompt(void)
 	}
 	else
 		ft_putstr(pwd);
-	ft_putstr(" ");
-	(user = get_env("USER=", VAL)) ? ft_putstr(user) : 0;
-	ft_putstr("$ ");
+	ft_putstr("\n");
+	ft_putstr("$> ");
 }
 
 static char	**set_env(char **sample)

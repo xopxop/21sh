@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 16:36:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:14:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ typedef struct			s_l
 	char				*line;
 }						t_l;
 
-   void					ft_get_line(t_l *l);
+	void					ft_get_line(t_l *l);
+	void					apply_termcap_str(char *str, int x, int y);
+
 
 void					print_semicolon_error(char *line);
 void					print_is_dir(char *str);

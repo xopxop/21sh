@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 17:21:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:19:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void				init_term(void)
 	default_term(&t);
 	t.c_lflag &= ~(ICANON);
 	tcsetattr(0, TCSANOW, &t);
-	apply_termcap_str("im", 0, 0); //insert mode start
 	if (!(tgetent(NULL, getenv("TERM"))))
 		ft_exit(NULL, ER);
+	apply_termcap_str("im", 0, 0); //insert mode start
 }
 
 /*int					bs_key(t_l *l)

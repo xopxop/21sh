@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_im.c                                          :+:      :+:    :+:   */
+/*   test_bc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 16:53:09 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 18:04:55 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/01 18:10:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ int main(void)
 	memset(buf, 0, sizeof(buf));
 	while (i-- > 0)
 		read(0, buf, sizeof(buf));
-	ft_putstr_fd(tgetstr("#4", NULL), 0);
-	ft_putstr_fd(tgetstr("#4", NULL), 0);
-	ft_putstr_fd(tgetstr("#4", NULL), 0);
+
+	char *str = tgetstr("kb", NULL);
+
+	str = NULL;
+	ft_putstr_fd(tgetstr("kb", NULL), 0);
+	ft_putstr_fd(tgetstr("kb", NULL), 0);
+	ft_putstr_fd(tgetstr("kb", NULL), 0);
 
 	i = 5;
 	memset(buf, 0, sizeof(buf));
 	while (i-- > 0)
 		read(0, buf, sizeof(buf));
-	ft_putstr_fd(tgetstr("ei", NULL), 0);
 
+	ft_putstr_fd(tgetstr("ei", NULL), 0);
 	return (0);
 }
