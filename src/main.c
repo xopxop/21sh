@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 23:27:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/02 16:46:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static int	shell(void)
 {
 	t_l		l;
 
-	ft_memset(&l, 0, sizeof(t_l));
 	while (1)
 	{
 		sig_controller(PARENT);

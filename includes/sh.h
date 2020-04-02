@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 23:20:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/02 19:28:06 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # define F_TYPE_MASK 0170000
 # define PRINT 1
 # define ER 0
-# define INSERT 0
-# define APPEND 1
 # define PMPT 3
 
 # include <term.h>
@@ -51,8 +49,10 @@ typedef struct			s_cmd
 
 typedef struct			s_l
 {
+	int					co;
 	int					nb;
-	int					curr;
+	int					x;
+	int					y;
 	char				*line;
 }						t_l;
 
