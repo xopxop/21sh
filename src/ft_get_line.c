@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/02 21:18:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/02 21:44:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_term				default_term(t_term *t)
 		old = *t;
 	return (old);
 }
+
 
 void				init_term(t_l *l)
 {
@@ -82,10 +83,10 @@ int					bs_key(t_l *l)
 {
 	if (l->y == 0 && l->x == PMPT)
 		return (1);
-	ft_putstr_fd(tgetstr("#4", NULL), 0);
-	ft_putstr_fd(tgetstr("cd", NULL), 0);
-	ft_putstr_fd(tgetstr("sc", NULL), 0);
-	ft_putstr_fd(tgetstr("rc", NULL), 0);
+	apply_termcap_str("#4", 0, 0);
+	apply_termcap_str("cd", 0, 0);
+	apply_termcap_str("sc", 0, 0);
+	apply_termcap_str("rc", 0, 0);
 	bs_key_str(l);
 	return (1);
 }
@@ -128,8 +129,6 @@ int					parse_key(char t[], t_l *l)
 {
 	if (t[0] == 127 && t[1] == '\0')
 		return (bs_key(l));
-//	else if (t[0] == '\n' && t[1] == '\0')
-//		return (enter_key());
 //	else if (t[0] == '\v' && t[1] == '\0')
 //		return (ctrl_k());
 //	else if (t[0] == 16 && t[1] == '\0')
@@ -215,6 +214,17 @@ void				parse_key_esc(char t[], t_l *l)
 		add_key(t, l);
 }
 
+void				restore_term(t_l *l)
+{
+	t_term			old;
+
+	if (l->line == NULL)
+		add_key("\n", l);
+	apply_termcap_str("do", 0, 0);
+	old = default_term(NULL);
+	tcsetattr(0, TCSANOW, &old);
+}
+
 void				ft_get_line(t_l *l)
 {
 	char			tmp[8];
@@ -224,9 +234,9 @@ void				ft_get_line(t_l *l)
 	{
 		ft_bzero(tmp, sizeof(tmp));
 		read(0, tmp, sizeof(tmp));
+		if (tmp[0] == '\n')
+			return (restore_term(l));
 		if (!parse_key(tmp, l))
 			parse_key_esc(tmp, l);
 	}
-
-
 }
