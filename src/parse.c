@@ -39,7 +39,36 @@ void			get_cmd_arg(char *cmd, t_cmd *c)
 	/* this function is in libft */
 }
 
-t_cmd			*get_coms(char **line)
+// t_cmd			*get_coms(char **line)
+// {
+// 	char		**cmd_lst;
+// 	int			i;
+// 	t_cmd		*coms;
+// 	t_cmd		*c_t;
+// 	t_cmd		*c_p;
+
+// 	if (ft_check_d_quote(*line))
+// 		cmd_lst = ft_split_shell(*line, ';');
+// 	/* 'ft_split_shell is in my libft */
+// 	else
+// 		cmd_lst = ft_strsplit(*line, ';');
+// 	ft_strdel(line);
+// 	coms = (t_cmd*)malloc(sizeof(t_cmd));
+// 	get_cmd_arg(cmd_lst[0], coms);
+// 	c_p = coms;
+// 	i = 0;
+// 	while (cmd_lst[++i])
+// 	{
+// 		c_t = (t_cmd*)malloc(sizeof(t_cmd));
+// 		get_cmd_arg(cmd_lst[i], c_t);
+// 		c_p->next = c_t;
+// 		c_p = c_p->next;
+// 	}
+// 	ft_strlst_del(&cmd_lst, i + 1);
+// 	return (coms);
+// }
+
+t_cmd			*get_coms(char *line)
 {
 	char		**cmd_lst;
 	int			i;
@@ -47,12 +76,8 @@ t_cmd			*get_coms(char **line)
 	t_cmd		*c_t;
 	t_cmd		*c_p;
 
-	if (ft_check_d_quote(*line))
-		cmd_lst = ft_split_shell(*line, ';');
-	/* 'ft_split_shell is in my libft */
-	else
-		cmd_lst = ft_strsplit(*line, ';');
-	ft_strdel(line);
+	cmd_lst = ft_strsplit(line, '|');
+	ft_strdel(line); // this may need to be changed
 	coms = (t_cmd*)malloc(sizeof(t_cmd));
 	get_cmd_arg(cmd_lst[0], coms);
 	c_p = coms;
@@ -73,32 +98,55 @@ t_cmd			*get_coms(char **line)
    and the structure that is defined in minishell.h is also for tokenizing ';'
 */
 
-void			parse_line(char **line)
-{
-	t_cmd		*coms;
-	t_cmd		*c_p;
-	char		*path;
-	char		*trim;
+// void			parse_line(char **line)
+// {
+// 	t_cmd		*coms;
+// 	t_cmd		*c_p;
+// 	char		*path;
+// 	char		*trim;
 
-	path = NULL;
-	trim = ft_strtrim(*line);
-	ft_strdel(line);
-	if (trim[0] == '\0')
-		return (ft_strdel(&trim));
-	if (trim[0] == ';')
-		return (print_semicolon_error(trim));
-	coms = get_coms(&trim);
-	c_p = coms;
-	while (c_p)
-	{
-		apply_t_d(c_p);
-		/*
-		   'apply_t_d' means interpreting tild(~) and dollar sign and
-		   expanding cmd
-		*/
-		execute_cmd(c_p, path);
-		coms = c_p;
-		c_p = c_p->next;
-		cmd_del(coms);
-	}
+// 	path = NULL;
+// 	trim = ft_strtrim(*line);
+// 	ft_strdel(line);
+// 	if (trim[0] == '\0')
+// 		return (ft_strdel(&trim));
+// 	if (trim[0] == ';')
+// 		return (print_semicolon_error(trim));
+// 	coms = get_coms(&trim);
+// 	c_p = coms;
+// 	while (c_p)
+// 	{
+// 		apply_t_d(c_p);
+// 		/*
+// 		   'apply_t_d' means interpreting tild(~) and dollar sign and
+// 		   expanding cmd
+// 		*/
+// 		execute_cmd(c_p, path);
+// 		coms = c_p;
+// 		c_p = c_p->next;
+// 		cmd_del(coms);
+// 	}
+// }
+
+//Working on pipe, the ideas is separating the ';' then '|' then ' '
+void			parse_line(char **full_cmd)
+{
+	char		*trimed_full_cmd;
+	char		**lst_single_cmd;
+	char		**ptr;
+	int			ret;
+
+	trimed_full_cmd = ft_strtrim(*full_cmd);
+	ft_strdel(full_cmd);
+	if (trimed_full_cmd[0] == '\0')
+		return (ft_strdel(&trimed_full_cmd));
+	if (trimed_full_cmd[0] == ';')
+		return (print_semicolon_error(trimed_full_cmd));
+	lst_single_cmd = (ft_check_d_quote(trimed_full_cmd)) ?	\
+	ft_split_shell(trimed_full_cmd, ';') : ft_strsplit(trimed_full_cmd, ';');
+	ptr = lst_single_cmd;
+	ret = EXIT_SUCCESS;
+	while (*ptr && ret == EXIT_SUCCESS)
+		parse_cmd((*ptr)++, &ret);
+	ft_lststrdel(lst_single_cmd);
 }

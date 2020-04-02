@@ -29,6 +29,7 @@
 # include <limits.h>
 # include <stdio.h>
 # include "../libft/includes/libft.h"
+# include "pipe_project.h"
 
 char					**g_env;
 int						g_status;
@@ -67,4 +68,5 @@ void					apply_t_d(t_cmd *c);
 void					execute_cmd(t_cmd *c, char *path);
 void					parse_line(char **line);
 void					get_prompt(void);
+
 #endif

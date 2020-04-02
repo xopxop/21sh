@@ -3,7 +3,7 @@ NAME = 21sh
 SRCS_PATH = src/
 LIBFT_PATH = libft/
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g #add -g for visual debugger
 INC = -I ./includes/ -I ./libft/includes
 
 SRCS_NAME = main.c \

@@ -31,6 +31,8 @@ SRCS_NAME = ft_atoi.c ft_bzero.c ft_isalnum.c \
 			get_next_line.c ft_strstr_e.c ft_strlst_del.c ft_is_d_quote.c \
 			ft_strtrim_d_quote.c ft_addchar.c ft_iswhite.c ft_split_d_quote.c \
 			ft_split_shell.c ft_check_d_quote.c ft_isext.c \
+			\
+			pipe/utilities_for_pipe.c
 
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
