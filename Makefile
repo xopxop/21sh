@@ -20,7 +20,7 @@ SRCS_NAME = main.c \
 			parse.c \
 			sig_handler.c \
 			utill.c \
-			#dquote.c utilities_for_pipe.c \
+			dquote.c utilities_for_pipe.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS_NAME:.c=.o)
