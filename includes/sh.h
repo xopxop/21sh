@@ -30,6 +30,7 @@
 # include <stdio.h>
 # include "../libft/includes/libft.h"
 # include "pipe_project.h"
+# include "dquote.h"
 
 char					**g_env;
 int						g_status;

@@ -75,9 +75,8 @@ static char	**set_env(char **sample)
 
 static int	minishell(void)
 {
-	char	*line;
+	char	*input;
 
-	line = NULL;
 	while (1)
 	{
 		sig_controller(PARENT);
@@ -86,8 +85,8 @@ static int	minishell(void)
 		when it comes with child process*/
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
-		get_next_line(0, &line);
-		is_eof(line) ? parse_line(&line) : ft_exit(NULL, PRINT);
+		input = get_input((int)1);
+		is_eof(input) ? parse_line(&input) : ft_exit(NULL, PRINT);
 		/*I'm using ft_exit function when user wants to exit, and even in error case.
 		  especially, ft_exit takes 'ER'macro when 'execve' is incomplete
 		  otherwise, it takes 'PRINT' macro*/

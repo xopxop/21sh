@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_project.h                                     :+:      :+:    :+:   */
+/*   dquote.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/02 04:27:40 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/02 04:27:41 by dthan            ###   ########.fr       */
+/*   Created: 2020/04/03 17:49:01 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/03 17:49:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPE_H
-# define PIPE_H
+#ifndef DQUOTE_H
+# define DQUOTE_H
 
-# define YES 1
-# define NO 0
-# define MY_ENOMEM "Out of memory"
-
-int		cmd_contains_pipe(char *cmd_input);
-void	ft_lststrdel(char ***str);
-void	parse_cmd(char *cmd_input, int *ret);
-//t_cmd			*get_coms(char *line);
-void	error_handler(char *first, char *second, char *third, char *fourth);
+char	*get_input(int level);
+int		open_d_quote(char *input, int level);
+char	*ft_strjoin_and_free_string2(char *string1, char *string2);
+char	*ft_strjoin_and_free_string1(char *string1, char *string2);
 
 #endif
