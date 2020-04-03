@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/03 14:05:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/03 16:37:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void				apply_termcap_str(char *str, int x, int y)
 {
 	if (!ft_strcmp(str, "ch"))
-		ft_putstr_fd(tgoto(tgetstr(str, NULL), x, y), 0);
-	if (x && y)
+		ft_putstr_fd(tgoto(tgetstr("ch", NULL), x, y), 0);
+	else if (x && y)
 		NULL;
 	else if (y)
 		ft_putstr_fd(tgoto(tgetstr(str, NULL), 0, y), 0);
@@ -74,9 +74,9 @@ static void			bs_key_str(t_l *l)
 		else
 			l->x--;
 	}
-	while (++i < l->nb)
+	while (++i < l->c_nb)
 		l->line[i] = l->line[i + 1];
-	l->nb--;
+	l->c_nb--;
 }
 
 int					bs_key(t_l *l)
@@ -110,7 +110,7 @@ void				left_key(t_l *l)
 
 void				right_key(t_l *l)
 {
-	if (l->x + (l->y * l->co) - PMPT == l->nb)
+	if (l->x + (l->y * l->co) - PMPT == l->c_nb)
 		return ;
 	if (l->x != l->co - 1)
 	{
@@ -125,16 +125,6 @@ void				right_key(t_l *l)
 	}
 }
 
-int					parse_key(char t[], t_l *l)
-{
-	if (t[0] == 127 && t[1] == '\0')
-		return (bs_key(l));
-//	else if (t[0] == '\v' && t[1] == '\0')
-//		return (ctrl_k());
-//	else if (t[0] == 16 && t[1] == '\0')
-//		return (ctrl_p());
-	return (0);
-}
 
 void				append_char(char t[], t_l *l)
 {
@@ -145,7 +135,7 @@ void				append_char(char t[], t_l *l)
 	tmp = ft_strjoin(l->line, t);
 	ft_strdel(&l->line);
 	l->line = tmp;
-	l->nb++;
+	ft_putstr(&l->line[l->c_nb]);
 	if (l->x != l->co - 1)
 		l->x++;
 	else
@@ -153,16 +143,14 @@ void				append_char(char t[], t_l *l)
 		l->x = 0;
 		l->y++;
 	}
-	ft_putstr(&l->line[l->nb - 1]);
+	l->c_nb++;
 }
 
 void				insert_char(char t[], t_l *l)
 {
 	char			*tmp;
-//	int				x;
 
-//	x = l->y == 0 ? l->x - PMPT : l->x;
-	tmp = ft_strnew(l->nb + 1);
+	tmp = ft_strnew(l->c_nb + 1);
 	tmp = ft_strncpy(tmp, l->line, l->x + (l->y * l->co) - PMPT);
 	tmp = ft_addchar(tmp, t[0]);
 	tmp = ft_strcat(tmp, &l->line[l->x + (l->y * l->co) - PMPT]);
@@ -170,7 +158,7 @@ void				insert_char(char t[], t_l *l)
 	ft_putchar(t[0]);
 	ft_strdel(&l->line);
 	l->line = tmp;
-	l->nb++;
+	l->c_nb++;
 	if (l->x != l->co)
 		l->x++;
 	else
@@ -183,10 +171,69 @@ void				insert_char(char t[], t_l *l)
 
 void				add_key(char t[], t_l *l)
 {
-	if (l->nb != l->x + (l->co * l->y) - PMPT)
+	if (l->c_nb != l->x + (l->co * l->y) - PMPT)
 		insert_char(t, l);
 	else
 		append_char(t, l);
+}
+
+int					parse_key(char t[], t_l *l)
+{
+	if (t[0] == 127 && t[1] == '\0')
+		return (bs_key(l));
+//	else if (t[0] == '\v' && t[1] == '\0')
+//		return (ctrl_k());
+//	else if (t[0] == 16 && t[1] == '\0')
+//		return (ctrl_p());
+	return (0);
+}
+
+void				ctrl_up(t_l *l)
+{
+	if (l->y == 0)
+	{
+		apply_termcap_str("ch", 0, PMPT);
+		l->x = PMPT;
+	}
+	else if (l->y == 1 && l->x < 3)
+	{
+		apply_termcap_str("up", 0, 0);
+		apply_termcap_str("ch", 0, PMPT);
+		l->y = 0;
+		l->x = PMPT;
+	}
+	else
+	{
+		apply_termcap_str("up", 0, 0);
+		l->y--;
+	}
+}
+
+void				ctrl_down(t_l *l)
+{
+	if ((l->co * (l->y + 1)) + l->x > l->c_nb + PMPT)
+		//if There is correct position to go
+	{
+		if (l->co - l->x < l->c_nb + PMPT - (l->x + (l->y * l->co)))
+			//If there is line to go instead of correct position
+		{
+			apply_termcap_str("do", 0, 0);
+			apply_termcap_str("ch", 0, (l->c_nb + PMPT) - (l->y + 1) * l->co);
+			l->x = (l->c_nb + PMPT) - ((l->y + 1) * l->co);
+			l->y++;
+		}
+		else
+		{
+			apply_termcap_str("ch", 0, (l->c_nb + PMPT) - (l->y * l->co));
+			l->x = (l->c_nb + PMPT) - (l->y * l->co);
+		}
+	}
+	else
+	{
+		apply_termcap_str("do", 0, 0);
+		apply_termcap_str("ch", 0, l->x);
+		l->y++;
+	}
 }
 
 void				parse_key_esc(char t[], t_l *l)
@@ -196,15 +243,16 @@ void				parse_key_esc(char t[], t_l *l)
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
 		down_key();
 		*/
-	if (t[0] == 27 && t[1] == 91 && t[2] == 'D')
+	if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
 	//if (t[0] == 27)
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
-/*	else if (!ft_strcmp(&tmp[1], "[1;5A"))
-		ctrl_up();
-	else if (!ft_strcmp(&tmp[1], "[1;5B"))
-		ctrl_down();
+	else if (!ft_strcmp(t, "\x1b[1;5A"))
+		ctrl_up(l);
+	else if (!ft_strcmp(t, "\x1b[1;5B"))
+		ctrl_down(l);
+	/*
 	else if (!ft_strcmp(&tmp[1], "[1;5C"))
 		ctrl_right();
 	else if (!ft_strcmp(&tmp[1], "[1;5D"))

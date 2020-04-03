@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/02 19:28:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/03 15:14:12 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct			s_cmd
 typedef struct			s_l
 {
 	int					co;
-	int					nb;
+	int					c_nb;
+	//int					l_nb;
 	int					x;
 	int					y;
 	char				*line;
