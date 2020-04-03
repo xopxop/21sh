@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/02 21:44:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/03 14:05:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int					bs_key(t_l *l)
 	apply_termcap_str("#4", 0, 0);
 	apply_termcap_str("cd", 0, 0);
 	apply_termcap_str("sc", 0, 0);
-	apply_termcap_str("rc", 0, 0);
 	bs_key_str(l);
+	apply_termcap_str("rc", 0, 0);
 	return (1);
 }
 
