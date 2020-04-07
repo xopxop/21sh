@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/03 16:37:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/07 21:05:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void				init_term(t_l *l)
 		ft_exit(NULL, ER);
 	}
 	l->co = tgetnum("co");
+	//l->co = 10;
 }
 
 static void			bs_key_str(t_l *l)
@@ -154,19 +155,21 @@ void				insert_char(char t[], t_l *l)
 	tmp = ft_strncpy(tmp, l->line, l->x + (l->y * l->co) - PMPT);
 	tmp = ft_addchar(tmp, t[0]);
 	tmp = ft_strcat(tmp, &l->line[l->x + (l->y * l->co) - PMPT]);
-	apply_termcap_str("im", 0, 0);
-	ft_putchar(t[0]);
 	ft_strdel(&l->line);
 	l->line = tmp;
+	ft_putchar(t[0]);
+	apply_termcap_str("cd", 0, 0);
+	apply_termcap_str("sc", 0, 0);
+	ft_putstr(&l->line[l->x + (l->y * l->co) - PMPT + 1]);
+	apply_termcap_str("rc", 0, 0);
 	l->c_nb++;
-	if (l->x != l->co)
+	if (l->x != l->co - 1)
 		l->x++;
 	else
 	{
 		l->x = 0;
 		l->y++;
 	}
-	apply_termcap_str("ei", 0, 0);
 }
 
 void				add_key(char t[], t_l *l)
@@ -218,15 +221,10 @@ void				ctrl_down(t_l *l)
 			//If there is line to go instead of correct position
 		{
 			apply_termcap_str("do", 0, 0);
-			apply_termcap_str("ch", 0, (l->c_nb + PMPT) - (l->y + 1) * l->co);
-			l->x = (l->c_nb + PMPT) - ((l->y + 1) * l->co);
 			l->y++;
 		}
-		else
-		{
 			apply_termcap_str("ch", 0, (l->c_nb + PMPT) - (l->y * l->co));
 			l->x = (l->c_nb + PMPT) - (l->y * l->co);
-		}
 	}
 	else
 	{
@@ -236,6 +234,45 @@ void				ctrl_down(t_l *l)
 	}
 }
 
+void				ctrl_right(t_l *l)
+{
+	int				i;
+	int				y_inc;
+
+	i = l->x + (l->y * l->co) - PMPT;
+	(ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
+	y_inc = 0;
+	while (l->line[i])
+	{
+		if (ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
+		{
+			if (i + PMPT - (l->x + (l->y * l->co)) < l->co - l->x)
+				//line is not changed
+			{
+				apply_termcap_str("ch", 0, (i + PMPT) % l->co);
+				l->x = (i + PMPT) % l->co;
+			}
+			else
+				//line is changed
+			{
+				l->y += y_inc;
+				l->x = (i + PMPT) % l->co;
+			}
+			if (i + PMPT == l->co - 1)
+				y_inc++;
+			break ;
+		}
+		i++;
+	}
+}
+
+/*void				ctrl_left(t_l *l)
+{
+
+
+
+}*/
+
 void				parse_key_esc(char t[], t_l *l)
 {
 /*	if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
@@ -244,20 +281,21 @@ void				parse_key_esc(char t[], t_l *l)
 		down_key();
 		*/
 	if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
-	//if (t[0] == 27)
+//	if (t[0] == '[')
+//		return ;
+//	if (t[0] == 'm')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
 	else if (!ft_strcmp(t, "\x1b[1;5A"))
+	//else if (t[0] == ',')
 		ctrl_up(l);
 	else if (!ft_strcmp(t, "\x1b[1;5B"))
 		ctrl_down(l);
-	/*
-	else if (!ft_strcmp(&tmp[1], "[1;5C"))
-		ctrl_right();
-	else if (!ft_strcmp(&tmp[1], "[1;5D"))
-		ctrl_left();
-		*/
+	else if (!ft_strcmp(t, "\x1b[1;5C"))
+		ctrl_right(l);
+//	else if (!ft_strcmp(&tmp[1], "[1;5D"))
+//		ctrl_left(l);
 	else if (ft_isprint(t[0])/* && t[0] != '['*/)
 		add_key(t, l);
 }
