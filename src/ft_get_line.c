@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/08 17:43:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/08 21:11:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_term				default_term(t_term *t)
 	return (old);
 }
 
-
 void				init_term(t_l *l)
 {
 	t_term			t;
@@ -50,7 +49,6 @@ void				init_term(t_l *l)
 		ft_exit(NULL, ER);
 	}
 	l->co = tgetnum("co");
-	//l->co = 10;
 }
 
 static void			bs_key_str(t_l *l)
@@ -126,7 +124,6 @@ void				right_key(t_l *l)
 	}
 }
 
-
 void				append_char(char t[], t_l *l)
 {
 	char			*tmp;
@@ -158,11 +155,13 @@ void				insert_char(char t[], t_l *l)
 	ft_strdel(&l->line);
 	l->line = tmp;
 	ft_putchar(t[0]);
-	apply_termcap_str("cd", 0, 0);
+	if (l->x != l->co - 1)
+		apply_termcap_str("cd", 0, 0);
+	else
+		apply_termcap_str("do", 0, 0);
 	apply_termcap_str("sc", 0, 0);
 	ft_putstr(&l->line[l->x + (l->y * l->co) - PMPT + 1]);
 	apply_termcap_str("rc", 0, 0);
-	l->c_nb++;
 	if (l->x != l->co - 1)
 		l->x++;
 	else
@@ -170,6 +169,7 @@ void				insert_char(char t[], t_l *l)
 		l->x = 0;
 		l->y++;
 	}
+	l->c_nb++;
 }
 
 void				add_key(char t[], t_l *l)
@@ -215,10 +215,8 @@ void				ctrl_up(t_l *l)
 void				ctrl_down(t_l *l)
 {
 	if ((l->co * (l->y + 1)) + l->x > l->c_nb + PMPT)
-		//if There is correct position to go
 	{
 		if (l->co - l->x < l->c_nb + PMPT - (l->x + (l->y * l->co)))
-			//If there is line to go instead of correct position
 		{
 			apply_termcap_str("do", 0, 0);
 			l->y++;
@@ -291,8 +289,8 @@ void				ctrl_left(t_l *l, int y_dec)
 				while (y_dec--)
 					apply_termcap_str("up", 0, 0);
 			}
-				apply_termcap_str("ch", 0, (i + PMPT) % l->co);
-				l->x = (i + PMPT) % l->co;
+			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
+			l->x = (i + PMPT) % l->co;
 			break ;
 		}
 		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
@@ -308,14 +306,10 @@ void				parse_key_esc(char t[], t_l *l)
 		down_key();
 		*/
 	if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
-//	if (t[0] == '[')
-//		return ;
-//	if (t[0] == 'm')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
 	else if (!ft_strcmp(t, "\x1b[1;5A"))
-	//else if (t[0] == ',')
 		ctrl_up(l);
 	else if (!ft_strcmp(t, "\x1b[1;5B"))
 		ctrl_down(l);
@@ -323,7 +317,7 @@ void				parse_key_esc(char t[], t_l *l)
 		ctrl_right(l);
 	else if (!ft_strcmp(t, "\x1b[1;5D"))
 		ctrl_left(l, 0);
-	else if (ft_isprint(t[0])/* && t[0] != '['*/)
+	else if (ft_isprint(t[0]))
 		add_key(t, l);
 }
 
