@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/07 21:05:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/08 16:39:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,44 +234,40 @@ void				ctrl_down(t_l *l)
 	}
 }
 
-void				ctrl_right(t_l *l)
+void				ctrl_right(t_l *l, int y_inc)
 {
 	int				i;
-	int				y_inc;
 
 	i = l->x + (l->y * l->co) - PMPT;
 	(ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
-	y_inc = 0;
-	while (l->line[i])
+	while (i <= l->c_nb)
 	{
-		if (ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
+		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
+				|| i == l->c_nb)
 		{
 			if (i + PMPT - (l->x + (l->y * l->co)) < l->co - l->x)
-				//line is not changed
-			{
-				apply_termcap_str("ch", 0, (i + PMPT) % l->co);
 				l->x = (i + PMPT) % l->co;
-			}
 			else
-				//line is changed
 			{
 				l->y += y_inc;
 				l->x = (i + PMPT) % l->co;
+				while (y_inc--)
+					apply_termcap_str("do", 0, 0);
 			}
-			if (i + PMPT == l->co - 1)
-				y_inc++;
+			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
 			break ;
 		}
+		((i + PMPT) % l->co == l->co - 1) ? y_inc++ : 0;
 		i++;
 	}
 }
 
-/*void				ctrl_left(t_l *l)
+void				ctrl_left(t_l *l)
 {
 
 
 
-}*/
+}
 
 void				parse_key_esc(char t[], t_l *l)
 {
@@ -293,7 +289,7 @@ void				parse_key_esc(char t[], t_l *l)
 	else if (!ft_strcmp(t, "\x1b[1;5B"))
 		ctrl_down(l);
 	else if (!ft_strcmp(t, "\x1b[1;5C"))
-		ctrl_right(l);
+		ctrl_right(l, 0);
 //	else if (!ft_strcmp(&tmp[1], "[1;5D"))
 //		ctrl_left(l);
 	else if (ft_isprint(t[0])/* && t[0] != '['*/)
