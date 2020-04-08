@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/08 21:11:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/09 00:02:59 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,142 @@ void				add_key(char t[], t_l *l)
 		append_char(t, l);
 }
 
+char				*clipboard(char *str, int opt)
+{
+	static char		*clip;
+
+	if (opt == CLIP_SAVE)
+	{
+		if (clip)
+			ft_strdel(&clip);
+		clip = ft_strdup(str);
+	}
+	else if (opt == CLIP_TAKE)
+	{
+		if (clip)
+			return (clip);
+	}
+	else
+		ft_strdel(&clip);
+	return (NULL);
+}
+
+void				ctrl_left_for_zero(t_l *l, int y_dec)
+{
+	l->x = PMPT;
+	l->y = 0;
+	while (y_dec--)
+		apply_termcap_str("up", 0, 0);
+	apply_termcap_str("ch", 0, PMPT);
+}
+
+void				ctrl_left(t_l *l, int y_dec)
+{
+	int				i;
+	int				curr;
+
+	i = l->x + (l->y * l->co) - PMPT;
+	curr = i;
+	ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i ? i-- : 0;
+	while (i >= 0)
+	{
+		if (i == 0)
+			ctrl_left_for_zero(l, y_dec);
+		else if (ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]))
+		{
+			if (l->x < curr - i)
+			{
+				l->y -= y_dec;
+				while (y_dec--)
+					apply_termcap_str("up", 0, 0);
+			}
+			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
+			l->x = (i + PMPT) % l->co;
+			break ;
+		}
+		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
+		i--;
+	}
+}
+
+void				ctrl_k_clipping(t_l *l, int i, int j)
+{
+	char			*clip;
+
+	clip = ft_strnew(j - i);
+	clip = ft_strncpy(clip, &l->line[i], j - i);
+	clipboard(clip, CLIP_SAVE);
+	ft_strdel(&clip);
+}
+
+void				ctrl_k_edit_line(t_l *l, int i, int j)
+{
+	char			*tmp;
+
+	tmp = ft_strnew(l->c_nb - (j - i));
+	tmp = ft_strncpy(tmp, l->line, i);
+	tmp = ft_strcat(tmp, &l->line[j]);
+	ft_strdel(&l->line);
+	l->line = tmp;
+}
+
+void				ctrl_k_apply_to_term(t_l *l, int i, int j, int y_dec)
+{
+	if (l->x < curr - i)
+	{
+		l->y -= y_dec;
+		while (y_dec--)
+			apply_trmcap_str("up", 0, 0);
+	}
+	apply_termcap_str("ch", 0, (i + PMPT) % l->co);
+	l->x = (i + PMPT) % l->co;
+	apply_termcap_str("cd", 0, 0);
+	apply_termcap_str("sc", 0, 0);
+	ft_putstr(&l->line[i]);
+	apply_termcap_str("rc", 0, 0);
+	l->c_nb -= (j - i);
+}
+
+int					ctrl_k(t_l *l, int y_dec)
+{
+	int				curr;
+	int				i;
+	int				j;
+
+	i = l->x + (l->y * l->co) - PMPT;
+	curr = i;
+	while (i >= 0)
+	{
+		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) &&
+		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
+		{
+			j = i - 1;
+			while (++j < l->c_nb)
+				if (ft_iswhite(l->line[j]))
+					break ;
+			ctrl_k_clipping(l, i, j);
+			ctrl_k_edit_line(l, i, j);
+			ctrl_k_apply_to_term(l, i, j, y_dec);
+			break ;
+		}
+		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
+		i--;
+	}
+	return (1);
+}
+
+int					ctrl_p(t_l *l)
+{
+
+
+}
+
 int					parse_key(char t[], t_l *l)
 {
 	if (t[0] == 127 && t[1] == '\0')
 		return (bs_key(l));
-//	else if (t[0] == '\v' && t[1] == '\0')
-//		return (ctrl_k());
+	else if (t[0] == '\v' && t[1] == '\0')
+		return (ctrl_k(l, 0));
 //	else if (t[0] == 16 && t[1] == '\0')
 //		return (ctrl_p());
 	return (0);
@@ -260,43 +390,6 @@ void				ctrl_right(t_l *l)
 	}
 }
 
-void				ctrl_left_for_zero(t_l *l, int y_dec)
-{
-	l->x = PMPT;
-	l->y = 0;
-	while (y_dec--)
-		apply_termcap_str("up", 0, 0);
-	apply_termcap_str("ch", 0, PMPT);
-}
-
-void				ctrl_left(t_l *l, int y_dec)
-{
-	int				i;
-	int				curr;
-
-	i = l->x + (l->y * l->co) - PMPT;
-	curr = i;
-	ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i ? i-- : 0;
-	while (i >= 0)
-	{
-		if (i == 0)
-			ctrl_left_for_zero(l, y_dec);
-		else if (ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]))
-		{
-			if (l->x < curr - i)
-			{
-				l->y -= y_dec;
-				while (y_dec--)
-					apply_termcap_str("up", 0, 0);
-			}
-			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
-			l->x = (i + PMPT) % l->co;
-			break ;
-		}
-		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
-		i--;
-	}
-}
 
 void				parse_key_esc(char t[], t_l *l)
 {

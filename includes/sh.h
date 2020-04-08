@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/03 15:14:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/08 23:06:55 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # define F_TYPE_MASK 0170000
 # define PRINT 1
 # define ER 0
-# define PMPT 3
+# define PMPT 2
+# define CLIP_SAVE 0
+# define CLIP_TAKE 1
+# define CLIP_DELT 2
 
 # include <term.h>
 # include <termios.h>
