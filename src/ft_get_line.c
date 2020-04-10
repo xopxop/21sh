@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/09 00:02:59 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/10 19:47:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,13 +259,13 @@ void				ctrl_k_edit_line(t_l *l, int i, int j)
 	l->line = tmp;
 }
 
-void				ctrl_k_apply_to_term(t_l *l, int i, int j, int y_dec)
+void				ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
 {
-	if (l->x < curr - i)
+	if (l->x < l->x + (l->y * l->co) - PMPT - i)
 	{
 		l->y -= y_dec;
 		while (y_dec--)
-			apply_trmcap_str("up", 0, 0);
+			apply_termcap_str("up", 0, 0);
 	}
 	apply_termcap_str("ch", 0, (i + PMPT) % l->co);
 	l->x = (i + PMPT) % l->co;
@@ -295,7 +295,7 @@ int					ctrl_k(t_l *l, int y_dec)
 					break ;
 			ctrl_k_clipping(l, i, j);
 			ctrl_k_edit_line(l, i, j);
-			ctrl_k_apply_to_term(l, i, j, y_dec);
+			ctrl_k_apply_to_screen(l, i, j, y_dec);
 			break ;
 		}
 		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
@@ -304,10 +304,41 @@ int					ctrl_k(t_l *l, int y_dec)
 	return (1);
 }
 
-int					ctrl_p(t_l *l)
+void				ctrl_p_apply_screen(t_l *l, char *clip, int i)
 {
+	apply_termcap_str("cd", 0, 0);
+	ft_putstr(clip);
+	apply_termcap_str("sc", 0, 0);
+	ft_putstr(&l->line[i]);
+	apply_termcap_str("rc", 0, 0);
+}
 
+int					ctrl_p(t_l *l, int clip_len)
+{
+	char			*clip;
+	char			*tmp;
+	int				i;
 
+	if (!(clip = clipboard(NULL, CLIP_TAKE)))
+		return (1);
+	clip_len = ft_strlen(clip);
+	i = l->x + (l->y * l->co) - PMPT;
+	ctrl_p_apply_screen(l, clip, i);
+	tmp = ft_strnew(l->c_nb + clip_len);
+	tmp = ft_strncpy(tmp, l->line, i);
+	tmp = ft_strcat(tmp, clip);
+	tmp = ft_strcat(tmp, &l->line[i]);
+	ft_strdel(&l->line);
+	l->line = tmp;
+	if (l->x + clip_len > l->co - 1)
+	{
+		l->y += (l->x + clip_len) / l->co;
+		l->x = (l->x + clip_len) % l->co;
+	}
+	else
+		l->x += clip_len;
+	l->c_nb += clip_len;
+	return (1);
 }
 
 int					parse_key(char t[], t_l *l)
@@ -316,8 +347,8 @@ int					parse_key(char t[], t_l *l)
 		return (bs_key(l));
 	else if (t[0] == '\v' && t[1] == '\0')
 		return (ctrl_k(l, 0));
-//	else if (t[0] == 16 && t[1] == '\0')
-//		return (ctrl_p());
+	else if (t[0] == 16 && t[1] == '\0')
+		return (ctrl_p(l, 0));
 	return (0);
 }
 
