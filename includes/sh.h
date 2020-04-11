@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/08 23:06:55 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 00:58:06 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <dirent.h>
 # include <limits.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include "../libft/includes/libft.h"
 
 char					**g_env;
@@ -52,15 +53,22 @@ typedef struct			s_cmd
 
 typedef struct			s_l
 {
+	char				*line;
 	int					co;
-	int					c_nb;
-	//int					l_nb;
+	int					nb;
 	int					x;
 	int					y;
-	char				*line;
+	int					curr;
 }						t_l;
 
-	void					ft_get_line(t_l *l);
+typedef struct			s_h
+{
+	char				*data;
+	struct s_h			*next;
+	short				nb;
+}						t_h;
+
+	void					ft_get_line(t_l *l, t_h **h);
 	void					apply_termcap_str(char *str, int x, int y);
 
 

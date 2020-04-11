@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/10 19:47:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 01:35:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ static void			bs_key_str(t_l *l)
 		else
 			l->x--;
 	}
-	while (++i < l->c_nb)
+	while (++i < l->nb)
 		l->line[i] = l->line[i + 1];
-	l->c_nb--;
+	l->nb--;
 }
 
 int					bs_key(t_l *l)
@@ -109,7 +109,7 @@ void				left_key(t_l *l)
 
 void				right_key(t_l *l)
 {
-	if (l->x + (l->y * l->co) - PMPT == l->c_nb)
+	if (l->x + (l->y * l->co) - PMPT == l->nb)
 		return ;
 	if (l->x != l->co - 1)
 	{
@@ -133,7 +133,7 @@ void				append_char(char t[], t_l *l)
 	tmp = ft_strjoin(l->line, t);
 	ft_strdel(&l->line);
 	l->line = tmp;
-	ft_putstr(&l->line[l->c_nb]);
+	ft_putstr(&l->line[l->nb]);
 	if (l->x != l->co - 1)
 		l->x++;
 	else
@@ -141,14 +141,14 @@ void				append_char(char t[], t_l *l)
 		l->x = 0;
 		l->y++;
 	}
-	l->c_nb++;
+	l->nb++;
 }
 
 void				insert_char(char t[], t_l *l)
 {
 	char			*tmp;
 
-	tmp = ft_strnew(l->c_nb + 1);
+	tmp = ft_strnew(l->nb + 1);
 	tmp = ft_strncpy(tmp, l->line, l->x + (l->y * l->co) - PMPT);
 	tmp = ft_addchar(tmp, t[0]);
 	tmp = ft_strcat(tmp, &l->line[l->x + (l->y * l->co) - PMPT]);
@@ -169,12 +169,12 @@ void				insert_char(char t[], t_l *l)
 		l->x = 0;
 		l->y++;
 	}
-	l->c_nb++;
+	l->nb++;
 }
 
 void				add_key(char t[], t_l *l)
 {
-	if (l->c_nb != l->x + (l->co * l->y) - PMPT)
+	if (l->nb != l->x + (l->co * l->y) - PMPT)
 		insert_char(t, l);
 	else
 		append_char(t, l);
@@ -252,7 +252,7 @@ void				ctrl_k_edit_line(t_l *l, int i, int j)
 {
 	char			*tmp;
 
-	tmp = ft_strnew(l->c_nb - (j - i));
+	tmp = ft_strnew(l->nb - (j - i));
 	tmp = ft_strncpy(tmp, l->line, i);
 	tmp = ft_strcat(tmp, &l->line[j]);
 	ft_strdel(&l->line);
@@ -273,7 +273,7 @@ void				ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
 	apply_termcap_str("sc", 0, 0);
 	ft_putstr(&l->line[i]);
 	apply_termcap_str("rc", 0, 0);
-	l->c_nb -= (j - i);
+	l->nb -= (j - i);
 }
 
 int					ctrl_k(t_l *l, int y_dec)
@@ -290,7 +290,7 @@ int					ctrl_k(t_l *l, int y_dec)
 		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
 		{
 			j = i - 1;
-			while (++j < l->c_nb)
+			while (++j < l->nb)
 				if (ft_iswhite(l->line[j]))
 					break ;
 			ctrl_k_clipping(l, i, j);
@@ -324,7 +324,7 @@ int					ctrl_p(t_l *l, int clip_len)
 	clip_len = ft_strlen(clip);
 	i = l->x + (l->y * l->co) - PMPT;
 	ctrl_p_apply_screen(l, clip, i);
-	tmp = ft_strnew(l->c_nb + clip_len);
+	tmp = ft_strnew(l->nb + clip_len);
 	tmp = ft_strncpy(tmp, l->line, i);
 	tmp = ft_strcat(tmp, clip);
 	tmp = ft_strcat(tmp, &l->line[i]);
@@ -337,7 +337,7 @@ int					ctrl_p(t_l *l, int clip_len)
 	}
 	else
 		l->x += clip_len;
-	l->c_nb += clip_len;
+	l->nb += clip_len;
 	return (1);
 }
 
@@ -375,15 +375,15 @@ void				ctrl_up(t_l *l)
 
 void				ctrl_down(t_l *l)
 {
-	if ((l->co * (l->y + 1)) + l->x > l->c_nb + PMPT)
+	if ((l->co * (l->y + 1)) + l->x > l->nb + PMPT)
 	{
-		if (l->co - l->x < l->c_nb + PMPT - (l->x + (l->y * l->co)))
+		if (l->co - l->x < l->nb + PMPT - (l->x + (l->y * l->co)))
 		{
 			apply_termcap_str("do", 0, 0);
 			l->y++;
 		}
-			apply_termcap_str("ch", 0, (l->c_nb + PMPT) - (l->y * l->co));
-			l->x = (l->c_nb + PMPT) - (l->y * l->co);
+			apply_termcap_str("ch", 0, (l->nb + PMPT) - (l->y * l->co));
+			l->x = (l->nb + PMPT) - (l->y * l->co);
 	}
 	else
 	{
@@ -401,10 +401,10 @@ void				ctrl_right(t_l *l)
 	y_inc = 0;
 	i = l->x + (l->y * l->co) - PMPT;
 	(ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
-	while (i <= l->c_nb)
+	while (i <= l->nb)
 	{
 		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
-				|| i == l->c_nb)
+				|| i == l->nb)
 		{
 			if (i + PMPT - (l->x + (l->y * l->co)) >= l->co - l->x)
 			{
@@ -421,12 +421,64 @@ void				ctrl_right(t_l *l)
 	}
 }
 
-
-void				parse_key_esc(char t[], t_l *l)
+void				up_key_apply_statuses(t_l *l)
 {
-/*	if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
-		up_key();
-	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
+	int				i;
+
+	l->nb = ft_strlen(l->line);
+	l->y = (l->nb + PMPT) / l->co;
+	l->x = (l->nb + PMPT) % l->co;
+	i = l->y;
+	while (i--)
+		apply_termcap_str("up", 0, 0);
+	apply_termcap_str("ch", 0, PMPT);
+	apply_termcap_str("cd", 0, 0);
+	ft_putstr(l->line);
+}
+
+t_h					*save_history(t_l *l, t_h **h)
+{
+	t_h				*append;
+
+	if (!l->line || !ft_isprint(l->line[0]))
+		return (h[0]);
+	append = (t_h*)malloc(sizeof(t_h));
+	append->nb = h[0] ? h[0]->nb + 1 : 1;
+	append->data = ft_strdup(l->line);
+	append->next = *h;
+	h[0] = append;
+	l->curr = 0;
+	return (h[0]);
+}
+
+void				up_key(t_l *l, t_h **h)
+{
+	t_h				*trav;
+	int				i;
+
+	if (!*h || l->curr == h[0]->nb)
+		return ;
+	trav = *h;
+	i = l->curr;
+	l->curr++;
+	while (i--)
+		trav = trav->next;
+	if (l->line && ft_isprint(l->line[0]))
+	{
+		h[0] = save_history(l, h);
+	}
+	ft_strdel(&l->line);
+	l->line = ft_strdup(trav->data);
+	up_key_apply_statuses(l);
+
+}
+
+void				parse_key_esc(char t[], t_l *l, t_h **h)
+{
+	if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
+//	if (t[0] == 'u')
+		up_key(l, h);
+/*	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
 		down_key();
 		*/
 	if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
@@ -455,8 +507,11 @@ void				restore_term(t_l *l)
 	old = default_term(NULL);
 	tcsetattr(0, TCSANOW, &old);
 }
+// read from .history file and store them into linked list and
+// The new histories occured whild using my shell, will be stored
+// into the linked list
 
-void				ft_get_line(t_l *l)
+void				ft_get_line(t_l *l, t_h **h)
 {
 	char			tmp[8];
 
@@ -466,8 +521,12 @@ void				ft_get_line(t_l *l)
 		ft_bzero(tmp, sizeof(tmp));
 		read(0, tmp, sizeof(tmp));
 		if (tmp[0] == '\n')
-			return (restore_term(l));
+		{
+			h[0] = save_history(l, h);
+			restore_term(l);
+			return ;
+		}
 		if (!parse_key(tmp, l))
-			parse_key_esc(tmp, l);
+			parse_key_esc(tmp, l, h);
 	}
 }
