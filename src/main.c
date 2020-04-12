@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/12 20:35:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/13 00:07:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		get_history(t_h **h, int fd)
 	char	*line;
 
 	fd = open("./.history", O_RDWR | O_CREAT, 0644);
-	h[0] = NULL;
+	ft_memset(h[0], 0, sizeof(t_h));
 	if (!get_next_line(fd, &line))
 		return ;
 	h[0] = (t_h*)malloc(sizeof(t_h));
@@ -73,17 +73,17 @@ void		get_history(t_h **h, int fd)
 	h[0]->len = ft_strlen(line);
 	h[0]->nb = 1;
 	node = h[0];
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		tmp = (t_h*)malloc(sizeof(t_h));
+		ft_memset(tmp, 0, sizeof(t_h));
 		tmp->data = line;
+		tmp->len = ft_strlen(line);
 		node->next = tmp;
-		node->len = ft_strlen(line);
 		node = node->next;
 		h[0]->nb++;
 	}
 	close(fd);
-	node = NULL;
 }
 
 static int	shell(void)
