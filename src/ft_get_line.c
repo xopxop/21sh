@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/12 23:48:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/13 00:48:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,16 +341,6 @@ int					ctrl_p(t_l *l, int clip_len)
 	return (1);
 }
 
-int					parse_key(char t[], t_l *l)
-{
-	if (t[0] == 127 && t[1] == '\0')
-		return (bs_key(l));
-	else if (t[0] == '\v' && t[1] == '\0')
-		return (ctrl_k(l, 0));
-	else if (t[0] == 16 && t[1] == '\0')
-		return (ctrl_p(l, 0));
-	return (0);
-}
 
 void				ctrl_up(t_l *l)
 {
@@ -537,7 +527,49 @@ void				delete_save_history(t_h **h)
 	close(fd);
 }
 
-void				parse_key_esc(char t[], t_l *l, t_h **h)
+int					home_key(t_l *l)
+{
+	int				i;
+
+	i = l->y;
+	while (i--)
+		apply_termcap_str("up", 0, 0);
+	apply_termcap_str("ch", 0, PMPT);
+	l->x = PMPT;
+	l->y = 0;
+	return (1);
+}
+
+int					end_key(t_l *l)
+{
+	int				i;
+
+	home_key(l);
+	l->y = (l->nb + PMPT) / l->co;
+	l->x = (l->nb + PMPT) % l->co;
+	i = l->y;
+	while (i--)
+		apply_termcap_str("do", 0, 0);
+	apply_termcap_str("ch", 0, l->x);
+	return (1);
+}
+
+int					parse_key(char t[], t_l *l)
+{
+	if (t[0] == 127 && t[1] == '\0')
+		return (bs_key(l));
+	else if (t[0] == '\v' && t[1] == '\0')
+		return (ctrl_k(l, 0));
+	else if (t[0] == 16 && t[1] == '\0')
+		return (ctrl_p(l, 0));
+	else if (t[0] == 27 && t[1] == 91 && t[2] == 'H')
+		return (home_key(l));
+	else if (t[0] == 27 && t[1] == 91 && t[2] == 'F')
+		return (end_key(l));
+	return (0);
+}
+
+void				parse_key_arrow(char t[], t_l *l, t_h **h)
 {
 	if ((t[0] == 27 && t[1] == 91 && t[2] == 'A')
 		|| (t[0] == 27 && t[1] == 91 && t[2] == 'B'))
@@ -587,6 +619,6 @@ void				ft_get_line(t_l *l, t_h **h)
 			return ;
 		}
 		if (!parse_key(tmp, l))
-			parse_key_esc(tmp, l, h);
+			parse_key_arrow(tmp, l, h);
 	}
 }
