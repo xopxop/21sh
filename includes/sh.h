@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/12 00:58:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:14:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ typedef struct			s_h
 	char				*data;
 	struct s_h			*next;
 	short				nb;
+	int					len;
 }						t_h;
 
 	void					ft_get_line(t_l *l, t_h **h);
 	void					apply_termcap_str(char *str, int x, int y);
+	void					delete_save_history(t_h **h);
 
 
 void					print_semicolon_error(char *line);
@@ -78,13 +80,13 @@ void					print_no_cmd(char *str);
 void					print_set_unset(char *str, int opt);
 int						there_is_p(t_cmd *c);
 int						there_is_d(t_cmd *c);
-void					make_child_not_env(t_cmd *c);
-void					make_child_env(t_cmd *c, char *path);
+void					make_child_not_env(t_cmd *c, t_h **h);
+void					make_child_env(t_cmd *c, char *path, t_h **h);
 int						is_eof(char *line);
 char					*is_in_path(t_cmd *c);
 void					ft_pwd(void);
 void					ft_echo(t_cmd *c);
-void					ft_exit(t_cmd *comm, int opt);
+void					ft_exit(t_cmd *comm, int opt, t_h **h);
 void					ft_env(void);
 void					ft_cd(t_cmd *c);
 void					ft_unsetenv(t_cmd *c);
@@ -93,7 +95,7 @@ void					sig_controller(int option);
 void					cmd_del(t_cmd *c);
 char					*get_env(char *name, int keyval);
 void					apply_t_d(t_cmd *c);
-void					execute_cmd(t_cmd *c, char *path);
-void					parse_line(char **line);
+void					execute_cmd(t_cmd *c, char *patt, t_h **h);
+void					parse_line(char **line, t_h **h);
 void					get_prompt(void);
 #endif

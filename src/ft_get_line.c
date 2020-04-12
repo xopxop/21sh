@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/12 01:35:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:32:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_term				default_term(t_term *t)
 	return (old);
 }
 
-void				init_term(t_l *l)
+void				init_term(t_l *l, t_h **h)
 {
 	t_term			t;
 
@@ -46,7 +46,7 @@ void				init_term(t_l *l)
 	if (!(tgetent(NULL, getenv("TERM"))))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
-		ft_exit(NULL, ER);
+		ft_exit(NULL, ER, h);
 	}
 	l->co = tgetnum("co");
 }
@@ -421,7 +421,7 @@ void				ctrl_right(t_l *l)
 	}
 }
 
-void				up_key_apply_statuses(t_l *l)
+void				up_down_key_apply_statuses(t_l *l)
 {
 	int				i;
 
@@ -436,7 +436,7 @@ void				up_key_apply_statuses(t_l *l)
 	ft_putstr(l->line);
 }
 
-t_h					*save_history(t_l *l, t_h **h)
+t_h					*append_history(t_l *l, t_h **h)
 {
 	t_h				*append;
 
@@ -445,7 +445,8 @@ t_h					*save_history(t_l *l, t_h **h)
 	append = (t_h*)malloc(sizeof(t_h));
 	append->nb = h[0] ? h[0]->nb + 1 : 1;
 	append->data = ft_strdup(l->line);
-	append->next = *h;
+	append->len = ft_strlen(append->data);
+	append->next = h[0];
 	h[0] = append;
 	l->curr = 0;
 	return (h[0]);
@@ -459,29 +460,90 @@ void				up_key(t_l *l, t_h **h)
 	if (!*h || l->curr == h[0]->nb)
 		return ;
 	trav = *h;
-	i = l->curr;
+	i = l->curr - 1;
 	l->curr++;
-	while (i--)
+	while (i-- > -1)
 		trav = trav->next;
-	if (l->line && ft_isprint(l->line[0]))
-	{
-		h[0] = save_history(l, h);
-	}
 	ft_strdel(&l->line);
 	l->line = ft_strdup(trav->data);
-	up_key_apply_statuses(l);
+	up_down_key_apply_statuses(l);
 
+}
+
+void				down_key(t_l *l, t_h **h, char *first)
+{
+	t_h				*trav;
+	int				i;
+
+	if (!*h || l->curr == 0)
+		return ;
+	trav = *h;
+	l->curr--;
+	i = l->curr - 1;
+	ft_strdel(&l->line);
+	if (l->curr)
+	{
+		while (i--)
+			trav = trav->next;
+		l->line = ft_strdup(trav->data);
+	}
+	else if (first)
+		l->line = ft_strdup(first);
+	else
+		l->line = ft_strnew(0);
+	up_down_key_apply_statuses(l);
+}
+
+void				up_down(t_l *l, t_h **h, char t[])
+{
+	static char		*tmp;
+
+	if (t == NULL)
+		//clear tmp
+		ft_strdel(&tmp);
+	else if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
+//	else if (t[0] == 'u')
+	{
+		if (l->curr == 0 && l->line && ft_isprint(l->line[0]))
+			tmp = ft_strdup(l->line);
+		up_key(l, h);
+	}
+//	else if (t[0] == 'd')
+	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
+		down_key(l, h, tmp);
+
+}
+
+void				delete_save_history(t_h **h)
+{
+	t_h				*trav;
+	t_h				*tmp;
+	int				fd;
+
+	if (!h[0])
+		return ;
+	trav = h[0];
+	fd = open("./.history", O_RDWR);
+	while (trav)
+	{
+		write(fd, trav->data, trav->len);
+		if (trav->next)
+			write(fd, "\n", 1);
+		ft_strdel(&trav->data);
+		tmp = trav->next;
+		free(trav);
+		trav = tmp;
+	}
+	close(fd);
 }
 
 void				parse_key_esc(char t[], t_l *l, t_h **h)
 {
-	if (t[0] == 27 && t[1] == 91 && t[2] == 'A')
-//	if (t[0] == 'u')
-		up_key(l, h);
-/*	else if (t[0] == 27 && t[1] == 91 && t[2] == 'B')
-		down_key();
-		*/
-	if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
+	if ((t[0] == 27 && t[1] == 91 && t[2] == 'A')
+		|| (t[0] == 27 && t[1] == 91 && t[2] == 'B'))
+//	if (t[0] == 'u' || t[0] == 'd')
+		up_down(l, h, t);
+	else if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
@@ -507,22 +569,20 @@ void				restore_term(t_l *l)
 	old = default_term(NULL);
 	tcsetattr(0, TCSANOW, &old);
 }
-// read from .history file and store them into linked list and
-// The new histories occured whild using my shell, will be stored
-// into the linked list
 
 void				ft_get_line(t_l *l, t_h **h)
 {
 	char			tmp[8];
 
-	init_term(l);
+	init_term(l, h);
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));
 		read(0, tmp, sizeof(tmp));
 		if (tmp[0] == '\n')
 		{
-			h[0] = save_history(l, h);
+			h[0] = append_history(l, h);
+			up_down(l, h, NULL);
 			restore_term(l);
 			return ;
 		}

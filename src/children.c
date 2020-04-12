@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 15:50:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:05:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void		make_child_not_env(t_cmd *c)
+void		make_child_not_env(t_cmd *c, t_h **h)
 {
 	pid_t	pid;
 	t_stat	sb;
@@ -27,13 +27,13 @@ void		make_child_not_env(t_cmd *c)
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, ER);
+		ft_exit(c, ER, h);
 	}
 	else
 		waitpid(pid, &g_status, 0);
 }
 
-static void	make_child_env_sub(t_cmd *c, char buf[])
+static void	make_child_env_sub(t_cmd *c, char buf[], t_h **h)
 {
 	pid_t	pid;
 
@@ -42,13 +42,13 @@ static void	make_child_env_sub(t_cmd *c, char buf[])
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, ER);
+		ft_exit(c, ER, h);
 	}
 	else
 		waitpid(pid, &g_status, 0);
 }
 
-void		make_child_env(t_cmd *c, char *path)
+void		make_child_env(t_cmd *c, char *path, t_h **h)
 {
 	char	buf[PATH_MAX];
 
@@ -63,7 +63,7 @@ void		make_child_env(t_cmd *c, char *path)
 	ft_strcat(buf, "/");
 	ft_strcat(buf, c->av[0]);
 	if (!access(buf, X_OK))
-		make_child_env_sub(c, buf);
+		make_child_env_sub(c, buf, h);
 	else
 	{
 		ft_putstr_fd(buf, 2);

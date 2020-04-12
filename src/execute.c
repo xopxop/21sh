@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 15:50:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:05:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int		is_builtin(char *comm)
 	return (0);
 }
 
-static void		run_builtin(t_cmd *coms)
+static void		run_builtin(t_cmd *coms, t_h **h)
 {
 	if (!ft_strcmp(coms->av[0], "exit"))
-		ft_exit(coms, PRINT);
+		ft_exit(coms, PRINT, h);
 	else if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(coms->av[0], "cd"))
@@ -40,14 +40,14 @@ static void		run_builtin(t_cmd *coms)
 		ft_unsetenv(coms);
 }
 
-void			execute_cmd(t_cmd *c, char *path)
+void			execute_cmd(t_cmd *c, char *path, t_h **h)
 {
 	if (is_builtin(c->av[0]))
-		return (run_builtin(c));
+		return (run_builtin(c, h));
 	else if ((path = is_in_path(c)))
-		return (make_child_env(c, path));
+		return (make_child_env(c, path, h));
 	if (there_is_p(c))
-		make_child_not_env(c);
+		make_child_not_env(c, h);
 	else if (c->av[0][0] != '.' && c->av[0][0] != '/')
 		print_no_cmd(c->av[0]);
 }

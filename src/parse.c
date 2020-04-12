@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 15:50:33 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:00:56 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_cmd			*get_coms(char **line)
 	return (coms);
 }
 
-void			parse_line(char **line)
+void			parse_line(char **line, t_h **h)
 {
 	t_cmd		*coms;
 	t_cmd		*c_p;
@@ -84,7 +84,7 @@ void			parse_line(char **line)
 	while (c_p)
 	{
 		apply_t_d(c_p);
-		execute_cmd(c_p, path);
+		execute_cmd(c_p, path, h);
 		coms = c_p;
 		c_p = c_p->next;
 		cmd_del(coms);

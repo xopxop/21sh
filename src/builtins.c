@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 17:06:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/12 20:27:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,11 @@ void		ft_pwd(void)
 	ft_putstr("\n");
 }
 
-void		ft_exit(t_cmd *coms, int opt)
+void		ft_exit(t_cmd *coms, int opt, t_h **h)
 {
 	t_cmd	*c_p;
 	int		i;
 
-/*
-   Control termcap setting
- */
-	apply_termcap_str("ei", 0, 0); //insert mode end
-
-/*
-   From minishell
- */
 	if (opt == PRINT)
 		!coms ? ft_putstr("\nlogout\n") : ft_putstr("logout\n");
 	while (coms)
@@ -54,6 +46,7 @@ void		ft_exit(t_cmd *coms, int opt)
 		coms = coms->next;
 		cmd_del(c_p);
 	}
+	delete_save_history(h);
 	i = -1;
 	while (g_env[++i])
 		ft_strdel(&g_env[i]);
