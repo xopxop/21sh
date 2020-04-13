@@ -19,7 +19,8 @@ SRCS_NAME = main.c \
 			intpt.c \
 			parse.c \
 			sig_handler.c \
-			utill.c
+			utill.c \
+			ft_get_line.c
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJS = $(SRCS_NAME:.c=.o)
@@ -31,7 +32,7 @@ all: $(NAME)
 $(NAME):
 	@make -C ./libft
 	@gcc -c $(FLAGS) $(INC) $(SRCS)
-	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME)
+	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME) -ltermcap
 
 clean:
 	@make -C ./libft clean
