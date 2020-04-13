@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include "../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 static t_astnode *build_ast(t_token *token)
 {

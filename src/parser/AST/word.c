@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.c                                         :+:      :+:    :+:   */
+/*       word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 08:32:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 08:32:30 by dthan            ###   ########.fr       */
+/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 09:17:45 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
-/*
-** pipeline :      pipe_sequence
-**          | Bang pipe_sequence    //not
-*/
-
-t_astnode *pipeline(t_token **token)
+t_astnode *word(t_token **token)
 {
 	t_astnode *node;
-	t_astnode *childnode;
 
-	if ((childnode = pipe_sequence(token)) == NULL)
+	if (*token == NULL)
 		return (NULL);
-	node = build_node(AST_pipeline);
-	node->data = ft_strdup("pipeline");
-	node->left = childnode;
+	if ((*token)->type != TOKEN_WORD)
+		return (NULL);
+	node = build_node(AST_WORD);
+	node->data = ft_strdup((*token)->data);
+	node->left = NULL;
 	node->right = NULL;
+	*token = (*token)->next;
 	return (node);
 }

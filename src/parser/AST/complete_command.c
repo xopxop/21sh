@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   syntax_analyzer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 07:38:19 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 07:38:20 by dthan            ###   ########.fr       */
+/*   Created: 2020/04/07 11:17:31 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/07 11:17:32 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
-** list : list separator_op and_or	1
-**    	|                   and_or	2
+** complete_command : list separator	1
+**                	| list				2
 */
 
-t_astnode	*list2(t_token **token)
+t_astnode	*complete_command2(t_token **token)
 {
 	t_astnode *node;
 	t_astnode *childnode;
 
-	if ((childnode = and_or(token)) == NULL)
+	if ((childnode = list(token)) == NULL)
 		return (NULL);
-	node = build_node(AST_list);
-	node->data = ft_strdup("list2");
+	node = build_node(AST_complete_command);
+	node->data = ft_strdup("complete_command2");
 	node->left = childnode;
 	node->right = NULL;
 	return (node);
 }
 
-t_astnode *list1(t_token **token)
+t_astnode	*complete_command1(t_token **token)
 {
 	t_astnode *node;
 	t_astnode *lnode;
-	t_astnode *rnode;
 
-	if ((lnode = and_or(token)) == NULL)
+	if ((lnode = list(token)) == NULL)
 		return (NULL);
 	if (!*token || ((ft_strcmp((*token)->data, ";") != 0) \
 				&& (ft_strcmp((*token)->data, "&") != 0)))
@@ -47,28 +46,22 @@ t_astnode *list1(t_token **token)
 		return (NULL);
 	}
 	*token = (*token)->next;
-	if ((rnode = list(token)) == NULL)
-	{
-		ft_delast(lnode);
-		return (NULL);
-	}
-	node = build_node(AST_list);
+	node = build_node(AST_complete_command);
 	node->left = lnode;
-	node->right = rnode;
-	node->data = ft_strdup("list1");
+	node->data = ft_strdup("complete_command1");
 	return (node);
 }
 
-t_astnode *list(t_token **token)
+t_astnode	*complete_command(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;
 
 	reset = *token;
-	if ((node = list1(token)) != NULL)
+	if ((node = complete_command1(token)) != NULL)
 		return (node);
 	*token = reset;
-	if ((node = list2(token)) != NULL)
+	if ((node = complete_command2(token)) != NULL)
 		return (node);
 	return (NULL);
 }
