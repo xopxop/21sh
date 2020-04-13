@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/13 00:48:51 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/13 15:41:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -426,20 +426,19 @@ void				up_down_key_apply_statuses(t_l *l)
 	ft_putstr(l->line);
 }
 
-t_h					*append_history(t_l *l, t_h **h)
+void				append_history(t_l *l, t_h **h)
 {
 	t_h				*append;
 
 	if (!l->line || !ft_isprint(l->line[0]))
-		return (h[0]);
+		return ;
 	append = (t_h*)malloc(sizeof(t_h));
+	ft_memset(append, 0, sizeof(t_h));
 	append->nb = h[0] ? h[0]->nb + 1 : 1;
 	append->data = ft_strdup(l->line);
 	append->len = ft_strlen(append->data);
-	append->next = h[0];
 	h[0] = append;
 	l->curr = 0;
-	return (h[0]);
 }
 
 void				up_key(t_l *l, t_h **h)
@@ -521,7 +520,8 @@ void				delete_save_history(t_h **h)
 			write(fd, "\n", 1);
 		ft_strdel(&trav->data);
 		tmp = trav->next;
-		free(trav);
+		if (trav)
+			free(trav);
 		trav = tmp;
 	}
 	close(fd);
@@ -613,7 +613,7 @@ void				ft_get_line(t_l *l, t_h **h)
 		read(0, tmp, sizeof(tmp));
 		if (tmp[0] == '\n')
 		{
-			h[0] = append_history(l, h);
+			append_history(l, h);
 			up_down(l, h, NULL);
 			restore_term(l);
 			return ;
