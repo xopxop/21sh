@@ -48,6 +48,7 @@ typedef enum
 	TOKEN_In, //add new token from here
 	TOKEN_PIPE, // |
 	TOKEN_SEMI, // ;
+	TOKEN_SEPARATOR_OPERATOR,
 }	t_token_type;
 
 typedef struct			s_token

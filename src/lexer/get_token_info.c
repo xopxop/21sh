@@ -66,6 +66,10 @@ static t_token_type	get_token_type(char *input)
 		return (TOKEN_In);
 	if (!ft_strcmp(input, "|")) // add new token from here
 		return (TOKEN_PIPE);
+	if (!ft_strcmp(input, ";"))
+		return (TOKEN_SEPARATOR_OPERATOR);
+	if (!ft_strcmp(input, "&"))
+		return (TOKEN_SEPARATOR_OPERATOR);
 	return (TOKEN_WORD); // also token assignment word, name, new_line, IO_number
 }
 
