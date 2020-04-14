@@ -26,8 +26,9 @@
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
+# include "sh.h"
 
-char **env;
+char **g_env;
 
 /*
 **	Lexer
@@ -40,5 +41,20 @@ t_token	*lexical_analysis(char *input);
 */
 
 t_astnode	*syntax_analysis(t_token *token);
+
+
+/*
+** Utilities
+*/
+
+int	ft_isspace(int c);
+char	*ft_strndup(char *str, size_t len);
+void	ft_arraydel(char **string_array);
+
+/*
+** Prompt
+*/
+
+char	*get_input(int level);
 
 #endif

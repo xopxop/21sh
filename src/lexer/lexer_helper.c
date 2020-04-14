@@ -48,10 +48,12 @@ void print_token(t_token *token)
 {
 	while (token)
 	{
-		ft_printf("[%s]->", token->data);
+		ft_putchar('[');
+		ft_putstr(token->data);
+		ft_putstr("]-->");
 		token = token->next;
 	}
-	ft_printf("NULL\n");
+	ft_putstr("NULL\n");
 }
 
 int	pre_token_contains_separator_operator(char *pre_token)

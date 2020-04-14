@@ -64,7 +64,7 @@ static char	**set_env(char **sample)
 
 void executor(t_astnode *ast)  // fore debug
 {
-	ft_printf("We have AST\n");
+	ft_putstr("We have AST\n");
 	(void)ast;
 }
 
@@ -106,17 +106,20 @@ static void	ft_execute(char *input)
 // }
 
 // NEW
+
+
 static int	minishell(void)
 {
 	char	*input;
 
 	while (1)
 	{
-		sig_controller(PARENT);
+		// sig_controller(PARENT); turn off signal for now
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
 		input = get_input((int)1);
-		is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
+		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
+		is_eof(input) ? ft_execute(input) : 0;
 	}
 	return (0);
 }
