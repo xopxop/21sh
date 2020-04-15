@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 t_astnode	*build_node(t_astnode_type type)
 {

@@ -64,8 +64,7 @@ static char	**set_env(char **sample)
 
 void executor(t_astnode *ast)  // fore debug
 {
-	ft_putstr("We have AST\n");
-	(void)ast;
+	printBinaryTree(ast);
 }
 
 static void	ft_execute(char *input)

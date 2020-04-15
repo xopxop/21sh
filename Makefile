@@ -28,6 +28,7 @@ src/parser/AST/pipe_sequence.c \
 src/parser/AST/pipeline.c \
 src/parser/AST/simple_command.c \
 src/parser/AST/here_end.c \
+src/parser/print_ast.c \
 src/utilities/tool_for_checking.c \
 src/environ/utill.c \
 src/utilities/ft_isspace.c \
@@ -60,6 +61,7 @@ pipe_sequence.o \
 pipeline.o \
 simple_command.o \
 here_end.o \
+print_ast.o \
 tool_for_checking.o \
 utill.o \
 ft_isspace.o \

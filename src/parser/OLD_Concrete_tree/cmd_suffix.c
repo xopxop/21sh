@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
 ** cmd_suffix :            io_redirect
@@ -68,6 +68,7 @@ t_astnode *cmd_suffix3(t_token **token)
 		return (NULL);
 	}
 	node = build_node(AST_cmd_suffix);
+	node->data = ft_strdup("cmd_suffix4");
 	node->left = lnode;
 	node->right = rnode;
 	return (node);
@@ -75,7 +76,16 @@ t_astnode *cmd_suffix3(t_token **token)
 
 t_astnode *cmd_suffix4(t_token **token)
 {
-	return (word(token));
+	t_astnode *node;
+	t_astnode *childnode;
+
+	if ((childnode = word(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_cmd_suffix);
+	node->data = ft_strdup("cmd_suffix3");
+	node->left = childnode;
+	node->right = NULL;
+	return (node);
 }
 
 t_astnode *cmd_suffix(t_token **token)

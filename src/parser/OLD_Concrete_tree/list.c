@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
 ** list : list separator_op and_or	1
@@ -20,15 +20,23 @@
 
 t_astnode	*list2(t_token **token)
 {
-	return (and_or(token));
+	t_astnode *node;
+	t_astnode *childnode;
+
+	if ((childnode = and_or(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_list);
+	node->data = ft_strdup("list2");
+	node->left = childnode;
+	node->right = NULL;
+	return (node);
 }
 
 t_astnode *list1(t_token **token)
 {
-	t_astnode	*node;
-	t_astnode	*lnode;
-	t_astnode	*rnode;
-	char		*operator;
+	t_astnode *node;
+	t_astnode *lnode;
+	t_astnode *rnode;
 
 	if ((lnode = and_or(token)) == NULL)
 		return (NULL);
@@ -38,7 +46,6 @@ t_astnode *list1(t_token **token)
 		ft_delast(lnode);
 		return (NULL);
 	}
-	operator = (*token)->data;
 	*token = (*token)->next;
 	if ((rnode = list(token)) == NULL)
 	{
@@ -48,7 +55,7 @@ t_astnode *list1(t_token **token)
 	node = build_node(AST_list);
 	node->left = lnode;
 	node->right = rnode;
-	node->data = ft_strdup(operator);
+	node->data = ft_strdup("list1");
 	return (node);
 }
 

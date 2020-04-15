@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ast.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
 /*
 ** cmd_name : WORD     //Apply rule 7a
@@ -19,14 +19,5 @@
 
 t_astnode *cmd_name(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *childnode;
-
-	if ((childnode = word(token)) == NULL)
-		return (NULL);
-	node = build_node(AST_cmd_name);
-	node->data = ft_strdup("cmd_name");
-	node->left = childnode;
-	node->right = NULL;
-	return (node);
+	return (word(token));
 }

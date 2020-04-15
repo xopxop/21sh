@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_tool.c                                         :+:      :+:    :+:   */
+/*       word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 07:29:09 by dthan            ###   ########.fr       */
+/*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 09:17:45 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
-t_astnode	*build_node(t_astnode_type type)
+t_astnode *word(t_token **token)
 {
 	t_astnode *node;
 
-	node = (t_astnode*)malloc(sizeof(t_astnode)); //need eermem
-	node->data = NULL,
-	node->type = type;
+	if (*token == NULL)
+		return (NULL);
+	if ((*token)->type != TOKEN_WORD)
+		return (NULL);
+	node = build_node(AST_WORD);
+	node->data = ft_strdup((*token)->data);
+	node->left = NULL;
 	node->right = NULL;
-	node->right = NULL;
+	*token = (*token)->next;
 	return (node);
-}
-
-
-void ft_delast(t_astnode *node)
-{
-	free(node->data);
-	free(node);
 }

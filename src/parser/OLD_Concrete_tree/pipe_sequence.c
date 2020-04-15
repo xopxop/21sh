@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
 ** pipe_sequence :                             command	1
@@ -20,15 +20,23 @@
 
 t_astnode *pipe_sequence2(t_token **token)
 {
-	return (command(token));
+	t_astnode *node;
+	t_astnode *childnode;
+
+	if ((childnode = command(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_pipe_sequence);
+	node->data = ft_strdup("pipe_sequence1");
+	node->left = childnode;
+	node->right = NULL;
+	return (node);
 }
 
 t_astnode *pipe_sequence1(t_token **token)
 {
-	t_astnode	*node;
-	t_astnode	*lnode;
-	t_astnode	*rnode;
-	char		*operator;
+	t_astnode *node;
+	t_astnode *lnode;
+	t_astnode *rnode;
 
 	if ((lnode = command(token)) == NULL)
 		return (NULL);
@@ -37,7 +45,6 @@ t_astnode *pipe_sequence1(t_token **token)
 		ft_delast(lnode);
 		return (NULL);
 	}
-	operator = (*token)->data;
 	*token = (*token)->next;
 	if ((rnode = pipe_sequence(token)) == NULL)
 	{
@@ -45,7 +52,7 @@ t_astnode *pipe_sequence1(t_token **token)
 		return (NULL);
 	}
 	node = build_node(AST_pipe_sequence);
-	node->data = ft_strdup(operator);
+	node->data = ft_strdup("pipe_sequence1");
 	node->left = lnode;
 	node->right = rnode;
 	return (node);

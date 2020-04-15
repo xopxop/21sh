@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
 ** simple_command : cmd_prefix cmd_word cmd_suffix		//not
@@ -23,7 +23,16 @@
 
 t_astnode *simple_command2(t_token **token)
 {
-	return (cmd_name(token));
+	t_astnode *node;
+	t_astnode *childnode;
+
+	if ((childnode = cmd_name(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_simple_command);
+	node->data = ft_strdup("simple_command2");
+	node->left = childnode;
+	node->right = NULL;
+	return (node);
 }
 
 t_astnode *simple_command1(t_token **token)
@@ -40,6 +49,7 @@ t_astnode *simple_command1(t_token **token)
 		return (NULL);
 	}
 	node = build_node(AST_simple_command);
+	node->data = ft_strdup("simple_command1");
 	node->left = lnode;
 	node->right = rnode;
 	return (node);

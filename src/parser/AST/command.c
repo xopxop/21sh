@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ast.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
 /*
 ** command : simple_command
@@ -22,14 +22,5 @@
 
 t_astnode *command(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *childnode;
-
-	if ((childnode = simple_command(token)) == NULL)
-		return (NULL);
-	node = build_node(AST_command);
-	node->data = ft_strdup("command");
-	node->left = childnode;
-	node->right = NULL;
-	return(node);	
+	return (simple_command(token));
 }

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ast.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
 /*
 ** pipeline :      pipe_sequence
@@ -20,14 +20,5 @@
 
 t_astnode *pipeline(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *childnode;
-
-	if ((childnode = pipe_sequence(token)) == NULL)
-		return (NULL);
-	node = build_node(AST_pipeline);
-	node->data = ft_strdup("pipeline");
-	node->left = childnode;
-	node->right = NULL;
-	return (node);
+	return (pipe_sequence(token));
 }

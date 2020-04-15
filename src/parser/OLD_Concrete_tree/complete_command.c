@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
+#include "ast.h"
 
 /*
 ** complete_command : list separator	1
@@ -20,14 +20,22 @@
 
 t_astnode	*complete_command2(t_token **token)
 {
-	return (list(token));
+	t_astnode *node;
+	t_astnode *childnode;
+
+	if ((childnode = list(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_complete_command);
+	node->data = ft_strdup("complete_command2");
+	node->left = childnode;
+	node->right = NULL;
+	return (node);
 }
 
 t_astnode	*complete_command1(t_token **token)
 {
-	t_astnode	*node;
-	t_astnode	*lnode;
-	char		*operator;
+	t_astnode *node;
+	t_astnode *lnode;
 
 	if ((lnode = list(token)) == NULL)
 		return (NULL);
@@ -37,11 +45,10 @@ t_astnode	*complete_command1(t_token **token)
 		ft_delast(lnode);
 		return (NULL);
 	}
-	operator = (*token)->data;
 	*token = (*token)->next;
 	node = build_node(AST_complete_command);
-	node->data = ft_strdup(operator);
 	node->left = lnode;
+	node->data = ft_strdup("complete_command1");
 	return (node);
 }
 
