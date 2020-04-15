@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   cmd_name.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 14:42:44 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:56:35 by tango            ###   ########.fr       */
+/*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 08:58:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
-int	ft_isalpha(int c)
+/*
+** cmd_name : WORD     //Apply rule 7a
+*/
+
+t_astnode *cmd_name(t_token **token)
 {
-	if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))
-		return (1);
-	else
-		return (0);
+	return (word(token));
 }

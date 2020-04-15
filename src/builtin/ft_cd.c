@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 static void	cd_shaping_env(char *str)
 {
@@ -41,13 +41,13 @@ static void	cd_shaping_env(char *str)
 	ft_strlst_del(&split, i + 1);
 }
 
-static void	cd_path_finder(t_cmd *c)
+static void	cd_path_finder(t_exe *c)
 {
 	char	*old;
 	char	pwd[PATH_MAX];
 	char	*var_pwd;
 
-	if (!there_is_d(c))
+	if (!possible_to_access_dir(c))
 		return ;
 	if (c->av[1][0] == '/')
 	{
@@ -103,7 +103,7 @@ static void	cd_exchange(void)
 	ft_strdel(&temp);
 }
 
-void		ft_cd(t_cmd *c)
+void		ft_cd(t_exe *c)
 {
 	if (c->ac == 1)
 		cd_no_arg();

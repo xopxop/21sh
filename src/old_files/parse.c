@@ -68,6 +68,35 @@ t_cmd			*get_coms(char **line)
 	return (coms);
 }
 
+
+/*
+** dthan: Pipe part
+*/
+
+// t_cmd			*get_coms(char *input_cmd)
+// {
+// 	char		**cmd_lst;
+// 	int			i;
+// 	t_cmd		*coms;
+// 	t_cmd		*c_t;
+// 	t_cmd		*c_p;
+
+// 	cmd_lst = ft_strsplit(input_cmd, '|');
+// 	coms = (t_cmd*)malloc(sizeof(t_cmd));
+// 	get_cmd_arg(cmd_lst[0], coms);
+// 	c_p = coms;
+// 	i = 0;
+// 	while (cmd_lst[++i])
+// 	{
+// 		c_t = (t_cmd*)malloc(sizeof(t_cmd));
+// 		get_cmd_arg(cmd_lst[i], c_t);
+// 		c_p->next = c_t;
+// 		c_p = c_p->next;
+// 	}
+// 	ft_strlst_del(&cmd_lst, i + 1);
+// 	return (coms);
+// }
+
 /* I'm using linked list for tokenizing ';'
    So we don't need to re-implement ';' in 21shell
    and the structure that is defined in minishell.h is also for tokenizing ';'
@@ -102,3 +131,26 @@ void			parse_line(char **line)
 		cmd_del(coms);
 	}
 }
+
+//Working on pipe, the ideas is separating the ';' then '|' then ' '
+// void			parse_line(char **full_cmd)
+// {
+// 	char		*trimed_full_cmd;
+// 	char		**lst_single_cmd;
+// 	char		**ptr;
+// 	int			ret;
+
+// 	trimed_full_cmd = ft_strtrim(*full_cmd);
+// 	ft_strdel(full_cmd);
+// 	if (trimed_full_cmd[0] == '\0')
+// 		return (ft_strdel(&trimed_full_cmd));
+// 	if (trimed_full_cmd[0] == ';')
+// 		return (print_semicolon_error(trimed_full_cmd));
+// 	lst_single_cmd = (ft_check_d_quote(trimed_full_cmd)) ?	\
+// 	ft_split_shell(trimed_full_cmd, ';') : ft_strsplit(trimed_full_cmd, ';');
+// 	ptr = lst_single_cmd;
+// 	ret = EXIT_SUCCESS;
+// 	while (*ptr && ret == EXIT_SUCCESS)
+// 		parse_cmd((*ptr)++, &ret);
+// 	ft_lststrdel(lst_single_cmd);
+// }

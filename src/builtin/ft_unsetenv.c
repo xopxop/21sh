@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:55:22 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/16 00:18:11 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 static void	del_replace(int index)
 {
@@ -58,7 +58,7 @@ static int	is_env(char *str)
 	return (0);
 }
 
-void		ft_unsetenv(t_cmd *c)
+void		ft_unsetenv(t_exe *c)
 {
 	int		i;
 	int		j;
@@ -71,7 +71,8 @@ void		ft_unsetenv(t_cmd *c)
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;
 		if (c->av[i][j] != '\0')
-			print_set_unset(c->av[i], UNSET);
+			error_monitor("unsetenv: '", c->av[i], \
+					"': not a valid identifier", NULL, EXIT_FAILURE, 0);
 		else if ((index = is_env(c->av[i])))
 			del_replace(index);
 	}

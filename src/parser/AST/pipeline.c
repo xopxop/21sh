@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 14:42:44 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:56:35 by tango            ###   ########.fr       */
+/*   Created: 2020/04/11 08:32:29 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 08:32:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
-int	ft_isalpha(int c)
+/*
+** pipeline :      pipe_sequence
+**          | Bang pipe_sequence    //not
+*/
+
+t_astnode *pipeline(t_token **token)
 {
-	if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))
-		return (1);
-	else
-		return (0);
+	return (pipe_sequence(token));
 }

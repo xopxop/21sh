@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 14:42:44 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:56:35 by tango            ###   ########.fr       */
+/*   Created: 2020/04/06 00:18:18 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/06 00:18:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-int	ft_isalpha(int c)
+char	*ft_strndup(char *str, size_t len)
 {
-	if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))
-		return (1);
-	else
-		return (0);
+	char *new;
+	int i;
+
+	new = ft_strnew(len);
+	i = 0;
+	while (len > 0)
+	{
+		new[i] = str[i];
+		len--;
+		i++;
+	}
+	return (new);
 }

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 14:42:44 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:56:35 by tango            ###   ########.fr       */
+/*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/13 11:35:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef UTILITIES_H
+# define UTILITIES_H
 
-int	ft_isalpha(int c)
-{
-	if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))
-		return (1);
-	else
-		return (0);
-}
+int is_separator_operator(char c);
+int	is_open_dquote(char *input, int level);
+int	input_contain_dquote(char *input);
+int	pre_tokens_contains_separator_operator(char *pre_token);
+
+#endif

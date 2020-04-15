@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_arraydel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 14:42:44 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:56:35 by tango            ###   ########.fr       */
+/*   Created: 2020/04/04 06:29:33 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/04 06:29:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-int	ft_isalpha(int c)
+void	ft_arraydel(char **string_array)
 {
-	if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'))
-		return (1);
-	else
-		return (0);
+	char *ptr;
+
+	while (*string_array)
+	{
+		ptr = *string_array;
+		string_array++;
+		free(ptr);
+	}
+	ptr = *string_array;
+	free(ptr);
 }

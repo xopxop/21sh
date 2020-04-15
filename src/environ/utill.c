@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
-
-void		cmd_del(t_cmd *c)
-{
-	ft_strlst_del(&(c->av), c->ac + 1);
-	free(c);
-}
+#include "minishell.h"
 
 char		*get_env(char *name, int keyval)
 {

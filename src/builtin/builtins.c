@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 void		ft_env(void)
 {
@@ -33,28 +33,26 @@ void		ft_pwd(void)
 	ft_putstr("\n");
 }
 
-void		ft_exit(t_cmd *coms, int opt)
-{
-	t_cmd	*c_p;
-	int		i;
+void		ft_exit(t_exe *coms, int opt)
+ {
+ 	int		i;
 
-	if (opt == PRINT)
-		!coms ? ft_putstr("\nlogout\n") : ft_putstr("logout\n");
-	while (coms)
-	{
-		c_p = coms;
-		coms = coms->next;
-		cmd_del(c_p);
-	}
-	i = -1;
-	while (g_env[++i])
-		ft_strdel(&g_env[i]);
-	ft_strdel(&g_env[i]);
-	free(g_env);
-	opt == ER ? exit(-1) : exit(0);
-}
+	//clean_memory()
+	// this function should free all the memoryies used.
+	// For that, this function has to take every structure allocated memory
+	coms = NULL;// This line has to be modified
 
-void		ft_echo(t_cmd *c)
+ 	i = -1;
+ 	while (g_env[++i])
+ 		ft_strdel(&g_env[i]);
+ 	ft_strdel(&g_env[i]);
+ 	free(g_env);
+	if (opt == CHILD_FAILURE)
+		exit(-1);
+	exit(0);
+ }
+
+void		ft_echo(t_exe *c)
 {
 	int		i;
 

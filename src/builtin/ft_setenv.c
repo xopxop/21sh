@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:55:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/16 00:11:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 static void	add_env(char *arg)
 {
@@ -54,7 +54,7 @@ static void	ft_setenv_sub(char *arg)
 	ft_strlst_del(&split, j + 1);
 }
 
-void		ft_setenv(t_cmd *c)
+void		ft_setenv(t_exe *c)
 {
 	int		i;
 	int		j;
@@ -68,7 +68,8 @@ void		ft_setenv(t_cmd *c)
 		if (c->av[i][j] == '\0')
 			;
 		else if (c->av[i][j] != '=' || j == 0)
-			print_set_unset(c->av[i], SET);
+			error_monitor("setenv: '", c->av[i], \
+					"'; not a valid identifier", NULL, EXIT_FAILURE, 0);
 		else
 			ft_setenv_sub(c->av[i]);
 	}
