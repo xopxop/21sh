@@ -24,9 +24,9 @@ static int		is_builtin(char *comm)
 
 static void		run_builtin(t_cmd *coms)
 {
-	if (!ft_strcmp(coms->av[0], "exit"))
-		ft_exit(coms, PRINT);
-	else if (!ft_strcmp(coms->av[0], "pwd"))
+	// if (!ft_strcmp(coms->av[0], "exit"))
+	// 	ft_exit(coms, PRINT);
+	if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(coms->av[0], "cd"))
 		ft_cd(coms);

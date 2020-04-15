@@ -28,6 +28,12 @@
 # include "utilities.h"
 # include "sh.h"
 
+typedef struct	s_exe
+{
+	int			ac;
+	char		**av;
+}				t_exe;
+
 char **g_env;
 
 /*
@@ -56,5 +62,19 @@ void	ft_arraydel(char **string_array);
 */
 
 char	*get_input(int level);
+
+/*
+** Commands
+*/
+
+void		ft_env(void);
+void		ft_pwd(void);
+void		ft_echo(t_exe *c);
+
+/*
+** Executor
+*/
+
+void executor(t_astnode *ast);
 
 #endif

@@ -36,7 +36,9 @@ src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
 src/prompt/dquote.c \
-src/signal/sig_handler.c
+src/signal/sig_handler.c \
+src/executor/executor.c \
+src/executor/builtins.c
 
 OBJS = main.o \
 lexical_analysis.o \
@@ -69,7 +71,9 @@ ft_strndup.o \
 ft_arraydel.o \
 error.o \
 dquote.o \
-sig_handler.o
+sig_handler.o \
+executor.o \
+builtins.o
 
 .PHONY: all, clean, fclean, re
 

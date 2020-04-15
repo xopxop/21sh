@@ -62,11 +62,6 @@ static char	**set_env(char **sample)
 ** ================= NEW=====================================
 */
 
-void executor(t_astnode *ast)  // fore debug
-{
-	printBinaryTree(ast);
-}
-
 static void	ft_execute(char *input)
 {
 	t_token	*tokens;
