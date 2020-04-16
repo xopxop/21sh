@@ -77,4 +77,22 @@ void		ft_echo(t_exe *c);
 
 void executor(t_astnode *ast);
 
+void execute_complete_command(t_astnode *ast, t_exe *exe);
+void execute_list(t_astnode *ast, t_exe *exe);
+void execute_and_or(t_astnode *ast, t_exe *exe);
+void execute_command(t_astnode *ast, t_exe *exe);
+void execute_pipeline(t_astnode *ast, t_exe *exe);
+void execute_pipe_sequence(t_astnode *ast, t_exe *exec);
+void execute_command(t_astnode *ast, t_exe *exe);
+void execute_simple_command(t_astnode *ast, t_exe *exe);
+
+/*
+** Executor tool
+*/
+
+int		count_av(t_astnode *ast);
+void	create_av(t_astnode *ast, char **av);
+
+void run (t_exe *exec);
+
 #endif

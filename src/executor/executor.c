@@ -55,62 +55,11 @@ void run (t_exe *c)
 	// 	print_no_cmd(c->av[0]);
 }
 
-int		count_av(t_astnode *ast)
-{
-	int ct;
-
-	ct = 0;
-	while (ast)
-	{
-		ct++;
-		ast = ast->right;
-	}
-	return (ct);
-}
-
-void create_av(t_astnode *ast, char **av)
-{
-	int i;
-
-	i = 0;
-	av[i++] = ft_strdup(ast->left->data);
-	if (ast->right && (ast->right->type != AST_cmd_suffix))
-		av[i++] = ft_strdup(ast->right->data);
-	else if (ast->right && (ast->right->type == AST_cmd_suffix))
-	{
-		ast = ast->right;
-		while (ast && ast->type == AST_cmd_suffix)
-		{
-			av[i++] = ft_strdup(ast->left->data);
-			ast = ast->right;
-		}
-		av[i++] = ft_strdup(ast->data);
-	}
-	av[i] = NULL;
-}
-
-void init(t_astnode *ast, t_exe *exec)
-{
-	if (ast->type == AST_simple_command)
-	{
-		exec->ac = count_av(ast);
-		exec->av = (char**)malloc(sizeof(char*) * (exec->ac + 1));
-		create_av(ast, exec->av);
-	}
-	else if (ast->type == AST_WORD)
-	{
-		exec->ac = 1;
-		exec->av = (char**)malloc(sizeof(char*) * 2);
-		exec->av[0] = ast->data;
-		exec->av[1] = NULL;
-	}
-}
-
 void executor(t_astnode *ast)
 {
 	t_exe exec;
 
 	printBinaryTree(ast);
-	init(ast, &exec);
-	run(&exec);
+	ft_bzero(&exec, sizeof(t_exe));
+	execute_complete_command(ast, &exec);
 }

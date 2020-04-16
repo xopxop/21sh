@@ -38,7 +38,15 @@ src/utilities/error.c \
 src/prompt/dquote.c \
 src/signal/sig_handler.c \
 src/executor/executor.c \
-src/executor/builtins.c
+src/executor/builtins.c \
+src/executor/executor_tools.c \
+src/executor/execute_ast/execute_complete_command.c \
+src/executor/execute_ast/execute_list.c \
+src/executor/execute_ast/execute_and_or.c \
+src/executor/execute_ast/execute_pipeline.c \
+src/executor/execute_ast/execute_pipe_sequence.c \
+src/executor/execute_ast/execute_command.c \
+src/executor/execute_ast/execute_simple_command.c
 
 OBJS = main.o \
 lexical_analysis.o \
@@ -73,7 +81,15 @@ error.o \
 dquote.o \
 sig_handler.o \
 executor.o \
-builtins.o
+builtins.o \
+executor_tools.o \
+execute_complete_command.o \
+execute_list.o \
+execute_and_or.o \
+execute_pipeline.o \
+execute_pipe_sequence.o \
+execute_command.o \
+execute_simple_command.o
 
 .PHONY: all, clean, fclean, re
 
