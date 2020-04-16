@@ -1,0 +1,156 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
+/*   Updated: 2020/04/01 14:55:33 by ihwang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sh.h"
+
+void			get_cmd_arg(char *cmd, t_cmd *c)
+{
+	char		**split;
+	int			i;
+
+	i = -1;
+	if (ft_check_d_quote(cmd))
+		split = ft_split_d_quote(cmd);
+	/* 'ft_split_d_quote' is in my libft */
+	else
+		split = ft_strsplit(cmd, ' ');
+	while (split[++i])
+		NULL;
+	c->ac = i;
+	c->av = (char**)malloc(sizeof(char*) * (i + 1));
+	i = -1;
+	while (++i < c->ac)
+	{
+		c->av[i] = (char*)malloc(PATH_MAX);
+		ft_strcpy(c->av[i], split[i]);
+	}
+	c->av[i] = NULL;
+	c->next = NULL;
+	ft_strlst_del(&split, i + 1);
+	/* this function is in libft */
+}
+
+t_cmd			*get_coms(char **line)
+{
+	char		**cmd_lst;
+	int			i;
+	t_cmd		*coms;
+	t_cmd		*c_t;
+	t_cmd		*c_p;
+
+	if (ft_check_d_quote(*line))
+		cmd_lst = ft_split_shell(*line, ';');
+	/* 'ft_split_shell is in my libft */
+	else
+		cmd_lst = ft_strsplit(*line, ';');
+	ft_strdel(line);
+	coms = (t_cmd*)malloc(sizeof(t_cmd));
+	get_cmd_arg(cmd_lst[0], coms);
+	c_p = coms;
+	i = 0;
+	while (cmd_lst[++i])
+	{
+		c_t = (t_cmd*)malloc(sizeof(t_cmd));
+		get_cmd_arg(cmd_lst[i], c_t);
+		c_p->next = c_t;
+		c_p = c_p->next;
+	}
+	ft_strlst_del(&cmd_lst, i + 1);
+	return (coms);
+}
+
+
+/*
+** dthan: Pipe part
+*/
+
+// t_cmd			*get_coms(char *input_cmd)
+// {
+// 	char		**cmd_lst;
+// 	int			i;
+// 	t_cmd		*coms;
+// 	t_cmd		*c_t;
+// 	t_cmd		*c_p;
+
+// 	cmd_lst = ft_strsplit(input_cmd, '|');
+// 	coms = (t_cmd*)malloc(sizeof(t_cmd));
+// 	get_cmd_arg(cmd_lst[0], coms);
+// 	c_p = coms;
+// 	i = 0;
+// 	while (cmd_lst[++i])
+// 	{
+// 		c_t = (t_cmd*)malloc(sizeof(t_cmd));
+// 		get_cmd_arg(cmd_lst[i], c_t);
+// 		c_p->next = c_t;
+// 		c_p = c_p->next;
+// 	}
+// 	ft_strlst_del(&cmd_lst, i + 1);
+// 	return (coms);
+// }
+
+/* I'm using linked list for tokenizing ';'
+   So we don't need to re-implement ';' in 21shell
+   and the structure that is defined in minishell.h is also for tokenizing ';'
+*/
+
+void			parse_line(char **line)
+{
+	t_cmd		*coms;
+	t_cmd		*c_p;
+	char		*path;
+	char		*trim;
+
+	path = NULL;
+	trim = ft_strtrim(*line);
+	ft_strdel(line);
+	if (trim[0] == '\0')
+		return (ft_strdel(&trim));
+	if (trim[0] == ';')
+		return (print_semicolon_error(trim));
+	coms = get_coms(&trim);
+	c_p = coms;
+	while (c_p)
+	{
+		apply_t_d(c_p);
+		/*
+		   'apply_t_d' means interpreting tild(~) and dollar sign and
+		   expanding cmd
+		*/
+		execute_cmd(c_p, path);
+		coms = c_p;
+		c_p = c_p->next;
+		cmd_del(coms);
+	}
+}
+
+//Working on pipe, the ideas is separating the ';' then '|' then ' '
+// void			parse_line(char **full_cmd)
+// {
+// 	char		*trimed_full_cmd;
+// 	char		**lst_single_cmd;
+// 	char		**ptr;
+// 	int			ret;
+
+// 	trimed_full_cmd = ft_strtrim(*full_cmd);
+// 	ft_strdel(full_cmd);
+// 	if (trimed_full_cmd[0] == '\0')
+// 		return (ft_strdel(&trimed_full_cmd));
+// 	if (trimed_full_cmd[0] == ';')
+// 		return (print_semicolon_error(trimed_full_cmd));
+// 	lst_single_cmd = (ft_check_d_quote(trimed_full_cmd)) ?	\
+// 	ft_split_shell(trimed_full_cmd, ';') : ft_strsplit(trimed_full_cmd, ';');
+// 	ptr = lst_single_cmd;
+// 	ret = EXIT_SUCCESS;
+// 	while (*ptr && ret == EXIT_SUCCESS)
+// 		parse_cmd((*ptr)++, &ret);
+// 	ft_lststrdel(lst_single_cmd);
+// }
