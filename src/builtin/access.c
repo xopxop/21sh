@@ -38,21 +38,20 @@ int				possible_to_access_dir(t_exe *c)
 	return (1);
 }
 
-/*
-int				there_is_p(t_cmd *c)
+int				possible_to_access_file(t_exe *c)
 {
 	if (c->av[0][0] == '.' || c->av[0][0] == '/')
 	{
 		if (access(c->av[0], F_OK))
 		{
-			ft_putstr_fd(c->av[0], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			error_monitor(c->av[0], ":No such file or dirrectory" \
+			, NULL, NULL, EXIT_FAILURE, 0);
 			return (0);
 		}
 		else if (access(c->av[0], X_OK))
 		{
-			ft_putstr_fd(c->av[0], 2);
-			ft_putstr_fd(": Permission denied\n", 2);
+			error_monitor(c->av[0], ": Permission denied" \
+			, NULL, NULL, EXIT_FAILURE, 0);
 			return (0);
 		}
 		else
@@ -60,4 +59,4 @@ int				there_is_p(t_cmd *c)
 	}
 	else
 		return (0);
-}*/
+}

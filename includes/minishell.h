@@ -20,11 +20,13 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/signal.h>
+# include <dirent.h>
 
 # include "shell_error.h"
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
+# include "line_edition.h"
 # include "sh.h"
 
 #define READ_END 0
@@ -70,6 +72,11 @@ t_astnode	*syntax_analysis(t_token *token);
 int	ft_isspace(int c);
 char	*ft_strndup(char *str, size_t len);
 void	ft_arraydel(char **string_array);
+char		*is_in_path(t_exe *c);
+void		make_child_path(t_exe *c, char *path/*, t_h **h*/);
+void		make_child_binary(t_exe *c/*, t_h **h*/);
+int			possible_to_access_dir(t_exe *c);
+int			possible_to_access_file(t_exe *c);
 
 /*
 ** Prompt
@@ -88,7 +95,6 @@ void		ft_exit(t_exe *coms, int opt);
 void		ft_cd(t_exe *c);
 void		ft_setenv(t_exe *c);
 void		ft_unsetenv(t_exe *c);
-int			possible_to_access_dir(t_exe *c);
 
 /*
 ** Executor

@@ -39,6 +39,8 @@ src/prompt/dquote.c \
 src/signal/sig_handler.c \
 src/executor/executor.c \
 src/executor/executor_tools.c \
+src/executor/children.c \
+src/executor/check_path.c \
 src/executor/execute_ast/execute_complete_command.c \
 src/executor/execute_ast/execute_list.c \
 src/executor/execute_ast/execute_and_or.c \
@@ -97,7 +99,9 @@ execute_simple_command.o \
 ft_cd.o \
 access.o \
 ft_setenv.o \
-ft_unsetenv.o
+ft_unsetenv.o \
+children.o \
+check_path.o
 
 .PHONY: all, clean, fclean, re
 
