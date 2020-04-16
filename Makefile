@@ -89,9 +89,8 @@ all: $(NAME)
 
 $(NAME):
 	@make -C ./libft
-	@gcc -Wall -Werror -Wextra $(SRCS) libft/libft.a $(INC) -g
-#	@gcc -c $(FLAGS) $(INC) $(SRCS)
-#	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME)
+	@gcc -c $(FLAGS) $(INC) $(SRCS)
+	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME)
 clean:
 	@make -C ./libft clean
 	@/bin/rm -f *.o
