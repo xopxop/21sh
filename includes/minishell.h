@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/16 17:49:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/16 18:18:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/signal.h>
-# include <sys/vlimit.h>
 
 # include "shell_error.h"
 # include "ast.h"

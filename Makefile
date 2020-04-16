@@ -38,7 +38,6 @@ src/utilities/error.c \
 src/prompt/dquote.c \
 src/signal/sig_handler.c \
 src/executor/executor.c \
-src/executor/builtins.c \
 src/executor/executor_tools.c \
 src/executor/execute_ast/execute_complete_command.c \
 src/executor/execute_ast/execute_list.c \

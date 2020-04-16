@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/16 18:03:28 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/16 18:19:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void run (t_exe *c)
 	// 	print_no_cmd(c->av[0]);
 }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 =======
 int		count_av(t_astnode *ast)
 {
@@ -108,17 +108,12 @@ void init(t_astnode *ast, t_exe *exec)
 	}
 }
 
->>>>>>> ihwang_sync_builtin
+>>>>>>> ihwang_sync_builtin */
 void executor(t_astnode *ast)
 {
 	t_exe exec;
 
 	printBinaryTree(ast);
-<<<<<<< HEAD
 	ft_bzero(&exec, sizeof(t_exe));
 	execute_complete_command(ast, &exec);
-=======
-	init(ast, &exec);
-	run(&exec);
->>>>>>> ihwang_sync_builtin
 }
