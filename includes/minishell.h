@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/03/26 11:25:46 by dthan            ###   ########.fr       */
+/*   Updated: 2020/04/16 17:49:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@
 #define READ_END 0
 #define WRITE_END 1
 
+# define NORM 0
+# define CHILD_FAILURE 1
+/* NORM and CHILD_FAILURE
+** For ft_exit function,
+** NORM, when a user types 'exit' and
+** CHILD_FAILURE, when a child process has faild to
+** execute the other binary
+*/
+
 typedef struct	s_exe
 {
 	int			ac;
@@ -38,6 +47,9 @@ typedef struct	s_exe
 }				t_exe;
 
 char **g_env;
+
+typedef struct stat t_stat;
+typedef struct dirent t_dir;
 
 /*
 **	Lexer
@@ -73,6 +85,11 @@ char	*get_input(int level);
 void		ft_env(void);
 void		ft_pwd(void);
 void		ft_echo(t_exe *c);
+void		ft_exit(t_exe *coms, int opt);
+void		ft_cd(t_exe *c);
+void		ft_setenv(t_exe *c);
+void		ft_unsetenv(t_exe *c);
+int			possible_to_access_dir(t_exe *c);
 
 /*
 ** Executor

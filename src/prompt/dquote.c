@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 17:45:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/03 17:45:30 by dthan            ###   ########.fr       */
+/*   Updated: 2020/04/16 18:07:12 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ char	*get_input(int level)
 {
 	char *line;
 
-	if ((get_next_line(STDOUT_FILENO, &line)) <= 0)
+//	if ((get_next_line(STDOUT_FILENO, &line)) <= 0)
+//	STDOUT_FILENO doesn't work on osx
+	if ((get_next_line(0, &line)) <= 0)
 			return (NULL);
 	if (open_d_quote(line, level))
 	{

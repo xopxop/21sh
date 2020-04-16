@@ -46,7 +46,12 @@ src/executor/execute_ast/execute_and_or.c \
 src/executor/execute_ast/execute_pipeline.c \
 src/executor/execute_ast/execute_pipe_sequence.c \
 src/executor/execute_ast/execute_command.c \
-src/executor/execute_ast/execute_simple_command.c
+src/executor/execute_ast/execute_simple_command.c \
+src/builtin/builtins.c \
+src/builtin/ft_cd.c \
+src/builtin/access.c \
+src/builtin/ft_setenv.c \
+src/builtin/ft_unsetenv.c
 
 OBJS = main.o \
 lexical_analysis.o \
@@ -89,7 +94,11 @@ execute_and_or.o \
 execute_pipeline.o \
 execute_pipe_sequence.o \
 execute_command.o \
-execute_simple_command.o
+execute_simple_command.o \
+ft_cd.o \
+access.o \
+ft_setenv.o \
+ft_unsetenv.o
 
 .PHONY: all, clean, fclean, re
 
@@ -99,7 +108,6 @@ $(NAME):
 	@make -C ./libft
 	@gcc -c $(FLAGS) $(INC) $(SRCS)
 	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME)
-
 clean:
 	@make -C ./libft clean
 	@/bin/rm -f *.o
