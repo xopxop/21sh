@@ -28,6 +28,9 @@
 # include "utilities.h"
 # include "sh.h"
 
+#define READ_END 0
+#define WRITE_END 1
+
 typedef struct	s_exe
 {
 	int			ac;
