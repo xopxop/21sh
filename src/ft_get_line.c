@@ -78,7 +78,13 @@ int					bs_key(t_l *l)
 {
 	if (l->y == 0 && l->x == PMPT)
 		return (1);
-	apply_termcap_str("#4", 0, 0);
+	if (l->x == 0 && l->y != 0)
+	{
+		apply_termcap_str("up", 0, 0);
+		apply_termcap_str("ch", 0, l->co);
+	}
+	else
+		apply_termcap_str(LEFT, 0, 0);
 	apply_termcap_str("cd", 0, 0);
 	apply_termcap_str("sc", 0, 0);
 	bs_key_str(l);
@@ -94,13 +100,12 @@ void				left_key(t_l *l)
 	{
 		l->y--;
 		l->x = l->co - 1;
-		apply_termcap_str(LEFT, 0, 0);
-		//apply_termcap_str("#4", 0, 0);
+		apply_termcap_str("up", 0, 0);
+		apply_termcap_str("ch", 0, l->co - 1);
 	}
 	else
 	{
 		apply_termcap_str(LEFT, 0, 0);
-		//apply_termcap_str("#4", 0, 0);
 		l->x--;
 	}
 }
@@ -136,6 +141,8 @@ void				append_char(char t[], t_l *l)
 		l->x++;
 	else
 	{
+		if (ft_strcmp(OS, "sierra"))
+			apply_termcap_str("do", 0, 0);
 		l->x = 0;
 		l->y++;
 	}
@@ -155,6 +162,8 @@ void				insert_char(char t[], t_l *l)
 	ft_putchar(t[0]);
 	if (l->x != l->co - 1)
 		apply_termcap_str("cd", 0, 0);
+//	else if ((l->nb + PMPT) % l->co == 0)
+//		apply_termcap_str("cd", 0, 0);
 	else
 		apply_termcap_str("do", 0, 0);
 	apply_termcap_str("sc", 0, 0);

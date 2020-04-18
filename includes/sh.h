@@ -29,12 +29,15 @@
 
 # ifdef __APPLE__
 #  if __MAC_OS_X_VERSION_MIN_REQUIRED <= 101200
+#   define OS "sierra"
 #   define LEFT "#4"
 #  else
 #   define LEFT "kl"
+#   define OS "not_sierra"
 #  endif
-# elif
+# else
 #  define LEFT "kl"
+#  define OS "not_apple"
 # endif
 
 
