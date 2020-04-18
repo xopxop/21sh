@@ -6,13 +6,14 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:50:19 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 00:58:16 by tango            ###   ########.fr       */
+/*   Updated: 2020/04/18 21:23:59 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_putchar(char c)
+int		ft_putchar(int c)
 {
 	write(1, &c, 1);
+	return (1);
 }

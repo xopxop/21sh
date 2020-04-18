@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/13 15:41:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:32:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 void				apply_termcap_str(char *str, int x, int y)
 {
 	if (!ft_strcmp(str, "ch"))
-		ft_putstr_fd(tgoto(tgetstr("ch", NULL), x, y), 0);
-	else if (x && y)
-		NULL;
-	else if (y)
-		ft_putstr_fd(tgoto(tgetstr(str, NULL), 0, y), 0);
+		tputs(tgoto(tgetstr("ch", NULL), x, y), 1, ft_putchar);
 	else
-		ft_putstr_fd(tgetstr(str, NULL), 0);
+		tputs(tgetstr(str, NULL), 1, ft_putchar);
 }
 
 t_term				default_term(t_term *t)
@@ -576,6 +572,7 @@ void				parse_key_arrow(char t[], t_l *l, t_h **h)
 //	if (t[0] == 'u' || t[0] == 'd')
 		up_down(l, h, t);
 	else if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
+//	else if (t[0] == 'l')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);
