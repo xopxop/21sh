@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 15:52:21 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/12 20:14:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/18 23:01:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
+
+
+# ifdef __APPLE__
+#  if __MAC_OS_X_VERSION_MIN_REQUIRED <= 101200
+#   define LEFT "#4"
+#  else
+#   define LEFT "kl"
+#  endif
+# elif
+#  define LEFT "kl"
+# endif
+
 
 # include <term.h>
 # include <termios.h>
