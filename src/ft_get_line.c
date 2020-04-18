@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/18 21:32:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:48:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,13 @@ void				left_key(t_l *l)
 	{
 		l->y--;
 		l->x = l->co - 1;
-		apply_termcap_str("#4", 0, 0);
+		//apply_termcap_str("#4", 0, 0);
+		apply_termcap_str("kl", 0, 0);
 	}
 	else
 	{
-		apply_termcap_str("#4", 0, 0);
+		apply_termcap_str("kl", 0, 0);
+		//apply_termcap_str("#4", 0, 0);
 		l->x--;
 	}
 }
