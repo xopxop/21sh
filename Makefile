@@ -53,7 +53,18 @@ src/builtin/ft_cd.c \
 src/builtin/access.c \
 src/builtin/ft_setenv.c \
 src/builtin/ft_unsetenv.c \
-src/ft_get_line.c
+src/line_edition/add_key.c \
+src/line_edition/clipping.c \
+src/line_edition/ctrl_k_p.c \
+src/line_edition/ctrl_left_right.c \
+src/line_edition/ctrl_up_down.c \
+src/line_edition/ft_get_line.c \
+src/line_edition/history.c \
+src/line_edition/home_end_key.c \
+src/line_edition/left_right_bs_key.c \
+src/line_edition/term_attr.c \
+src/line_edition/up_down_key.c
+
 
 OBJS = main.o \
 lexical_analysis.o \
@@ -103,6 +114,16 @@ ft_setenv.o \
 ft_unsetenv.o \
 children.o \
 check_path.o \
+add_key.o \
+clipping.o \
+ctrl_k_p.o \
+ctrl_left_right.o \
+ctrl_up_down.o \
+history.o \
+home_end_key.o \
+left_right_bs_key.o \
+term_attr.o \
+up_down_key.o \
 ft_get_line.o
 
 .PHONY: all, clean, fclean, re
@@ -111,8 +132,10 @@ all: $(NAME)
 
 $(NAME):
 	@make -C ./libft
-	@gcc -c $(FLAGS) $(INC) $(SRCS)
-	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
+#	@gcc -c $(FLAGS) $(INC) $(SRCS)
+#	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
+	 gcc $(FLAGS) $(SRCS) libft/libft.a -I includes -I libft/includes/ -ltermcap 
+
 clean:
 	@make -C ./libft clean
 	@/bin/rm -f *.o

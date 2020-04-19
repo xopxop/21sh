@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/19 21:54:16 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/20 00:23:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,35 +100,6 @@ static void	ft_execute(char *input, t_h **h)
 // }
 
 // NEW
-
-void		get_history(t_h **h, int fd)
-{
-	t_h		*node;
-	t_h		*tmp;
-	char	*line;
-
-	fd = open("./.history", O_RDWR | O_CREAT, 0644);
-	if (!get_next_line(fd, &line))
-		return ;
-	h[0] = (t_h*)malloc(sizeof(t_h));
-	ft_memset(h[0], 0, sizeof(t_h));
-	h[0]->data = line;
-	h[0]->len = ft_strlen(line);
-	h[0]->nb = 1;
-	node = h[0];
-	while (get_next_line(fd, &line) > 0)
-	{
-		tmp = (t_h*)malloc(sizeof(t_h));
-		ft_memset(tmp, 0, sizeof(t_h));
-		tmp->data = line;
-		tmp->len = ft_strlen(line);
-		node->next = tmp;
-		node = node->next;
-		h[0]->nb++;
-	}
-	close(fd);
-}
-
 
 
 static int	minishell(void)
