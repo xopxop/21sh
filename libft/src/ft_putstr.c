@@ -6,21 +6,16 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 14:54:08 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 17:41:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/02/28 00:58:42 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-int		ft_putstr(char const *s)
+void	ft_putstr(char const *s)
 {
-	int	i;
-
-	i = 0;
 	while (*s)
 	{
 		write(1, s++, 1);
-		i++;
 	}
-	return (i);
 }

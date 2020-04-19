@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/06 00:18:18 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/06 00:18:19 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-char		*ft_strnew(size_t size)
+char	*ft_strndup(char *str, size_t len)
 {
-	char	*str;
-	size_t	i;
+	char *new;
+	int i;
 
-	if ((str = (char*)malloc(size + 1)))
+	new = ft_strnew(len);
+	i = 0;
+	while (len > 0)
 	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
+		new[i] = str[i];
+		len--;
+		i++;
 	}
-	return (NULL);
+	return (new);
 }

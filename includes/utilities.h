@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   utilities.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/13 11:35:45 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/13 11:35:48 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef UTILITIES_H
+# define UTILITIES_H
 
-char		*ft_strnew(size_t size)
-{
-	char	*str;
-	size_t	i;
+int is_separator_operator(char c);
+int	is_open_dquote(char *input, int level);
+int	input_contain_dquote(char *input);
+int	pre_tokens_contains_separator_operator(char *pre_token);
 
-	if ((str = (char*)malloc(size + 1)))
-	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
-	}
-	return (NULL);
-}
+#endif

@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/13 17:18:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/19 21:54:16 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 void		get_prompt(void)
 {
@@ -58,6 +58,49 @@ static char	**set_env(char **sample)
 	return (env);
 }
 
+/*
+** ================= NEW=====================================
+*/
+
+static void	ft_execute(char *input, t_h **h)
+{
+	t_token	*tokens;
+	t_astnode *ast;
+	char	*trimmed_input;
+
+	ast = NULL;
+	trimmed_input = ft_strtrim(input);
+	if (trimmed_input)
+	{
+		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
+			if ((ast = syntax_analysis(tokens)) != NULL)
+				executor(ast, h);
+		free(trimmed_input); // need to free tokens after, i can free them all at executor
+	}
+}
+
+/*
+** ============================================================
+*/
+
+// OLD
+// static int	minishell(void)
+// {
+// 	char	*input;
+
+// 	while (1)
+// 	{
+// 		sig_controller(PARENT);
+// 		WIFSIGNALED(g_status) ? 0 : get_prompt();
+// 		g_status = 0;
+// 		input = get_input((int)1);
+// 		is_eof(input) ? parse_line(&input) : ft_exit(NULL, PRINT);
+// 	}
+// 	return (0);
+// }
+
+// NEW
+
 void		get_history(t_h **h, int fd)
 {
 	t_h		*node;
@@ -86,7 +129,9 @@ void		get_history(t_h **h, int fd)
 	close(fd);
 }
 
-static int	shell(void)
+
+
+static int	minishell(void)
 {
 	t_l		l;
 	t_h		*h;
@@ -95,24 +140,27 @@ static int	shell(void)
 	get_history(&h, 0);
 	while (1)
 	{
-		sig_controller(PARENT);
+		// sig_controller(PARENT); turn off signal for now
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
 		ft_get_line(&l, &h);
-		is_eof(l.line) ? parse_line(&l.line, &h) : ft_exit(NULL, PRINT, &h);
+		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
+		//is_eof(input) ? ft_execute(input) : 0;
+		is_eof(l.line) ? ft_execute(l.line, &h) : 0;
+
 	}
 	return (0);
 }
 
 int			main(int ac, char **av, char **envp)
 {
-	ac = 0;
-	av = NULL;
+	(void)ac;
+	(void)av;
 	g_env = set_env(envp);
 	if (!(getenv("TERM")))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
 		return (-1);
 	}
-	return (shell());
+	return (minishell());
 }

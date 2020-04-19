@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   cmd_name.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 08:58:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
-char		*ft_strnew(size_t size)
+/*
+** cmd_name : WORD     //Apply rule 7a
+*/
+
+t_astnode *cmd_name(t_token **token)
 {
-	char	*str;
-	size_t	i;
-
-	if ((str = (char*)malloc(size + 1)))
-	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
-	}
-	return (NULL);
+	return (word(token));
 }

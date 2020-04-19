@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   utill.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
+/*   Updated: 2020/04/01 14:55:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-char		*ft_strnew(size_t size)
+char		*get_env(char *name, int keyval)
 {
-	char	*str;
-	size_t	i;
+	int		i;
+	char	*ret;
 
-	if ((str = (char*)malloc(size + 1)))
+	i = -1;
+	while (g_env[++i])
 	{
-		i = 0;
-		while (i < size)
+		if (keyval == VAL)
 		{
-			str[i] = '\0';
-			i++;
+			if (ft_strstr(g_env[i], name) && name[0] == g_env[i][0])
+				return (ft_strstr_e(g_env[i], name));
 		}
-		return (str);
+		else
+		{
+			if ((ret = ft_strstr(g_env[i], name)) && name[0] == g_env[i][0])
+				return (ret);
+		}
 	}
 	return (NULL);
 }

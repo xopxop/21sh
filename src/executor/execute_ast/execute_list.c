@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   execute_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/16 18:02:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../../includes/minishell.h"
 
-char		*ft_strnew(size_t size)
+void execute_list(t_astnode *ast, t_exe *exe, t_h **h)
 {
-	char	*str;
-	size_t	i;
-
-	if ((str = (char*)malloc(size + 1)))
+	if (ast->type == AST_list)
 	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
+		execute_and_or(ast->left, exe, h);
+		execute_list(ast->right, exe, h);
 	}
-	return (NULL);
+	else
+		execute_and_or(ast, exe, h);
 }

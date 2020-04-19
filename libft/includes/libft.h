@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/18 21:24:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/23 02:09:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int					ft_check_d_quote(char *str);
 char				**ft_split_shell(char *str, char c);
 char				**ft_split_d_quote(char const *s);
 int					ft_iswhite(char c);
+int					ft_isprint(int c);
 char				*ft_addchar(char *str, char c);
 char				*ft_strtrim_d_quote(char const *s);
 int					ft_is_d_quote(char c);
@@ -87,7 +88,7 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 int					ft_putchar(int c);
-int					ft_putstr(char const *s);
+void				ft_putstr(char const *s);
 void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
 void				ft_putchar_fd(char c, int fd);

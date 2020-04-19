@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/11 08:32:29 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/11 08:32:30 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../../includes/minishell.h"
+#include "../../../includes/ast.h"
 
-char		*ft_strnew(size_t size)
+/*
+** pipeline :      pipe_sequence
+**          | Bang pipe_sequence    //not
+*/
+
+t_astnode *pipeline(t_token **token)
 {
-	char	*str;
-	size_t	i;
-
-	if ((str = (char*)malloc(size + 1)))
-	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
-	}
-	return (NULL);
+	return (pipe_sequence(token));
 }

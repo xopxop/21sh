@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#include "minishell.h"
 
 void				apply_termcap_str(char *str, int x, int y)
 {
@@ -42,7 +42,7 @@ void				init_term(t_l *l, t_h **h)
 	if (!(tgetent(NULL, getenv("TERM"))))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
-		ft_exit(NULL, ER, h);
+		ft_exit(NULL, CHILD_FAILURE, h);
 	}
 	l->co = tgetnum("co");
 }
@@ -162,8 +162,6 @@ void				insert_char(char t[], t_l *l)
 	ft_putchar(t[0]);
 	if (l->x != l->co - 1)
 		apply_termcap_str("cd", 0, 0);
-//	else if ((l->nb + PMPT) % l->co == 0)
-//		apply_termcap_str("cd", 0, 0);
 	else
 		apply_termcap_str("do", 0, 0);
 	apply_termcap_str("sc", 0, 0);
@@ -581,10 +579,8 @@ void				parse_key_arrow(char t[], t_l *l, t_h **h)
 {
 	if ((t[0] == 27 && t[1] == 91 && t[2] == 'A')
 		|| (t[0] == 27 && t[1] == 91 && t[2] == 'B'))
-//	if (t[0] == 'u' || t[0] == 'd')
 		up_down(l, h, t);
 	else if  (t[0] == 27 && t[1] == 91 && t[2] == 'D')
-//	else if (t[0] == 'l')
 		left_key(l);
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'C')
 		right_key(l);

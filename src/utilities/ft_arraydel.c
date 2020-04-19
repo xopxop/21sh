@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_arraydel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 19:11:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 01:00:08 by tango            ###   ########.fr       */
+/*   Created: 2020/04/04 06:29:33 by dthan             #+#    #+#             */
+/*   Updated: 2020/04/04 06:29:34 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-char		*ft_strnew(size_t size)
+void	ft_arraydel(char **string_array)
 {
-	char	*str;
-	size_t	i;
+	char *ptr;
 
-	if ((str = (char*)malloc(size + 1)))
+	while (*string_array)
 	{
-		i = 0;
-		while (i < size)
-		{
-			str[i] = '\0';
-			i++;
-		}
-		return (str);
+		ptr = *string_array;
+		string_array++;
+		free(ptr);
 	}
-	return (NULL);
+	ptr = *string_array;
+	free(ptr);
 }
