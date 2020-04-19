@@ -21,6 +21,7 @@
 # include <sys/stat.h>
 # include <sys/signal.h>
 # include <dirent.h>
+# include <fcntl.h>
 
 # include "shell_error.h"
 # include "ast.h"
@@ -45,6 +46,8 @@ typedef struct	s_exe
 {
 	int			ac;
 	char		**av;
+	char		*redirect_op;
+	char		*redirect_des;
 }				t_exe;
 
 char **g_env;
@@ -118,6 +121,8 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 int		count_av(t_astnode *ast);
 void	create_av(t_astnode *ast, char **av);
 
-void run (t_exe *exec);
+void	run (t_exe *exec);
+void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
+void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe);
 
 #endif

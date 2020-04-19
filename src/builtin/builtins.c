@@ -40,8 +40,8 @@ void		ft_exit(t_exe *coms, int opt)
 	//clean_memory()
 	// this function should free all the memoryies used.
 	// For that, this function has to take every structure allocated memory
-	coms = NULL;// This line has to be modified
-
+	// coms = NULL;// This line has to be modified
+	(void)coms;  //dudu: rewrite from the line above
  	i = -1;
  	while (g_env[++i])
  		ft_strdel(&g_env[i]);

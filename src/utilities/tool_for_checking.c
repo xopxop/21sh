@@ -37,8 +37,3 @@ int	input_contain_dquote(char *input)
 			return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
-
-int is_separator_operator(char c)
-{
-	return ((ft_strchr("&;", c)) ? 1 : 0);
-}

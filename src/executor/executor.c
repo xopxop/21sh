@@ -40,6 +40,23 @@ static void		run_builtin(t_exe *coms)
 	 	ft_unsetenv(coms);
 }
 
+int redirect_great(char *des)
+{
+		int fd = open(des, 		
+		O_WRONLY | O_CREAT | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		// need to handle error
+		dup2(fd, STDOUT_FILENO);
+		return (fd);
+}
+
+int handle_redirect(t_exe exe)
+{
+	if (ft_strequ(exe.redirect_op, ">"))
+		return (redirect_great(exe.redirect_des));
+	return (0);
+}
+
 void run (t_exe *c)
 {
 	char *path;
@@ -47,13 +64,21 @@ void run (t_exe *c)
 	path = NULL;
 	if (is_builtin(c->av[0]))
 		return (run_builtin(c));
-	else if ((path = is_in_path(c)))
-	 	return (make_child_path(c, path));
-	if (possible_to_access_file(c))
-		make_child_binary(c);
-	else if (c->av[0][0] != '.' && c->av[0][0] != '/')
-		error_monitor(c->av[0], ": command not found", \
-		NULL, NULL, EXIT_FAILURE, 0);
+	if (fork() == 0)
+	{
+		if (c->redirect_op != NULL)
+			handle_redirect(*c);
+		if ((path = is_in_path(c)))
+	 		return (make_child_path(c, path));
+		if (possible_to_access_file(c))
+			make_child_binary(c);
+		else if (c->av[0][0] != '.' && c->av[0][0] != '/')
+			error_monitor(c->av[0], ": command not found", \
+			NULL, NULL, EXIT_FAILURE, 0);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		wait(NULL);
 }
 
 void executor(t_astnode *ast)
@@ -62,5 +87,6 @@ void executor(t_astnode *ast)
 
 	printBinaryTree(ast);
 	ft_bzero(&exec, sizeof(t_exe));
+	exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
 	execute_complete_command(ast, &exec);
 }

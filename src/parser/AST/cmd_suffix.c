@@ -23,20 +23,6 @@
 // t_astnode *cmd_suffix1(t_token **token)
 // {
 // 	t_astnode *node;
-// 	t_astnode *childnode;
-
-// 	if ((childnode = io_redirect(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_cmd_suffix);
-// 	node->data = ft_strdup("cmd_suffix1");
-// 	node->left = childnode;
-// 	node->right = NULL;
-// 	return (node);
-// }
-
-// t_astnode *cmd_suffix2(t_token **token)
-// {
-// 	t_astnode *node;
 // 	t_astnode *lnode;
 // 	t_astnode *rnode;
 
@@ -48,11 +34,17 @@
 // 		return (NULL);
 // 	}
 // 	node = build_node(AST_cmd_suffix);
-// 	node->data = ft_strdup("cmd_suffix2");
 // 	node->left = lnode;
 // 	node->right = rnode;
 // 	return (node);
 // }
+
+t_astnode *cmd_suffix2(t_token **token)
+{
+	return (io_redirect(token));
+}
+
+
 
 t_astnode *cmd_suffix3(t_token **token)
 {
@@ -86,8 +78,9 @@ t_astnode *cmd_suffix(t_token **token)
 	reset = *token;
 	// if ((node = cmd_suffix1(token)) != NULL)
 	// 	return (node);
-	// if ((node = cmd_suffix2(token)) != NULL)
-	// 	return (node);
+	if ((node = cmd_suffix2(token)) != NULL)
+		return (node);
+	*token = reset;
 	if ((node = cmd_suffix3(token)) != NULL)
 		return (node);
 	*token = reset;

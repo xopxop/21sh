@@ -30,25 +30,27 @@ typedef enum
 	TOKEN_LESSGREAT,
 	TOKEN_DLESSDASH,
 	TOKEN_CLOBBER,
-	TOKEN_If,
-	TOKEN_Then,
-	TOKEN_Else,
-	TOKEN_Elif,
-	TOKEN_Fi,
-	TOKEN_Do,
-	TOKEN_Done,
-	TOKEN_Case,
-	TOKEN_Esac,
-	TOKEN_While,
-	TOKEN_Until,
-	TOKEN_For,
-	TOKEN_Lbrace,
-	TOKEN_Rbrace,
-	TOKEN_Bang,
-	TOKEN_In, //add new token from here
-	TOKEN_PIPE, // |
-	TOKEN_SEMI, // ;
-	TOKEN_SEPARATOR_OPERATOR,
+	// TOKEN_If,
+	// TOKEN_Then,
+	// TOKEN_Else,
+	// TOKEN_Elif,
+	// TOKEN_Fi,
+	// TOKEN_Do,
+	// TOKEN_Done,
+	// TOKEN_Case,
+	// TOKEN_Esac,
+	// TOKEN_While,
+	// TOKEN_Until,
+	// TOKEN_For,
+	// TOKEN_Lbrace,
+	// TOKEN_Rbrace,
+	// TOKEN_Bang,
+	// TOKEN_In, 
+	//add new token from here
+	TOKEN_OR,		// '|'
+	TOKEN_SEMI,		// ';'
+	TOKEN_AND,		// '&'
+	TOKEN_GREAT,	// '>'
 }	t_token_type;
 
 typedef struct			s_token
@@ -58,14 +60,12 @@ typedef struct			s_token
 	struct s_token		*next;
 }						t_token;
 
-char	**split_input(char *input);
-int		tokenizer_special(char *pre_token, t_token **lst_token);
-void	tokenizer_normal(char *pre_token, t_token **lst_tokens);
 t_token	*get_token(char *input);
-void	deltoken(t_token *lst);
+void	deltoken(t_token **lst);
 void	push_node_into_ltoken(t_token *node, t_token **head);
 void	print_token(t_token *token);
-int		pre_token_contains_separator_operator(char *pre_token);
 void	ft_delete_dquote(char **tokens);
+int		is_separator_operator(char c);
+int		is_redirection_operator(char c);
 
 #endif

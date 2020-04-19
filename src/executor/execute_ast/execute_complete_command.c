@@ -14,5 +14,8 @@
 
 void execute_complete_command(t_astnode *ast, t_exe *exe)
 {
-	execute_list(ast, exe);
+	if (ast->type == AST_complete_command)
+		execute_list(ast->left, exe);
+	else
+		execute_list(ast, exe);
 }

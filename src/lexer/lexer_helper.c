@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-void deltoken(t_token *lst)
+void deltoken(t_token **lst)
 {
 	t_token *ptr;
 
-	while (lst)
+	while (*lst)
 	{
-		ptr = lst;
-		lst = lst->next;
+		ptr = *lst;
+		*lst = (*lst)->next;
 		free(ptr->data);
 		free(ptr);
 	}
@@ -40,6 +40,16 @@ void push_node_into_ltoken(t_token *node, t_token **head)
 	}
 }
 
+int is_separator_operator(char c)
+{
+	return ((ft_strchr("&;", c)) ? 1 : 0);
+}
+
+int	is_redirection_operator(char c)
+{
+	return ((ft_strchr(">", c)) ? 1 : 0);
+}
+
 /*
 ** print token stream, for debugging purpose only
 */
@@ -50,21 +60,10 @@ void print_token(t_token *token)
 	{
 		ft_putchar('[');
 		ft_putstr(token->data);
-		ft_putstr("]-->");
+		ft_putstr("]->");
 		token = token->next;
 	}
 	ft_putstr("NULL\n");
-}
-
-int	pre_token_contains_separator_operator(char *pre_token)
-{
-	int i;
-
-	i = -1;
-	while(pre_token[++i])
-		if (is_separator_operator(pre_token[i]))
-			return (1);
-	return (0);
 }
 
 // void		ft_delete_dquote(char **tokens)     //OPEN LATER
