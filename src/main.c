@@ -91,6 +91,7 @@ static int	shell(void)
 	t_l		l;
 	t_h		*h;
 
+	h = NULL;
 	get_history(&h, 0);
 	while (1)
 	{

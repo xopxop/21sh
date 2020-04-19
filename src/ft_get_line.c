@@ -444,6 +444,7 @@ void				append_history(t_l *l, t_h **h)
 	append->nb = h[0] ? h[0]->nb + 1 : 1;
 	append->data = ft_strdup(l->line);
 	append->len = ft_strlen(append->data);
+	append->next = h[0];
 	h[0] = append;
 	l->curr = 0;
 }
