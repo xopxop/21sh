@@ -2,7 +2,7 @@ NAME = 21sh
 
 LIBFT_PATH = libft/
 
-FLAGS = -Wall -Werror -Wextra  #add -g for visual debugger
+FLAGS = -Wall -Werror -Wextra -g #add -g for visual debugger
 INC = -I ./includes/ -I ./libft/includes
 
 SRCS = src/main.c \
@@ -111,9 +111,8 @@ all: $(NAME)
 
 $(NAME):
 	@make -C ./libft
-#	@gcc -c $(FLAGS) $(INC) $(SRCS)
-#	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
-	@gcc $(FLAGS) $(SRCS) libft/libft.a -I includes/ -I libft/includes/ -ltermcap -g
+	@gcc -c $(FLAGS) $(INC) $(SRCS)
+	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
 clean:
 	@make -C ./libft clean
 	@/bin/rm -f *.o

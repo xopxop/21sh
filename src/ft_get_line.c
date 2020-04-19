@@ -314,15 +314,15 @@ void				ctrl_p_apply_screen(t_l *l, char *clip, int i)
 	apply_termcap_str("cd", 0, 0);
 	ft_putstr(clip);
 	apply_termcap_str("sc", 0, 0);
-	ft_putstr(&l->line[i]);
+	if (l->line)
+		ft_putstr(&l->line[i]);
 	apply_termcap_str("rc", 0, 0);
 }
 
-int					ctrl_p(t_l *l, int clip_len)
+int					ctrl_p(t_l *l, int clip_len, int i)
 {
 	char			*clip;
 	char			*tmp;
-	int				i;
 
 	if (!(clip = clipboard(NULL, CLIP_TAKE)))
 		return (1);
@@ -330,9 +330,11 @@ int					ctrl_p(t_l *l, int clip_len)
 	i = l->x + (l->y * l->co) - PMPT;
 	ctrl_p_apply_screen(l, clip, i);
 	tmp = ft_strnew(l->nb + clip_len);
-	tmp = ft_strncpy(tmp, l->line, i);
+	if (l->line)
+		tmp = ft_strncpy(tmp, l->line, i);
 	tmp = ft_strcat(tmp, clip);
-	tmp = ft_strcat(tmp, &l->line[i]);
+	if (l->line)
+		tmp = ft_strcat(tmp, &l->line[i]);
 	ft_strdel(&l->line);
 	l->line = tmp;
 	if (l->x + clip_len > l->co - 1)
@@ -567,7 +569,7 @@ int					parse_key(char t[], t_l *l)
 	else if (t[0] == '\v' && t[1] == '\0')
 		return (ctrl_k(l, 0));
 	else if (t[0] == 16 && t[1] == '\0')
-		return (ctrl_p(l, 0));
+		return (ctrl_p(l, 0, 0));
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'H')
 		return (home_key(l));
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'F')

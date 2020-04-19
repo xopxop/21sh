@@ -25,5 +25,6 @@ char	*ft_strndup(char *str, size_t len)
 		len--;
 		i++;
 	}
+	new[i] = '\0';
 	return (new);
 }

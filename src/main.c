@@ -146,7 +146,8 @@ static int	minishell(void)
 		ft_get_line(&l, &h);
 		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
 		//is_eof(input) ? ft_execute(input) : 0;
-		is_eof(l.line) ? ft_execute(l.line, &h) : 0;
+		//is_eof(l.line) ? ft_execute(l.line, &h) : 0;
+		ft_execute(l.line, &h);
 
 	}
 	return (0);
