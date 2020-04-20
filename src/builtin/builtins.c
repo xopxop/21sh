@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:54:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/20 17:24:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		ft_pwd(void)
 	ft_putstr("\n");
 }
 
-void		ft_exit(t_exe *coms, int opt)
+void		ft_exit(t_exe *coms, int opt, t_h **h)
  {
  	int		i;
 
@@ -43,6 +43,7 @@ void		ft_exit(t_exe *coms, int opt)
 	coms = NULL;// This line has to be modified
 
  	i = -1;
+	delete_save_history(h);
  	while (g_env[++i])
  		ft_strdel(&g_env[i]);
  	ft_strdel(&g_env[i]);

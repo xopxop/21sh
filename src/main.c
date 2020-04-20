@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/31 22:22:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/20 22:22:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void		get_prompt(void)
 {
-	char	*user;
+	char	*usr;
 	char	*home;
 	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
-	ft_putstr("Minishell ");
+	ft_putstr("21sh ");
+	(usr = get_env("USER=", VAL)) ? ft_putstr(usr) : 0;
+	ft_putstr(" ");
 	if ((home = get_env("HOME=", VAL)))
 	{
 		if (!ft_strcmp(pwd, home))
@@ -34,9 +36,7 @@ void		get_prompt(void)
 	}
 	else
 		ft_putstr(pwd);
-	ft_putstr(" ");
-	(user = get_env("USER=", VAL)) ? ft_putstr(user) : 0;
-	ft_putstr("$ ");
+	ft_putstr("\n> ");
 }
 
 static char	**set_env(char **sample)
@@ -62,7 +62,7 @@ static char	**set_env(char **sample)
 ** ================= NEW=====================================
 */
 
-static void	ft_execute(char *input)
+static void	ft_execute(char *input, t_h **h)
 {
 	t_token	*tokens;
 	t_astnode *ast;
@@ -74,7 +74,7 @@ static void	ft_execute(char *input)
 	{
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
 			if ((ast = syntax_analysis(tokens)) != NULL)
-				executor(ast);
+				executor(ast, h);
 		free(trimmed_input); // need to free tokens after, i can free them all at executor
 	}
 }
@@ -104,16 +104,20 @@ static void	ft_execute(char *input)
 
 static int	minishell(void)
 {
-	char	*input;
+	t_l		l;
+	t_h		*h;
 
+	h = NULL;
+	get_history(&h, 0);
 	while (1)
 	{
 		// sig_controller(PARENT); turn off signal for now
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
-		input = get_input((int)1);
+		ft_get_line(&l, &h);
 		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
-		is_eof(input) ? ft_execute(input) : 0;
+		//is_eof(input) ? ft_execute(input) : 0;
+		is_eof(l.line) ? ft_execute(l.line, &h) : 0;
 	}
 	return (0);
 }
@@ -123,5 +127,10 @@ int			main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	g_env = set_env(envp);
+	if (!(getenv("TERM")))
+	{
+		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
+		return (-1);
+	}
 	return (minishell());
 }

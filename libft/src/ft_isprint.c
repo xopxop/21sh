@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/06 00:18:18 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/20 17:13:52 by ihwang           ###   ########.fr       */
+/*   Created: 2019/10/22 14:43:35 by ihwang            #+#    #+#             */
+/*   Updated: 2020/04/07 19:59:54 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/libft.h"
 
-char	*ft_strndup(char *str, size_t len)
+int	ft_isprint(int c)
 {
-	char *new;
-	int i;
-
-	new = ft_strnew(len);
-	i = 0;
-	while (len > 0)
-	{
-		new[i] = str[i];
-		len--;
-		i++;
-	}
-	return (new);
+	if (' ' <= c && c <= '~')
+		return (1);
+	else
+		return (0);
 }

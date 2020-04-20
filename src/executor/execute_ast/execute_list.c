@@ -6,19 +6,19 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/16 18:02:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/20 22:04:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
-void execute_list(t_astnode *ast, t_exe *exe)
+void execute_list(t_astnode *ast, t_exe *exe, t_h **h)
 {
 	if (ast->type == AST_list)
 	{
-		execute_and_or(ast->left, exe);
-		execute_list(ast->right, exe);
+		execute_and_or(ast->left, exe, h);
+		execute_list(ast->right, exe, h);
 	}
 	else
-		execute_and_or(ast, exe);
+		execute_and_or(ast, exe, h);
 }

@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:43:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/13 11:43:22 by dthan            ###   ########.fr       */
+/*   Updated: 2020/04/20 22:08:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_single_pretoken(char *input, int *tail)
 	}
 	if (*tail <= head)
 		return (NULL);
-	str = ft_strndup(&input[head], *tail - head);
+	str = ft_strndup(&input[head], *tail - head + 1);
 	while (input[(*tail)] && ft_isspace(input[*tail]))
 		(*tail)++;
 	return (str);

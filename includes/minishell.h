@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/16 18:18:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/20 17:18:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,24 @@
 # include <sys/stat.h>
 # include <sys/signal.h>
 # include <dirent.h>
+# include <fcntl.h>
+# include <term.h>
+# include <termios.h>
 
 # include "shell_error.h"
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
 # include "line_edition.h"
-# include "sh.h"
 
 #define READ_END 0
 #define WRITE_END 1
 
+# define PARENT 1 //For signal
+# define CHILD 0 // For signal
+# define F_TYPE_MASK 0170000 //For ft_cd
+# define KEY 1//For get_env
+# define VAL 0//For get_env
 # define NORM 0
 # define CHILD_FAILURE 1
 /* NORM and CHILD_FAILURE
@@ -48,6 +55,7 @@ typedef struct	s_exe
 }				t_exe;
 
 char **g_env;
+int						g_status;
 
 typedef struct stat t_stat;
 typedef struct dirent t_dir;
@@ -69,20 +77,23 @@ t_astnode	*syntax_analysis(t_token *token);
 ** Utilities
 */
 
+char					*get_env(char *name, int keyval);
 int	ft_isspace(int c);
 char	*ft_strndup(char *str, size_t len);
 void	ft_arraydel(char **string_array);
 char		*is_in_path(t_exe *c);
-void		make_child_path(t_exe *c, char *path/*, t_h **h*/);
-void		make_child_binary(t_exe *c/*, t_h **h*/);
+void		make_child_path(t_exe *c, char *path, t_h **h);
+void		make_child_binary(t_exe *c, t_h **h);
 int			possible_to_access_dir(t_exe *c);
 int			possible_to_access_file(t_exe *c);
+int						is_eof(char *line);
 
 /*
 ** Prompt
 */
 
-char	*get_input(int level);
+void					get_prompt(void);
+//char	*get_input(int level);
 
 /*
 ** Commands
@@ -91,25 +102,31 @@ char	*get_input(int level);
 void		ft_env(void);
 void		ft_pwd(void);
 void		ft_echo(t_exe *c);
-void		ft_exit(t_exe *coms, int opt);
+void		ft_exit(t_exe *coms, int opt, t_h **h);
 void		ft_cd(t_exe *c);
 void		ft_setenv(t_exe *c);
 void		ft_unsetenv(t_exe *c);
 
 /*
+** Signal
+*/
+
+void					sig_controller(int option);
+
+/*
 ** Executor
 */
 
-void executor(t_astnode *ast);
+void executor(t_astnode *ast, t_h **h);
 
-void execute_complete_command(t_astnode *ast, t_exe *exe);
-void execute_list(t_astnode *ast, t_exe *exe);
-void execute_and_or(t_astnode *ast, t_exe *exe);
-void execute_command(t_astnode *ast, t_exe *exe);
-void execute_pipeline(t_astnode *ast, t_exe *exe);
-void execute_pipe_sequence(t_astnode *ast, t_exe *exec);
-void execute_command(t_astnode *ast, t_exe *exe);
-void execute_simple_command(t_astnode *ast, t_exe *exe);
+void execute_complete_command(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_list(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_and_or(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_command(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_pipeline(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h);
+void execute_command(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_simple_command(t_astnode *ast, t_exe *exe, t_h **h);
 
 /*
 ** Executor tool
@@ -118,6 +135,6 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 int		count_av(t_astnode *ast);
 void	create_av(t_astnode *ast, char **av);
 
-void run (t_exe *exec);
+void run (t_exe *exec, t_h **h);
 
 #endif

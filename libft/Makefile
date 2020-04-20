@@ -6,7 +6,7 @@
 #    By: ihwang <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2020/04/16 22:24:50 by ihwang           ###   ########.fr        #
+#    Updated: 2020/04/20 17:23:21 by ihwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_PATH = obj/
 SRCS_PATH = src/
 
 SRCS_NAME = ft_atoi.c ft_bzero.c  \
-			ft_isascii.c ft_isalnu.c \
+			ft_isascii.c ft_isalnu.c ft_isprint.c\
 			ft_itoa.c ft_itoh.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c \
 			ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c \
 			ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c \

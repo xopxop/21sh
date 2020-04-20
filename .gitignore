@@ -1,4 +1,6 @@
 *.swp
+.vscode
+.history
 .DS_Store
 .vscode
 # Prerequisites
