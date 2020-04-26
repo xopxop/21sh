@@ -19,7 +19,8 @@ void	find_iofile(t_astnode *ast)
 	ptr = ast;
 	while (ptr)
 	{
-		if (ptr->type == AST_io_file)
+		if (ptr->type == AST_io_file && \
+			(ft_strequ(">", ptr->data) || ft_strequ(">>", ptr->data)))
 		{
 			int fd = open(ptr->left->data, O_CREAT, \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
