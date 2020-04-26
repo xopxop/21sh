@@ -21,8 +21,7 @@ void	find_iofile(t_astnode *ast)
 	{
 		if (ptr->type == AST_io_file)
 		{
-			int fd = open(ptr->left->data,
-			O_WRONLY | O_CREAT | O_TRUNC, 
+			int fd = open(ptr->left->data, O_CREAT, \
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			close(fd);
 		}

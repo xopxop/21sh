@@ -13,18 +13,19 @@
 #include "../../../includes/minishell.h"
 #include "../../../includes/ast.h"
 
-// t_astnode *io_file1(t_token **token)
-// {
-// 	t_astnode *node;
-// 	t_astnode *childnode;
+t_astnode *io_file1(t_token **token)
+{
+	t_astnode *node;
+	t_astnode *childnode;
 
-// 	if ((childnode = filename(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_io_file);
-// 	node->data = ft_strdup("<");
-// 	node->left = childnode;
-// 	return (node);
-// }
+	*token = (*token)->next;
+	if ((childnode = filename(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_file);
+	node->data = ft_strdup("<");
+	node->left = childnode;
+	return (node);
+}
 
 // t_astnode *io_file2(t_token **token)
 // {
@@ -70,20 +71,19 @@ t_astnode *io_file3(t_token **token)
 // 	return (node);
 // }
 
-// t_astnode *io_file5(t_token **token)
-// {
-// 	t_astnode *node;
-// 	t_astnode *childnode;
+t_astnode *io_file5(t_token **token)
+{
+	t_astnode *node;
+	t_astnode *childnode;
 
-// 	if (*token == NULL)
-// 		return (NULL);
-// 	if ((childnode = filename(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_io_file);
-// 	node->data = ft_strdup(">>");
-// 	node->left = childnode;
-// 	return (node);
-// }
+	*token = (*token)->next;
+	if ((childnode = filename(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_file);
+	node->data = ft_strdup(">>");
+	node->left = childnode;
+	return (node);
+}
 
 // t_astnode *io_file6(t_token **token)
 // {
@@ -119,11 +119,8 @@ t_astnode *io_file(t_token **token)
 {
 	if (*token == NULL)
 		return (NULL);
-	// if (ft_strcmp((*token)->data, "<") == 0)
-	// {
-	// 	node = io_file1(token);
-	// 	return (node);
-	// }
+	if (ft_strcmp((*token)->data, "<") == 0)
+		return (io_file1(token));
 	// if (ft_strcmp((*token)->data, "<&") == 0)
 	// {
 	// 	node = io_file2(token);
@@ -136,11 +133,8 @@ t_astnode *io_file(t_token **token)
 	// 	node = io_file4(token);
 	// 	return (node);
 	// }
-	// if (ft_strcmp((*token)->data, ">>") == 0)
-	// {
-	// 	node = io_file5(token);
-	// 	return (node);
-	// }
+	if (ft_strcmp((*token)->data, ">>") == 0)
+		return (io_file5(token));
 	// if (ft_strcmp((*token)->data, "<<") == 0)
 	// {
 	// 	node = io_file6(token);

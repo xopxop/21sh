@@ -30,6 +30,9 @@ void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe)
 	else if (ast->type == AST_io_file)
 	{
 		exe->redirect_op = ast->data;
-		exe->redirect_des = ast->left->data;
+		exe->redirect_des = (ft_strequ(ast->data, ">") || \
+			ft_strequ(ast->data, ">>")) ? ast->left->data : NULL;
+		exe->redirect_src = (ft_strequ(ast->data, "<") || \
+			ft_strequ(ast->data, "<<")) ? ast->left->data : NULL;
 	}
 }

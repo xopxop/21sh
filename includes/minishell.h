@@ -48,6 +48,7 @@ typedef struct	s_exe
 	char		**av;
 	char		*redirect_op;
 	char		*redirect_des;
+	char		*redirect_src;
 }				t_exe;
 
 char **g_env;

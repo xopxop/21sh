@@ -24,6 +24,7 @@
 # define CD_ENOPWD "cd: string not in pwd: "
 # define SYNTAX_UNEXPECTED_TOKEN "21sh: syntax error near unexpected token `"
 # define SYNTAX_CMDNF "21sh : command not found : "
+# define SHELL_ENOENT "21sh: no such fine or directory: "
 
 void			ft_error_malloc(void);
 int	error_monitor(char *first, char *second, char *third, char *fourth, \

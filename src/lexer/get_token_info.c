@@ -72,6 +72,8 @@ static t_token_type	get_token_type(char *input)
 		return (TOKEN_AND);
 	if (!ft_strcmp(input, ">"))
 		return (TOKEN_GREAT);
+	if (ft_strequ(input, "<"))
+		return (TOKEN_LESS);
 	return (TOKEN_WORD); // also token assignment word, name, new_line, IO_number
 }
 

@@ -51,6 +51,7 @@ typedef enum
 	TOKEN_SEMI,		// ';'
 	TOKEN_AND,		// '&'
 	TOKEN_GREAT,	// '>'
+	TOKEN_LESS,		// '<'
 }	t_token_type;
 
 typedef struct			s_token
