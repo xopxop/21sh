@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:32:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 17:35:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void run (t_exe *c)
 		else if (c->av[0][0] != '.' && c->av[0][0] != '/')
 			error_monitor(c->av[0], ": command not found", \
 			NULL, NULL, EXIT_FAILURE, 0);
-		exit(EXIT_SUCCESS);
+		ft_exit(c, NORM);
 	}
 	else
 		wait(NULL);

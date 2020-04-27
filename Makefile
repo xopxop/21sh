@@ -65,7 +65,7 @@ src/line_edition/left_right_bs_key.c \
 src/line_edition/term_attr.c \
 src/line_edition/up_down_key.c
 
-OBJS = main.o \
+OBJS_NAME = main.o \
 lexical_analysis.o \
 get_token_info.o \
 lexer_helper.o \
@@ -125,18 +125,24 @@ term_attr.o \
 up_down_key.o \
 ft_get_line.o
 
-.PHONY: all, clean, fclean, re
+OBJS_PATH = obj/
 
+OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
+
+
+.PHONY: all, clean, fclean, re
 all: $(NAME)
 
 $(NAME):
 	@make -C ./libft
 	@gcc -c $(FLAGS) $(INC) $(SRCS)
+	@mkdir -p $(OBJS_PATH)
+	@mv $(OBJS_NAME) $(OBJS_PATH)
 	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
 
 clean:
 	@make -C ./libft clean
-	@/bin/rm -f *.o
+	@/bin/rm -rf $(OBJS_PATH)
 
 fclean: clean
 	@make -C ./libft fclean

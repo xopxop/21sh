@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/27 13:35:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 17:18:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #   define OS "sierra"
 #   define LEFT "#4"
 #  else
-#   define LEFT "kl"
+#   define LEFT "#4"
 #   define OS "not_sierra"
 #  endif
 # else
