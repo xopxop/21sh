@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 22:22:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:24:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**set_env(char **sample)
 ** ================= NEW=====================================
 */
 
-static void	ft_execute(char *input, t_h **h)
+static void	ft_execute(char *input)
 {
 	t_token	*tokens;
 	t_astnode *ast;
@@ -74,7 +74,7 @@ static void	ft_execute(char *input, t_h **h)
 	{
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
 			if ((ast = syntax_analysis(tokens)) != NULL)
-				executor(ast, h);
+				executor(ast);
 		free(trimmed_input); // need to free tokens after, i can free them all at executor
 	}
 }
@@ -105,19 +105,17 @@ static void	ft_execute(char *input, t_h **h)
 static int	minishell(void)
 {
 	t_l		l;
-	t_h		*h;
 
-	h = NULL;
-	get_history(&h, 0);
+	get_history(&g_h, 0);
 	while (1)
 	{
 		// sig_controller(PARENT); turn off signal for now
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
-		ft_get_line(&l, &h);
+		ft_get_line(&l, &g_h);
 		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
 		//is_eof(input) ? ft_execute(input) : 0;
-		is_eof(l.line) ? ft_execute(l.line, &h) : 0;
+		is_eof(l.line) ? ft_execute(l.line) : 0;
 	}
 	return (0);
 }

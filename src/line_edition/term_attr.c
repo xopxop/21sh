@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_attr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:36 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:35:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_term				get_set_default_term(t_term *t)
 	return (old);
 }
 
-void				init_term(t_l *l, t_h **h)
+void				init_term(t_l *l)
 {
 	t_term			t;
 
@@ -45,7 +45,7 @@ void				init_term(t_l *l, t_h **h)
 	if (!(tgetent(NULL, getenv("TERM"))))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set \n", 2);
-		ft_exit(NULL, CHILD_FAILURE, h);
+		ft_exit(NULL, CHILD_FAILURE);
 	}
 	l->co = tgetnum("co");
 }

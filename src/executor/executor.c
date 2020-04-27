@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/20 22:08:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:32:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int		is_builtin(char *comm)
 	return (0);
 }
 
-static void		run_builtin(t_exe *coms, t_h **h)
+static void		run_builtin(t_exe *coms)
 {
 	if (!ft_strcmp(coms->av[0], "exit"))
-	 	ft_exit(coms, NORM, h); // Not done. need more 'free'
+	 	ft_exit(coms, NORM); // Not done. need more 'free'
 	if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(coms->av[0], "cd"))
@@ -40,27 +40,27 @@ static void		run_builtin(t_exe *coms, t_h **h)
 	 	ft_unsetenv(coms);
 }
 
-void run (t_exe *c, t_h **h)
+void run (t_exe *c)
 {
 	char *path;
 
 	path = NULL;
 	if (is_builtin(c->av[0]))
-		return (run_builtin(c, h));
+		return (run_builtin(c));
 	else if ((path = is_in_path(c)))
-	 	return (make_child_path(c, path, h));
+	 	return (make_child_path(c, path));
 	if (possible_to_access_file(c))
-		make_child_binary(c, h);
+		make_child_binary(c);
 	else if (c->av[0][0] != '.' && c->av[0][0] != '/')
 		error_monitor(c->av[0], ": command not found", \
 		NULL, NULL, EXIT_FAILURE, 0);
 }
 
-void executor(t_astnode *ast, t_h **h)
+void executor(t_astnode *ast)
 {
 	t_exe exec;
 
 	printBinaryTree(ast);
 	ft_bzero(&exec, sizeof(t_exe));
-	execute_complete_command(ast, &exec, h);
+	execute_complete_command(ast, &exec);
 }

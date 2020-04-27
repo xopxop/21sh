@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:25:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:36:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void				ft_get_line(t_l *l, t_h **h)
 {
 	char			tmp[8];
 
-	init_term(l, h);
+	init_term(l);
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));

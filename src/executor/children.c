@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 17:25:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:34:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		make_child_binary(t_exe *c, t_h **h)
+void		make_child_binary(t_exe *c)
 {
 	pid_t	pid;
 	t_stat	sb;
@@ -31,13 +31,13 @@ void		make_child_binary(t_exe *c, t_h **h)
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, CHILD_FAILURE, h);
+		ft_exit(c, CHILD_FAILURE);
 	}
 	else
 		waitpid(pid, &g_status, 0);
 }
 
-static void	make_child_path_sub(t_exe *c, char buf[], t_h **h)
+static void	make_child_path_sub(t_exe *c, char buf[])
 {
 	pid_t	pid;
 
@@ -46,13 +46,13 @@ static void	make_child_path_sub(t_exe *c, char buf[], t_h **h)
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, CHILD_FAILURE, h);
+		ft_exit(c, CHILD_FAILURE);
 	}
 	else
 		waitpid(pid, &g_status, 0);
 }
 
-void		make_child_path(t_exe *c, char *path, t_h **h)
+void		make_child_path(t_exe *c, char *path)
 {
 	char	buf[PATH_MAX];
 
@@ -67,7 +67,7 @@ void		make_child_path(t_exe *c, char *path, t_h **h)
 	ft_strcat(buf, "/");
 	ft_strcat(buf, c->av[0]);
 	if (!access(buf, X_OK))
-		make_child_path_sub(c, buf, h);
+		make_child_path_sub(c, buf);
 	else
 	{
 		ft_putstr_fd(buf, 2);

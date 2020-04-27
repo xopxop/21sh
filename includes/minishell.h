@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/20 17:18:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:32:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	ft_isspace(int c);
 char	*ft_strndup(char *str, size_t len);
 void	ft_arraydel(char **string_array);
 char		*is_in_path(t_exe *c);
-void		make_child_path(t_exe *c, char *path, t_h **h);
-void		make_child_binary(t_exe *c, t_h **h);
+void		make_child_path(t_exe *c, char *path);
+void		make_child_binary(t_exe *c);
 int			possible_to_access_dir(t_exe *c);
 int			possible_to_access_file(t_exe *c);
 int						is_eof(char *line);
@@ -102,7 +102,7 @@ void					get_prompt(void);
 void		ft_env(void);
 void		ft_pwd(void);
 void		ft_echo(t_exe *c);
-void		ft_exit(t_exe *coms, int opt, t_h **h);
+void		ft_exit(t_exe *coms, int opt);
 void		ft_cd(t_exe *c);
 void		ft_setenv(t_exe *c);
 void		ft_unsetenv(t_exe *c);
@@ -117,16 +117,16 @@ void					sig_controller(int option);
 ** Executor
 */
 
-void executor(t_astnode *ast, t_h **h);
+void executor(t_astnode *ast);
 
-void execute_complete_command(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_list(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_and_or(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_command(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_pipeline(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h);
-void execute_command(t_astnode *ast, t_exe *exe, t_h **h);
-void execute_simple_command(t_astnode *ast, t_exe *exe, t_h **h);
+void execute_complete_command(t_astnode *ast, t_exe *exe);
+void execute_list(t_astnode *ast, t_exe *exe);
+void execute_and_or(t_astnode *ast, t_exe *exe);
+void execute_command(t_astnode *ast, t_exe *exe);
+void execute_pipeline(t_astnode *ast, t_exe *exe);
+void execute_pipe_sequence(t_astnode *ast, t_exe *exec);
+void execute_command(t_astnode *ast, t_exe *exe);
+void execute_simple_command(t_astnode *ast, t_exe *exe);
 
 /*
 ** Executor tool
@@ -135,6 +135,6 @@ void execute_simple_command(t_astnode *ast, t_exe *exe, t_h **h);
 int		count_av(t_astnode *ast);
 void	create_av(t_astnode *ast, char **av);
 
-void run (t_exe *exec, t_h **h);
+void run (t_exe *exec);
 
 #endif

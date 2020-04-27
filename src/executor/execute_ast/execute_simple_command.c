@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/20 22:07:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:28:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void execute_simple_command(t_astnode *ast, t_exe *exe, t_h **h)
+void execute_simple_command(t_astnode *ast, t_exe *exe)
 {
 	if (ast->type == AST_simple_command)
 	{
@@ -27,5 +27,5 @@ void execute_simple_command(t_astnode *ast, t_exe *exe, t_h **h)
 		exe->av[0] = ast->data;
 		exe->av[1] = NULL;
 	}
-	run(exe, h);
+	run(exe);
 }

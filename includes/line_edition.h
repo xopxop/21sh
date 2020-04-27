@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_edition.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:44:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:35:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct			s_h
 	int					len;
 }						t_h;
 
+t_h						*g_h;
+
 void					ft_get_line(t_l *l, t_h **h);
 
 /*
@@ -75,15 +77,15 @@ void					ctrl_down(t_l *l);
 ** History
 */
 
-void					delete_save_history(t_h **h);
-void					append_history(t_l *l, t_h **h);
-void					get_history(t_h **h, int fd);
+void					delete_save_history(t_h **g_h);
+void					append_history(t_l *l, t_h **g_h);
+void					get_history(t_h **g_h, int fd);
 
 /*
 ** Term_attr
 */
 
-void					init_term(t_l *l, t_h **h);
+void					init_term(t_l *l);
 t_term					get_set_default_term(t_term *t);
 void					restore_term(t_l *l);
 

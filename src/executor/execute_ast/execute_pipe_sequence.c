@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_sequence.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/20 22:07:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:28:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h)
+void execute_pipe_sequence(t_astnode *ast, t_exe *exec)
 {
 	int pipefd[2];
 	int status;
@@ -26,7 +26,7 @@ void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h)
 		{
 			close(pipefd[READ_END]);
 			dup2(pipefd[WRITE_END], STDOUT_FILENO);
-			execute_command(ast->left, exec, h);
+			execute_command(ast->left, exec);
 			exit(EXIT_SUCCESS);
 		}
 		pid[1] = fork();
@@ -34,7 +34,7 @@ void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h)
 		{
 			close(pipefd[WRITE_END]);
 			dup2(pipefd[READ_END], STDIN_FILENO);
-			execute_pipe_sequence(ast->right, exec, h);
+			execute_pipe_sequence(ast->right, exec);
 			exit(EXIT_SUCCESS);
 		}
 		close(pipefd[0]);
@@ -43,5 +43,5 @@ void execute_pipe_sequence(t_astnode *ast, t_exe *exec, t_h **h)
 		waitpid(pid[1], &status, 0);
 	}
 	else
-		execute_command(ast, exec, h);
+		execute_command(ast, exec);
 }

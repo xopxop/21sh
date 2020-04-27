@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/27 12:27:41 by dthan            ###   ########.fr       */
+/*   Updated: 2020/04/27 13:30:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		ft_pwd(void)
 	ft_putstr("\n");
 }
 
-void		ft_exit(t_exe *coms, int opt, t_h **h)
+void		ft_exit(t_exe *coms, int opt)
  {
  	int		i;
 
@@ -43,7 +43,7 @@ void		ft_exit(t_exe *coms, int opt, t_h **h)
 	(void)coms;// This line has to be modified
 
  	i = -1;
-	delete_save_history(h);
+	delete_save_history(&g_h);
  	while (g_env[++i])
  		ft_strdel(&g_env[i]);
  	ft_strdel(&g_env[i]);
