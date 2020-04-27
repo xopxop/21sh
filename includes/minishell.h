@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:53:09 by dthan            ###   ########.fr       */
+/*   Updated: 2020/03/26 11:25:46 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,21 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/signal.h>
-# include <dirent.h>
-# include <fcntl.h>
-# include <term.h>
-# include <termios.h>
+// # include <sys/vlimit.h>
+# include <stdio.h>
 
 # include "shell_error.h"
 # include "ast.h"
 # include "token.h"
 # include "utilities.h"
-# include "line_edition.h"
-
 #define READ_END 0
 #define WRITE_END 1
 
-# define PARENT 1 //For signal
-# define CHILD 0 // For signal
-# define F_TYPE_MASK 0170000 //For ft_cd
-# define KEY 1//For get_env
-# define VAL 0//For get_env
-# define NORM 0
-# define CHILD_FAILURE 1
-/* NORM and CHILD_FAILURE
-** For ft_exit function,
-** NORM, when a user types 'exit' and
-** CHILD_FAILURE, when a child process has faild to
-** execute the other binary
-*/
+typedef struct			s_builtin
+{
+	char				*command;
+	void				(*func)(char**);
+}						t_builtin;
 
 typedef struct	s_exe
 {
@@ -57,11 +45,15 @@ typedef struct	s_exe
 	char		*redirect_src;
 }				t_exe;
 
-char **g_env;
-int						g_status;
+char **env;
 
-typedef struct stat t_stat;
-typedef struct dirent t_dir;
+/*
+**	Environ
+*/
+
+char			**ft_new_env(char *var_name, char *var_value, int step, char **env);
+char			*ft_call_var(char *var_name);
+char			*ft_call_value_of(char *var_name);
 
 /*
 **	Lexer
@@ -75,52 +67,20 @@ t_token	*lexical_analysis(char *input);
 
 t_astnode	*syntax_analysis(t_token *token);
 
-
-/*
-** Utilities
-*/
-
-char					*get_env(char *name, int keyval);
-int	ft_isspace(int c);
-char	*ft_strndup(char *str, size_t len);
-void	ft_arraydel(char **string_array);
-char		*is_in_path(t_exe *c);
-void		make_child_path(t_exe *c, char *path);
-void		make_child_binary(t_exe *c);
-int			possible_to_access_dir(t_exe *c);
-int			possible_to_access_file(t_exe *c);
-int						is_eof(char *line);
-
-/*
-** Prompt
-*/
-
-void					get_prompt(void);
-//char	*get_input(int level);
-
-/*
-** Commands
-*/
-
-void		ft_env(void);
-void		ft_pwd(void);
-void		ft_echo(t_exe *c);
-void		ft_exit(t_exe *coms, int opt);
-void		ft_cd(t_exe *c);
-void		ft_setenv(t_exe *c);
-void		ft_unsetenv(t_exe *c);
-
-/*
-** Signal
-*/
-
-void					sig_controller(int option);
+void printBinaryTree(t_astnode * t);
 
 /*
 ** Executor
 */
-
 void executor(t_astnode *ast);
+
+void	cd_cmd(char **tokens);
+void	echo_cmd(char **args);
+void	env_cmd(char **tokens);
+void	exit_cmd(char **tokens);
+void	setenv_cmd(char **tokens);
+void		unsetenv_cmd(char **var_name);
+
 
 void execute_complete_command(t_astnode *ast, t_exe *exe);
 void execute_list(t_astnode *ast, t_exe *exe);
@@ -138,7 +98,7 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 int		count_av(t_astnode *ast);
 void	create_av(t_astnode *ast, char **av);
 
-void	run (t_exe *exec);
+void	run (t_exe exec);
 void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
 void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe);
 

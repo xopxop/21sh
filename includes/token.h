@@ -45,7 +45,7 @@ typedef enum
 	// TOKEN_Lbrace,
 	// TOKEN_Rbrace,
 	// TOKEN_Bang,
-	// TOKEN_In, 
+	// TOKEN_In,
 	//add new token from here
 	TOKEN_OR,		// '|'
 	TOKEN_SEMI,		// ';'
@@ -66,7 +66,8 @@ void	deltoken(t_token **lst);
 void	push_node_into_ltoken(t_token *node, t_token **head);
 void	print_token(t_token *token);
 void	ft_delete_dquote(char **tokens);
-int		is_separator_operator(char c);
-int		is_redirection_operator(char c);
+
+int is_separator_operator(char c);
+int	is_redirection_operator(char c);
 
 #endif

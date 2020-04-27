@@ -1,74 +1,67 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/03/25 09:14:51 by dthan             #+#    #+#              #
+#    Updated: 2020/03/25 09:14:54 by dthan            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = 21sh
 
-LIBFT_PATH = libft/
+INCLUDES = includes/
 
-FLAGS = -Wall -Werror -Wextra -g #add -g for visual debugger
-INC = -I ./includes/ -I ./libft/includes
+CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS = src/main.c \
-src/lexer/lexical_analysis.c \
-src/lexer/get_token_info.c \
-src/lexer/lexer_helper.c \
-src/parser/syntax_analysis.c \
-src/parser/AST/and_or.c \
-src/parser/AST/ast_tool.c \
-src/parser/AST/cmd_name.c \
-src/parser/AST/cmd_suffix.c \
-src/parser/AST/word.c \
-src/parser/AST/command.c \
-src/parser/AST/complete_command.c \
-src/parser/AST/file_name.c \
-src/parser/AST/io_file.c \
-src/parser/AST/io_here.c \
-src/parser/AST/io_redirect.c \
-src/parser/AST/list.c \
-src/parser/AST/pipe_sequence.c \
-src/parser/AST/pipeline.c \
-src/parser/AST/simple_command.c \
-src/parser/AST/here_end.c \
-src/parser/print_ast.c \
-src/utilities/tool_for_checking.c \
-src/environ/utill.c \
-src/utilities/ft_isspace.c \
-src/utilities/ft_strndup.c \
-src/utilities/ft_arraydel.c \
-src/utilities/error.c \
-src/prompt/dquote.c \
-src/signal/sig_handler.c \
-src/executor/executor.c \
-src/executor/executor_tools.c \
-src/executor/children.c \
-src/executor/check_path.c \
-src/executor/execute_ast/execute_complete_command.c \
-src/executor/execute_ast/execute_list.c \
-src/executor/execute_ast/execute_and_or.c \
-src/executor/execute_ast/execute_pipeline.c \
-src/executor/execute_ast/execute_pipe_sequence.c \
-src/executor/execute_ast/execute_command.c \
-src/executor/execute_ast/execute_simple_command.c \
-src/executor/execute_ast/execute_cmd_name.c \
-src/executor/execute_ast/execute_cmd_suffix.c \
-src/builtin/builtins.c \
-src/builtin/ft_cd.c \
-src/builtin/access.c \
-src/builtin/ft_setenv.c \
-src/builtin/ft_unsetenv.c \
-src/line_edition/add_key.c \
-src/line_edition/clipping.c \
-src/line_edition/ctrl_k_p.c \
-src/line_edition/ctrl_left_right.c \
-src/line_edition/ctrl_up_down.c \
-src/line_edition/ft_get_line.c \
-src/line_edition/history.c \
-src/line_edition/home_end_key.c \
-src/line_edition/left_right_bs_key.c \
-src/line_edition/term_attr.c \
-src/line_edition/up_down_key.c
+SRCS_CODES = srcs/main.c srcs/error.c \
+srcs/environ/tool_for_env.c \
+srcs/lexer/lexical_analysis.c \
+srcs/lexer/get_token_info.c \
+srcs/lexer/lexer_helper.c \
+srcs/utilities/tool_for_checking.c \
+srcs/parser/syntax_analysis.c \
+srcs/parser/AST/and_or.c \
+srcs/parser/AST/ast_tool.c \
+srcs/parser/AST/cmd_name.c \
+srcs/parser/AST/cmd_suffix.c \
+srcs/parser/AST/word.c \
+srcs/parser/AST/command.c \
+srcs/parser/AST/complete_command.c \
+srcs/parser/AST/file_name.c \
+srcs/parser/AST/io_file.c \
+srcs/parser/AST/io_here.c \
+srcs/parser/AST/io_redirect.c \
+srcs/parser/AST/list.c \
+srcs/parser/AST/pipe_sequence.c \
+srcs/parser/AST/pipeline.c \
+srcs/parser/AST/simple_command.c \
+srcs/parser/AST/here_end.c \
+srcs/parser/print_ast.c \
+srcs/executor/executor.c \
+srcs/executor/executor_tools.c \
+srcs/executor/internal_cmd/cd_cmd.c \
+srcs/executor/internal_cmd/echo_cmd.c \
+srcs/executor/internal_cmd/env_cmd.c \
+srcs/executor/internal_cmd/exit_cmd.c \
+srcs/executor/internal_cmd/setenv_cmd.c \
+srcs/executor/internal_cmd/unsetenv_cmd.c \
+srcs/executor/execute_ast/execute_complete_command.c \
+srcs/executor/execute_ast/execute_list.c \
+srcs/executor/execute_ast/execute_and_or.c \
+srcs/executor/execute_ast/execute_pipeline.c \
+srcs/executor/execute_ast/execute_pipe_sequence.c \
+srcs/executor/execute_ast/execute_command.c \
+srcs/executor/execute_ast/execute_simple_command.c \
+srcs/executor/execute_ast/execute_cmd_name.c \
+srcs/executor/execute_ast/execute_cmd_suffix.c
 
-OBJS = main.o \
-lexical_analysis.o \
-get_token_info.o \
-lexer_helper.o \
+SRCS_OBJ = main.o error.o \
+tool_for_env.o  \
+lexical_analysis.o get_token_info.o lexer_helper.o \
+tool_for_checking.o \
 syntax_analysis.o \
 and_or.o \
 ast_tool.o \
@@ -87,17 +80,14 @@ pipeline.o \
 simple_command.o \
 here_end.o \
 print_ast.o \
-tool_for_checking.o \
-utill.o \
-ft_isspace.o \
-ft_strndup.o \
-ft_arraydel.o \
-error.o \
-dquote.o \
-sig_handler.o \
 executor.o \
-builtins.o \
 executor_tools.o \
+cd_cmd.o \
+echo_cmd.o \
+env_cmd.o \
+exit_cmd.o \
+setenv_cmd.o \
+unsetenv_cmd.o \
 execute_complete_command.o \
 execute_list.o \
 execute_and_or.o \
@@ -106,40 +96,25 @@ execute_pipe_sequence.o \
 execute_command.o \
 execute_simple_command.o \
 execute_cmd_name.o \
-execute_cmd_suffix.o \
-ft_cd.o \
-access.o \
-ft_setenv.o \
-ft_unsetenv.o \
-children.o \
-check_path.o \
-add_key.o \
-clipping.o \
-ctrl_k_p.o \
-ctrl_left_right.o \
-ctrl_up_down.o \
-history.o \
-home_end_key.o \
-left_right_bs_key.o \
-term_attr.o \
-up_down_key.o \
-ft_get_line.o
-
-.PHONY: all, clean, fclean, re
+execute_cmd_suffix.o
 
 all: $(NAME)
 
 $(NAME):
-	@make -C ./libft
-	@gcc -c $(FLAGS) $(INC) $(SRCS)
-	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
+	@make -s -C libft/ fclean && make -s -C libft/
+	@gcc $(CFLAGS) -I$(INCLUDES) -c $(SRCS_CODES) 
+	@gcc $(CFLAGS) $(SRCS_OBJ) libft/libft.a -o $(NAME)
+	@echo "\033[32mCreated Minishell\033[0m"
 
 clean:
-	@make -C ./libft clean
-	@/bin/rm -f *.o
+	@make clean -s -C libft/
+	@rm -f $(SRCS_OBJ)
+	@echo "\033[32mRemoved Object files\033[0m"
 
 fclean: clean
-	@make -C ./libft fclean
-	@/bin/rm -f $(NAME)
+	@make fclean -s -C libft/
+	@rm -f $(SRCS_OBJ)
+	@rm -f $(NAME)
+	@echo "\033[32mRemoved and Minishell\033[0m"
 
 re: fclean all

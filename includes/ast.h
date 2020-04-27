@@ -122,6 +122,5 @@ t_astnode *word(t_token **token);
 // tools
 t_astnode	*build_node(t_astnode_type type);
 void ft_delast(t_astnode *node);
-void printBinaryTree(t_astnode * t);
 
 #endif
