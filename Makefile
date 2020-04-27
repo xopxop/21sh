@@ -7,8 +7,6 @@ INC = -I ./includes/ -I ./libft/includes
 
 SRCS = src/main.c \
 src/lexer/lexical_analysis.c \
-src/lexer/white_space_destroyer.c \
-src/lexer/tokenizer.c \
 src/lexer/get_token_info.c \
 src/lexer/lexer_helper.c \
 src/parser/syntax_analysis.c \
@@ -48,6 +46,8 @@ src/executor/execute_ast/execute_pipeline.c \
 src/executor/execute_ast/execute_pipe_sequence.c \
 src/executor/execute_ast/execute_command.c \
 src/executor/execute_ast/execute_simple_command.c \
+src/executor/execute_ast/execute_cmd_name.c \
+src/executor/execute_ast/execute_cmd_suffix.c \
 src/builtin/builtins.c \
 src/builtin/ft_cd.c \
 src/builtin/access.c \
@@ -67,8 +67,6 @@ src/line_edition/up_down_key.c
 
 OBJS = main.o \
 lexical_analysis.o \
-white_space_destroyer.o \
-tokenizer.o \
 get_token_info.o \
 lexer_helper.o \
 syntax_analysis.o \
@@ -107,6 +105,8 @@ execute_pipeline.o \
 execute_pipe_sequence.o \
 execute_command.o \
 execute_simple_command.o \
+execute_cmd_name.o \
+execute_cmd_suffix.o \
 ft_cd.o \
 access.o \
 ft_setenv.o \

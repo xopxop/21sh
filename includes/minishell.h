@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:32:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 13:53:09 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ typedef struct	s_exe
 {
 	int			ac;
 	char		**av;
+	char		*redirect_op;
+	char		*redirect_des;
+	char		*redirect_src;
 }				t_exe;
 
 char **g_env;
@@ -135,6 +138,8 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 int		count_av(t_astnode *ast);
 void	create_av(t_astnode *ast, char **av);
 
-void run (t_exe *exec);
+void	run (t_exe *exec);
+void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
+void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe);
 
 #endif

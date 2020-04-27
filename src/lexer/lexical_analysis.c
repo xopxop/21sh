@@ -10,41 +10,93 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-/*
-** Lexer will do:
-** 1. remove all the white space and will produce a list of pre_tokens,
-**    to prepare for screening 2nd time
-** 2. each pre_tokens will fo through the 2nd screening, this step will be
-**    called as tokenizer, it will take care of the case if the token is
-**    not separated each other with the white space
-**    - lexical_analysis_normal will be activated when the pre_token does 
-**      not contain separator operator (;&)
-**    - lexical_analysis_special will be activated when the pre_token 
-**      contains the separator operator. When there is syntax error appeals
-**      it will delete the list of token and the pre_tokens array
-*/
+static void 	word_jump(char *input, int *tail, t_token **lst_tokens)
+{
+	int head;
+	t_token *node;
+
+	head = *tail;
+	while (input[*tail] && !ft_isspace(input[*tail]) && \
+			!is_separator_operator(input[*tail]) && \
+			!is_redirection_operator(input[*tail]))
+	{
+		if (input[*tail] == '"')
+		{
+			while (input[++(*tail)])
+				if (input[*tail] == '"')
+					break ;
+		}
+		(*tail)++;
+	}
+	node = get_token(ft_strndup(&input[head], *tail - head));
+	push_node_into_ltoken(node, lst_tokens);
+}
+
+static void	separator_operator_jump(char *input, int *tail, t_token **lst_tokens)
+{
+	int head;
+	t_token *node;
+
+	head = *tail;
+	while (input[*tail] && is_separator_operator(input[*tail]))
+		(*tail)++;
+	node = get_token(ft_strndup(&input[head], *tail - head));
+	push_node_into_ltoken(node, lst_tokens);
+}
+
+static void	redirection_operator_jump(char *input, int *tail, t_token **lst_tokens)
+{
+	int head;
+	t_token *node;
+
+	head = *tail;
+	while (input[*tail] && is_redirection_operator(input[*tail]))
+		(*tail)++;
+	node = get_token(ft_strndup(&input[head], *tail - head));
+	push_node_into_ltoken(node, lst_tokens);
+}
+
+int	check_syntax(t_token *lst_tokens)
+{
+	t_token *ptr;
+	char buf[3];
+	
+	ptr = lst_tokens;
+	ft_bzero(buf, 3);
+	while (ptr)
+	{
+		if (ptr->type == TOKEN_WORD && (is_separator_operator(ptr->data[0]) \
+			|| is_redirection_operator(ptr->data[0])))
+			return (error_monitor(SYNTAX_UNEXPECTED_TOKEN, \
+			ft_strncpy(buf, ptr->data, 2), "'", NULL, EXIT_FAILURE, 0));
+		ptr = ptr->next;
+	}
+	return (EXIT_SUCCESS);
+}
 
 t_token	*lexical_analysis(char *input)
 {
-	char	**pre_tokens;
 	t_token	*lst_tokens;
-	int		i;
+	int i;
 
-	i = -1;
+	i = 0;
 	lst_tokens = NULL;
-	pre_tokens = split_input(input);
-	while (pre_tokens[++i])
-		if (!pre_token_contains_separator_operator(pre_tokens[i]))
-			tokenizer_normal(pre_tokens[i], &lst_tokens);
-		else if (tokenizer_special(pre_tokens[i], &lst_tokens) == EXIT_FAILURE)
-		{
-			ft_arraydel(pre_tokens);
-			deltoken(lst_tokens);
-			return (NULL);
-		}	
-	print_token(lst_tokens);  //for debugging
-	ft_arraydel(pre_tokens);
+	while (input[i])
+	{
+		if (is_separator_operator(input[i]))
+			separator_operator_jump(input, &i , &lst_tokens);
+		else if (is_redirection_operator(input[i]))
+			redirection_operator_jump(input, &i , &lst_tokens);
+		else if (!ft_isspace(input[i]))
+			word_jump(input, &i, &lst_tokens);
+		else
+			i++;
+	}
+	print_token(lst_tokens);
+	if (check_syntax(lst_tokens) == EXIT_FAILURE)
+		deltoken(&lst_tokens);
+	print_token(lst_tokens);
 	return (lst_tokens);
 }

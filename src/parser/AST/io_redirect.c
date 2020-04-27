@@ -22,11 +22,6 @@
 
 // t_astnode *io_redirect1(t_token **token)
 // {
-// 	return (io_file(token));
-// }
-
-// t_astnode *io_redirect2(t_token **token)
-// {
 // 	t_astnode *node;
 // 	t_astnode *childnode;
 
@@ -41,6 +36,13 @@
 // 	node->left = childnode;
 // 	return (node);
 // }
+
+t_astnode *io_redirect2(t_token **token)
+{
+	return (io_file(token));
+}
+
+
 
 // t_astnode *io_redirect3(t_token **token)
 // {
@@ -65,17 +67,17 @@
 // 	return (node);
 // }
 
-// t_astnode *io_redirect(t_token **token)
-// {
-// 	t_astnode *node;
+t_astnode *io_redirect(t_token **token)
+{
+	t_astnode *node;
 
-// 	if ((node = io_redirect1(token)) != NULL)
-// 		return (node);
-// 	if ((node = io_redirect2(token)) != NULL)
-// 		return (node);
-// 	if ((node = io_redirect3(token)) != NULL)
-// 		return (node);
-// 	if ((node = io_redirect4(token)) != NULL)
-// 		return (node);
-// 	return (NULL);
-// }
+	// if ((node = io_redirect1(token)) != NULL)
+	// 	return (node);
+	if ((node = io_redirect2(token)) != NULL)
+		return (node);
+	// if ((node = io_redirect3(token)) != NULL)
+	// 	return (node);
+	// if ((node = io_redirect4(token)) != NULL)
+	// 	return (node);
+	return (NULL);
+}
