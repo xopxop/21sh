@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 17:24:22 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/04/27 12:27:41 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		ft_exit(t_exe *coms, int opt, t_h **h)
 	//clean_memory()
 	// this function should free all the memoryies used.
 	// For that, this function has to take every structure allocated memory
-	coms = NULL;// This line has to be modified
+	(void)coms;// This line has to be modified
 
  	i = -1;
 	delete_save_history(h);
