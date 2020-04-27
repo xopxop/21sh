@@ -47,7 +47,7 @@ int is_separator_operator(char c)
 
 int	is_redirection_operator(char c)
 {
-	return ((ft_strchr(">", c)) ? 1 : 0);
+	return ((ft_strchr("><", c)) ? 1 : 0);
 }
 
 /*
