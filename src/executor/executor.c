@@ -31,8 +31,6 @@ static void		run_builtin(t_exe *coms)
 	 	ft_cd(coms);
 	else if (!ft_strcmp(coms->av[0], "env"))
 		ft_env();
-	// else if (!ft_strcmp(coms->av[0], "echo"))
-	// 	ft_echo(coms);
 	else if (!ft_strcmp(coms->av[0], "setenv"))
 	 	ft_setenv(coms);
 	else if (!ft_strcmp(coms->av[0], "unsetenv"))
@@ -67,6 +65,16 @@ void redirect_less(char *src)
 	dup2(fd, STDIN_FILENO);
 }
 
+void redirect_dless(t_exe exe)
+{
+	int fd[2];
+
+	pipe(fd);
+	ft_putstr_fd(exe.heredoc->heredoc, fd[WRITE_END]);
+	close(fd[WRITE_END]);
+	dup2(fd[READ_END], STDIN_FILENO);
+}
+
 void handle_redirect(t_exe exe)
 {
 	if (ft_strequ(exe.redirect_op, ">"))
@@ -75,8 +83,8 @@ void handle_redirect(t_exe exe)
 		return (redirect_dgreat(exe.redirect_des));
 	if (ft_strequ(exe.redirect_op, "<"))
 		return (redirect_less(exe.redirect_src));
-	// if (ft_strequ(exe.redirect_op, "<<"))
-	// 	return (redirect_dless(exe));
+	if (ft_strequ(exe.redirect_op, "<<"))
+		return (redirect_dless(exe));
 }
 
 void run (t_exe *c)
@@ -108,6 +116,13 @@ void run (t_exe *c)
 		wait(NULL);
 }
 
+/*
+** Note form dthan for future de-allocating memory
+** In this t_exe allocate:
+** 		+ allocating maximum argument size an array of a pointer type char
+**		+ A linked list of heredoc in case there is heredoc
+*/
+
 void executor(t_astnode *ast)
 {
 	t_exe exec;
@@ -115,5 +130,6 @@ void executor(t_astnode *ast)
 	printBinaryTree(ast);
 	ft_bzero(&exec, sizeof(t_exe));
 	exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
+	find_heredoc(ast, &exec);
 	execute_complete_command(ast, &exec);
 }

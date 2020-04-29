@@ -48,6 +48,12 @@
 ** execute the other binary
 */
 
+typedef struct 			s_heredoc
+{
+	char				*heredoc;
+	struct s_heredoc	*next;
+}						t_heredoc;
+
 typedef struct	s_exe
 {
 	int			ac;
@@ -55,6 +61,7 @@ typedef struct	s_exe
 	char		*redirect_op;
 	char		*redirect_des;
 	char		*redirect_src;
+	t_heredoc	*heredoc;
 }				t_exe;
 
 char **g_env;
@@ -135,9 +142,7 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 ** Executor tool
 */
 
-int		count_av(t_astnode *ast);
-void	create_av(t_astnode *ast, char **av);
-
+void	find_heredoc(t_astnode *ast, t_exe *exe);
 void	run (t_exe *exec);
 void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
 void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe);
