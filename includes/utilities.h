@@ -15,5 +15,7 @@
 
 int	is_open_dquote(char *input, int level);
 int	input_contain_dquote(char *input);
+char	*ft_strjoin_and_free_string2(char *string1, char *string2);
+char	*ft_strjoin_and_free_string1(char *string1, char *string2);
 
 #endif

@@ -33,12 +33,13 @@ src/utilities/ft_isspace.c \
 src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
+src/utilities/ft_strjoin_and_free.c \
 src/prompt/dquote.c \
 src/signal/sig_handler.c \
 src/executor/executor.c \
-src/executor/executor_tools.c \
 src/executor/children.c \
 src/executor/check_path.c \
+src/executor/heredoc.c \
 src/executor/execute_ast/execute_complete_command.c \
 src/executor/execute_ast/execute_list.c \
 src/executor/execute_ast/execute_and_or.c \
@@ -93,11 +94,11 @@ ft_isspace.o \
 ft_strndup.o \
 ft_arraydel.o \
 error.o \
+ft_strjoin_and_free.o \
 dquote.o \
 sig_handler.o \
 executor.o \
 builtins.o \
-executor_tools.o \
 execute_complete_command.o \
 execute_list.o \
 execute_and_or.o \
@@ -113,6 +114,7 @@ ft_setenv.o \
 ft_unsetenv.o \
 children.o \
 check_path.o \
+heredoc.o \
 add_key.o \
 clipping.o \
 ctrl_k_p.o \

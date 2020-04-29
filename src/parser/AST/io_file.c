@@ -85,20 +85,19 @@ t_astnode *io_file5(t_token **token)
 	return (node);
 }
 
-// t_astnode *io_file6(t_token **token)
-// {
-// 	t_astnode *node;
-// 	t_astnode *childnode;
+t_astnode *io_file6(t_token **token)
+{
+	t_astnode *node;
+	t_astnode *childnode;
 
-// 	if (*token == NULL)
-// 		return (NULL);
-// 	if ((childnode = filename(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_io_file);
-// 	node->data = ft_strdup("<<");
-// 	node->left = childnode;
-// 	return (node);
-// }
+	*token = (*token)->next;
+	if ((childnode = filename(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_file);
+	node->data = ft_strdup("<<");
+	node->left = childnode;
+	return (node);
+}
 
 // t_astnode *io_file7(t_token **token)
 // {
@@ -135,11 +134,8 @@ t_astnode *io_file(t_token **token)
 	// }
 	if (ft_strcmp((*token)->data, ">>") == 0)
 		return (io_file5(token));
-	// if (ft_strcmp((*token)->data, "<<") == 0)
-	// {
-	// 	node = io_file6(token);
-	// 	return (node);
-	// }
+	if (ft_strcmp((*token)->data, "<<") == 0)
+		return (io_file6(token));
 	// if (ft_strcmp((*token)->data, ">|") == 0)
 	// {
 	// 	node = io_file7(token);
