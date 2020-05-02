@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_name.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 08:58:09 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 12:58:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@
 
 t_astnode *cmd_name(t_token **token)
 {
-	return (word(token));
+	return (word(token, TOKEN_SPECIFIER_NOT_HIPHEN));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 07:29:09 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/03 21:27:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ t_astnode	*build_node(t_astnode_type type)
 
 void ft_delast(t_astnode *node)
 {
-	free(node->data);
+	ft_strdel(&(node->data));
 	free(node);
 }

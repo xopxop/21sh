@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_error.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 06:09:01 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/07 06:09:02 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 00:43:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define CD_ENOPWD "cd: string not in pwd: "
 # define SYNTAX_UNEXPECTED_TOKEN "21sh: syntax error near unexpected token `"
 # define SYNTAX_CMDNF "21sh : command not found : "
-# define SHELL_ENOENT "21sh: no such fine or directory: "
+# define SHELL_ENOENT "21sh: no such file or directory: "
 
 void			ft_error_malloc(void);
 int	error_monitor(char *first, char *second, char *third, char *fourth, \

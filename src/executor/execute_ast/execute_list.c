@@ -6,27 +6,41 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:51:05 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 13:44:27 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	open_iofile(t_astnode *ast)
+{
+	int fd;
+
+	if (ast->type == AST_io_file && (ft_strequ(">", ast->data) || \
+		ft_strequ(">&", ast->data) || ft_strequ(">>", ast->data)))
+		open_iofile(ast->left);
+	else if (ast->type == AST_WORD)
+	{
+		fd = open(ast->data, O_CREAT, 0644);
+		close(fd);
+	}
+}
+
 void	find_iofile(t_astnode *ast)
 {
-	t_astnode *ptr;
-
-	ptr = ast;
-	while (ptr)
+	if (ast->type == AST_io_redirect)
+		open_iofile(ast->right);
+	else if (ast->type == AST_pipe_sequence)
 	{
-		if (ptr->type == AST_io_file && \
-			(ft_strequ(">", ptr->data) || ft_strequ(">>", ptr->data)))
-		{
-			int fd = open(ptr->left->data, O_CREAT, \
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			close(fd);
-		}
-		ptr = ptr->right;
+		find_iofile(ast->left);
+		find_iofile(ast->right);
+	}
+	else if (ast->type == AST_simple_command)
+		find_iofile(ast->right);
+	else if (ast->type == AST_cmd_suffix)
+	{
+		find_iofile(ast->left);
+		find_iofile(ast->right);
 	}
 }
 
@@ -43,5 +57,4 @@ void execute_list(t_astnode *ast, t_exe *exe)
 		find_iofile(ast);
 		execute_and_or(ast, exe);
 	}
-	// need to reser redirect
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_file.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 10:16:43 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 10:16:44 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 13:38:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_astnode *io_file1(t_token **token)
 	t_astnode *childnode;
 
 	*token = (*token)->next;
-	if ((childnode = filename(token)) == NULL)
+	if ((childnode = filename(token, TOKEN_SPECIFIER_NOT_HIPHEN)) == NULL)
 		return (NULL);
 	node = build_node(AST_io_file);
 	node->data = ft_strdup("<");
@@ -48,7 +48,7 @@ t_astnode *io_file3(t_token **token)
 	t_astnode *childnode;
 
 	*token = (*token)->next;
-	if ((childnode = filename(token)) == NULL)
+	if ((childnode = filename(token, TOKEN_SPECIFIER_HIPHEN)) == NULL)
 		return (NULL);
 	node = build_node(AST_io_file);
 	node->data = ft_strdup(">");
@@ -56,20 +56,19 @@ t_astnode *io_file3(t_token **token)
 	return (node);
 }
 
-// t_astnode *io_file4(t_token **token)
-// {
-// 	t_astnode *node;
-// 	t_astnode *childnode;
+t_astnode *io_file4(t_token **token)
+{
+	t_astnode *node;
+	t_astnode *childnode;
 
-// 	if (*token == NULL)
-// 		return (NULL);
-// 	if ((childnode = filename(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_io_file);
-// 	node->data = ft_strdup(">&");
-// 	node->left = childnode;
-// 	return (node);
-// }
+	*token = (*token)->next;
+	if ((childnode = filename(token, TOKEN_SPECIFIER_HIPHEN)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_file);
+	node->data = ft_strdup(">&");
+	node->left = childnode;
+	return (node);
+}
 
 t_astnode *io_file5(t_token **token)
 {
@@ -77,7 +76,7 @@ t_astnode *io_file5(t_token **token)
 	t_astnode *childnode;
 
 	*token = (*token)->next;
-	if ((childnode = filename(token)) == NULL)
+	if ((childnode = filename(token, TOKEN_SPECIFIER_HIPHEN)) == NULL)
 		return (NULL);
 	node = build_node(AST_io_file);
 	node->data = ft_strdup(">>");
@@ -91,7 +90,7 @@ t_astnode *io_file6(t_token **token)
 	t_astnode *childnode;
 
 	*token = (*token)->next;
-	if ((childnode = filename(token)) == NULL)
+	if ((childnode = filename(token, TOKEN_SPECIFIER_NOT_HIPHEN)) == NULL)
 		return (NULL);
 	node = build_node(AST_io_file);
 	node->data = ft_strdup("<<");
@@ -127,11 +126,8 @@ t_astnode *io_file(t_token **token)
 	// }
 	if (ft_strcmp((*token)->data, ">") == 0)
 		return (io_file3(token));
-	// if (ft_strcmp((*token)->data, ">&") == 0)
-	// {
-	// 	node = io_file4(token);
-	// 	return (node);
-	// }
+	if (ft_strcmp((*token)->data, ">&") == 0)
+		return (io_file4(token));
 	if (ft_strcmp((*token)->data, ">>") == 0)
 		return (io_file5(token));
 	if (ft_strcmp((*token)->data, "<<") == 0)

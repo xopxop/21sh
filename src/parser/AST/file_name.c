@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   file_name.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 10:13:47 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 10:13:49 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 01:42:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/ast.h"
 
-t_astnode	*filename(t_token **token)
+t_astnode	*filename(t_token **token, int opt)
 {
-	return (word(token));
+	return (word(token, opt));
 }

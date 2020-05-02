@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/13 11:40:13 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 23:39:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,85 @@ void deltoken(t_token **lst)
 	{
 		ptr = *lst;
 		*lst = (*lst)->next;
-		free(ptr->data);
+		ft_strdel(&ptr->data);
 		free(ptr);
 	}
 }
 
-void push_node_into_ltoken(t_token *node, t_token **head)
+int				is_made_of_digits(char *data)
+{
+	int			i;
+
+	i = -1;
+	while (data[++i])
+		if (!ft_isdigit(data[i]))
+			return (0);
+	return (1);
+}
+
+int				is_hiphen(char *data)
+{
+	return (ft_strlen(data) == 1 && data[0] == '-');
+}
+
+void			get_additional_preceding_token_for_redirect
+(t_token *tail_token, t_token *target_token)
+{
+	t_token		*additional_token;
+
+	additional_token = (t_token*)malloc(sizeof(t_token));
+	additional_token->type = TOKEN_IO_NUMBER;
+	additional_token->next = tail_token;
+	if (ft_strequ(tail_token->data, "<") || ft_strequ(tail_token->data, "<<"))
+		additional_token->data = ft_strdup("0");
+	else
+		additional_token->data = ft_strdup("1");
+	target_token->next = additional_token;
+}
+
+void			change_token_type_for_redirection( \
+	char *input, int head, t_token **lst_tokens)
+{
+	t_token		*tail_token;
+	t_token		*target_token;
+
+	tail_token = lst_tokens[0];
+	target_token = lst_tokens[0];
+	while (tail_token->next)
+		tail_token = tail_token->next;
+	if (target_token->next)
+		while (target_token->next->next)
+			target_token = target_token->next;
+	if (ft_strequ(tail_token->data, "-") && target_token->type >= TOKEN_GREAT)
+		tail_token->type = TOKEN_HIPHEN;
+	if (tail_token->type == TOKEN_WORD && target_token->type >= TOKEN_GREAT &&
+		(is_made_of_digits(tail_token->data) || is_hiphen(tail_token->data)))
+		tail_token->type = TOKEN_IO_NUMBER;
+	else if (tail_token->type >= TOKEN_GREAT && !ft_isspace(input[head - 1]) && \
+		is_made_of_digits(target_token->data))
+		target_token->type = TOKEN_IO_NUMBER;
+	else if (tail_token->type >= TOKEN_GREAT)
+		get_additional_preceding_token_for_redirect(tail_token, target_token);
+}
+
+void push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_tokens)
 {
 	t_token *p;
 
-	if (*head == NULL)
-		*head = node;
+	if (*lst_tokens == NULL)
+		*lst_tokens = node;
 	else
 	{
-		p = *head;
+		p = *lst_tokens;
 		while (p->next)
 			p = p->next;
 		p->next = node;
 	}
+	change_token_type_for_redirection(input, head, lst_tokens);
 }
 
+/*
+////////////OLD//////////
 int is_separator_operator(char c)
 {
 	return ((ft_strchr("&;", c)) ? 1 : 0);
@@ -48,6 +107,38 @@ int is_separator_operator(char c)
 int	is_redirection_operator(char c)
 {
 	return ((ft_strchr("><", c)) ? 1 : 0);
+}
+*/
+
+int is_separator_operator(char *input, int i)
+{
+	int front;
+//	int back;
+
+	front = i == 0 ? i : i - 1;
+//	back = (int)ft_strlen(input) == i + 1 ? i : i + 1;
+	if ((input[i] == '&' && input[front] != '>' && input[front] != '<')
+		|| ft_strchr(";", input[i]))
+		return (1);
+	return (0);
+}
+
+int	is_redirection_operator(char *input, int i)
+{
+	int front;
+//	int back;
+
+	front = i == 0 ? i : i - 1;
+//	back = (int)ft_strlen(input) == i + 1 ? 1 : i + 1;
+	if ((input[i] == '&' && (input[front] == '>' || input[front] == '<'))
+		|| ft_strchr("><", input[i]))
+		return (1);
+	return (0);
+}
+
+char *is_pipe_operator(char *input, int i)
+{
+	return (ft_strchr("|", input[i]));
 }
 
 /*

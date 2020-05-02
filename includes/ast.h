@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/07 07:06:14 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/04 13:17:07 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 # include "token.h"
+
+# define TOKEN_SPECIFIER_HIPHEN 1 		//for word func by ihwang
+# define TOKEN_SPECIFIER_NOT_HIPHEN 0
 
 typedef enum
 {
@@ -53,6 +56,7 @@ typedef enum
 	AST_io_redirect = (1 << 11),
 	AST_io_file = (1 << 12),
 	AST_filename = (1 << 13),
+	AST_io_fd = (1 << 14),
 	// AST_io_here,
 	// AST_here_end,
 	// AST_newline_list,
@@ -107,7 +111,7 @@ t_astnode *cmd_suffix(t_token **token);
 t_astnode *redirect_list(t_token **token);
 t_astnode *io_redirect(t_token **token);
 t_astnode *io_file(t_token **token);
-t_astnode *filename(t_token **token);
+t_astnode *filename(t_token **token, int opt);
 t_astnode *io_here(t_token **token);
 t_astnode *here_end(t_token **token);
 t_astnode *newline_list(t_token **token);
@@ -116,7 +120,7 @@ t_astnode *separator_op(t_token **token);
 t_astnode *separotor(t_token **token);
 t_astnode *sequential_sep(t_token **token);
 
-t_astnode *word(t_token **token);
+t_astnode *word(t_token **token, int opt);
 
 
 // tools

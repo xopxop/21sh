@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/28 22:17:59 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/05 00:14:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,19 @@ static void	apply_heredoc(t_astnode *heredoc, t_exe *exe)
 
 void	find_heredoc(t_astnode *ast, t_exe *exe)
 {
+	/*if (ast->type == AST_simple_command)
+		find_heredoc(ast->right, exe);
+	else if (ast->type == AST_complete_command)
+		find_heredoc(ast->left, exe);
+	else if (ast->type == AST_list)
+	{
+		find_heredoc(ast->left, exe);
+		find_heredoc(ast->right, exe);
+	}*/
 	if (ast->type == AST_io_file && ft_strequ(ast->data, "<<"))
 		apply_heredoc(ast->left, exe);
+	else if (ast->type == AST_io_redirect)
+		find_heredoc(ast->right, exe);
 	else if (ast->type == AST_complete_command)
 		find_heredoc(ast->left, exe);
 	else if (ast->type == AST_list)

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/27 13:24:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/03 21:32:25 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	ft_execute(char *input)
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
 			if ((ast = syntax_analysis(tokens)) != NULL)
 				executor(ast);
-		free(trimmed_input); // need to free tokens after, i can free them all at executor
+		ft_strdel(&trimmed_input); // need to free tokens after, i can free them all at executor
 	}
 }
 

@@ -141,6 +141,7 @@ $(NAME):
 	@mkdir -p $(OBJS_PATH)
 	@mv $(OBJS_NAME) $(OBJS_PATH)
 	@gcc $(FLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -ltermcap -o $(NAME)
+#	 @gcc $(FLAGS) $(SRCS) libft/libft.a $(INC) -ltermcap #debug for ihwang
 
 clean:
 	@make -C ./libft clean

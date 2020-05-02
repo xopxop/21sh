@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 17:35:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 00:32:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,54 +37,94 @@ static void		run_builtin(t_exe *coms)
 	 	ft_unsetenv(coms);
 }
 
-void redirect_great(char *des)
+void redirect_great(t_exe exe, int nb)
 {
 	int fd;
-	
-	fd = open(des, O_WRONLY | O_TRUNC);
-	// need to handle error
-	dup2(fd, STDOUT_FILENO);
+
+	if (!ft_strequ(exe.redirect_des[nb], "-"))
+	{
+		fd = open(exe.redirect_des[nb], O_WRONLY | O_TRUNC);
+		// need to handle error
+		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+	}
+	else
+		close(ft_atoi(exe.redirect_src[nb]));
 }
 
-void redirect_dgreat(char *des)
+void redirect_dgreat(t_exe exe, int nb)
 {
 	int fd;
-	
-	fd = open(des, O_WRONLY | O_APPEND);
-	// need to handle error
-	dup2(fd, STDOUT_FILENO);
+
+	if (!ft_strequ(exe.redirect_des[nb], "-"))
+	{
+		fd = open(exe.redirect_des[nb], O_WRONLY | O_APPEND);
+		// need to handle error
+		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+	}
+	else
+		close(ft_atoi(exe.redirect_src[nb]));
 }
 
-void redirect_less(char *src)
+void redirect_less(t_exe exe, int nb)
 {
 	int fd;
-	
-	fd = open(src, O_RDONLY);
+
+	fd = open(exe.redirect_src[nb], O_RDONLY);
 	if (fd == -1)
-		error_monitor(SHELL_ENOENT, src, NULL, NULL, 0, EXIT_FAILURE);
+		error_monitor(SHELL_ENOENT, exe.redirect_src[nb], NULL, \
+			NULL, 0, EXIT_FAILURE);
 	dup2(fd, STDIN_FILENO);
+}
+
+void redirect_greatand(t_exe exe, int nb)
+{
+	int fd;
+
+	if (!is_made_of_digits(exe.redirect_des[nb]) && \
+		!ft_strequ("-", exe.redirect_des[nb]))
+	{
+		fd = open(exe.redirect_des[nb], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+	}
+	else if (is_made_of_digits(exe.redirect_des[nb]))
+		dup2(ft_atoi(exe.redirect_des[nb]), ft_atoi(exe.redirect_src[nb]));
+	else
+		close(ft_atoi(exe.redirect_src[nb]));
 }
 
 void redirect_dless(t_exe exe)
 {
 	int fd[2];
+	t_heredoc *temp;
 
 	pipe(fd);
 	ft_putstr_fd(exe.heredoc->heredoc, fd[WRITE_END]);
+	temp = exe.heredoc;
+	exe.heredoc = exe.heredoc->next;
+	ft_strdel(&temp->heredoc);
+	free(temp);
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 }
 
 void handle_redirect(t_exe exe)
 {
-	if (ft_strequ(exe.redirect_op, ">"))
-		return (redirect_great(exe.redirect_des));
-	if (ft_strequ(exe.redirect_op, ">>"))
-		return (redirect_dgreat(exe.redirect_des));
-	if (ft_strequ(exe.redirect_op, "<"))
-		return (redirect_less(exe.redirect_src));
-	if (ft_strequ(exe.redirect_op, "<<"))
-		return (redirect_dless(exe));
+	int nb;
+
+	nb = -1;
+	while (++nb < REDI_MAX && exe.redirect_op[nb])
+	{
+		if (ft_strequ(exe.redirect_op[nb], ">"))
+			redirect_great(exe, nb);
+		else if (ft_strequ(exe.redirect_op[nb], ">>"))
+			redirect_dgreat(exe, nb);
+		else if (ft_strequ(exe.redirect_op[nb], "<"))
+			redirect_less(exe, nb);
+		else if (ft_strequ(exe.redirect_op[nb], "<<"))
+			redirect_dless(exe);
+		else if (ft_strequ(exe.redirect_op[nb], ">&"))
+			redirect_greatand(exe, nb);
+	}
 }
 
 void run (t_exe *c)
