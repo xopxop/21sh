@@ -22,9 +22,7 @@ void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe)
 	}
 	else if (ast->type == AST_cmd_suffix)
 	{
-		exe->ac++;
-		exe->av[exe->ac - 1] = ast->left->data;
-		exe->av[exe->ac] = NULL;
+		get_av_cmd_suffix(ast->left, exe);
 		get_av_cmd_suffix(ast->right, exe);
 	}
 	else if (ast->type == AST_io_file)

@@ -14,19 +14,24 @@
 
 void	find_iofile(t_astnode *ast)
 {
-	t_astnode *ptr;
-
-	ptr = ast;
-	while (ptr)
+	if (ast->type == AST_io_file && \
+	(ft_strequ(">", ast->data) || ft_strequ(">>", ast->data)))
 	{
-		if (ptr->type == AST_io_file && \
-			(ft_strequ(">", ptr->data) || ft_strequ(">>", ptr->data)))
-		{
-			int fd = open(ptr->left->data, O_CREAT, \
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			close(fd);
-		}
-		ptr = ptr->right;
+		int fd = open(ast->left->data, O_CREAT, \
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		close(fd);
+	}
+	else if (ast->type == AST_pipe_sequence)
+	{
+		find_iofile(ast->left);
+		find_iofile(ast->right);
+	}
+	else if (ast->type == AST_simple_command)
+		find_iofile(ast->right);
+	else if (ast->type == AST_cmd_suffix)
+	{
+		find_iofile(ast->left);
+		find_iofile(ast->right);
 	}
 }
 
@@ -43,5 +48,4 @@ void execute_list(t_astnode *ast, t_exe *exe)
 		find_iofile(ast);
 		execute_and_or(ast, exe);
 	}
-	// need to reser redirect
 }
