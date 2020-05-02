@@ -20,29 +20,30 @@
 **            | IO_NUMBER io_here
 */
 
-// t_astnode *io_redirect1(t_token **token)
-// {
-// 	t_astnode *node;
-// 	t_astnode *childnode;
+t_astnode *io_redirect1(t_token **token)
+{
+	t_astnode	*node;
+	t_astnode	*childnode;
+	char		*ionumber;
 
-// 	if(*token == NULL)
-// 		return (NULL);
-// 	if ((*token)->type == TOKEN_IO_NUMBER)
-// 		return (NULL);
-// 	if ((childnode = io_file(token)) == NULL)
-// 		return (NULL);
-// 	node = build_node(AST_io_redirect);
-// 	node->data = ft_strdup((*token)->data);
-// 	node->left = childnode;
-// 	return (node);
-// }
+	if(*token == NULL)
+		return (NULL);
+	if ((*token)->type != TOKEN_IO_NUMBER)
+		return (NULL);
+	ionumber = (*token)->data;
+	*token = (*token)->next;
+	if ((childnode = io_file(token)) == NULL)
+		return (NULL);
+	node = build_node(AST_io_redirect);
+	node->data = ionumber;
+	node->right = childnode;
+	return (node);
+}
 
 t_astnode *io_redirect2(t_token **token)
 {
 	return (io_file(token));
 }
-
-
 
 // t_astnode *io_redirect3(t_token **token)
 // {
@@ -70,9 +71,12 @@ t_astnode *io_redirect2(t_token **token)
 t_astnode *io_redirect(t_token **token)
 {
 	t_astnode *node;
+	t_token		*reset;
 
-	// if ((node = io_redirect1(token)) != NULL)
-	// 	return (node);
+	reset = *token;
+	if ((node = io_redirect1(token)) != NULL)
+		return (node);
+	*token = reset;
 	if ((node = io_redirect2(token)) != NULL)
 		return (node);
 	// if ((node = io_redirect3(token)) != NULL)

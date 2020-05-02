@@ -1,0 +1,5 @@
+total 8
+drwxrwxr-x 2 dthan dthan 4096 touko   2 20:26 .
+drwxrwxr-x 8 dthan dthan 4096 touko   2 20:20 ..
+-rw-rw-r-- 1 dthan dthan    0 touko   2 20:26 foo1
+-rw-rw-r-- 1 dthan dthan    0 touko   2 20:26 foo2
