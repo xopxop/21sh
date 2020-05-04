@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 23:34:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 02:02:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void exchange_src_des_for_less(t_exe *exe)
 	nb = -1;
 	while (++nb < REDI_MAX)
 	{
-		if (ft_strequ(exe->redirect_op[nb], "<"))
+		if (ft_strequ(exe->redirect_op[nb], "<") || \
+			ft_strequ(exe->redirect_op[nb], "<<"))
 		{
 			temp = exe->redirect_des[nb];
 			exe->redirect_des[nb] = exe->redirect_src[nb];
@@ -45,6 +46,16 @@ static void init_redirect_elements(t_exe *exe)
 	}
 }
 
+void clear_exe(t_exe *exe)
+{
+	free(exe->redirect_op);
+	free(exe->redirect_des);
+	free(exe->redirect_src);
+	ft_strdel(&exe->heredoc->heredoc);
+	if (exe->heredoc)
+		free(exe->heredoc);
+}
+
 void execute_simple_command(t_astnode *ast, t_exe *exe)
 {
 	int redirect_level;
@@ -60,10 +71,5 @@ void execute_simple_command(t_astnode *ast, t_exe *exe)
 	else
 		get_av_cmd_name(ast, exe);
 	run(exe);
-	// reset redirection
-	/*if (ft_strequ(exe->redirect_op, "<<"))
-		exe->heredoc =  exe->heredoc->next;
-	exe->redirect_op =  NULL;
-	exe->redirect_des = NULL;
-	exe->redirect_src = NULL;*/
+	clear_exe(exe);
 }

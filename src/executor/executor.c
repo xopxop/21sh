@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 00:32:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 01:55:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ void redirect_greatand(t_exe exe, int nb)
 		close(ft_atoi(exe.redirect_src[nb]));
 }
 
-void redirect_dless(t_exe exe)
+void redirect_dless(t_exe *exe)
 {
 	int fd[2];
 	t_heredoc *temp;
 
 	pipe(fd);
-	ft_putstr_fd(exe.heredoc->heredoc, fd[WRITE_END]);
-	temp = exe.heredoc;
-	exe.heredoc = exe.heredoc->next;
+	ft_putstr_fd(exe->heredoc->heredoc, fd[WRITE_END]);
+	temp = exe->heredoc;
+	exe->heredoc = exe->heredoc->next;
 	ft_strdel(&temp->heredoc);
 	free(temp);
 	close(fd[WRITE_END]);
@@ -121,7 +121,7 @@ void handle_redirect(t_exe exe)
 		else if (ft_strequ(exe.redirect_op[nb], "<"))
 			redirect_less(exe, nb);
 		else if (ft_strequ(exe.redirect_op[nb], "<<"))
-			redirect_dless(exe);
+			redirect_dless(&exe);
 		else if (ft_strequ(exe.redirect_op[nb], ">&"))
 			redirect_greatand(exe, nb);
 	}
