@@ -6,30 +6,33 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 13:44:27 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 01:16:55 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_iofile(t_astnode *ast)
+void	open_iofile(t_astnode *ast, char *redirect_op)
 {
 	int fd;
 
 	if (ast->type == AST_io_file && (ft_strequ(">", ast->data) || \
 		ft_strequ(">&", ast->data) || ft_strequ(">>", ast->data)))
-		open_iofile(ast->left);
+		open_iofile(ast->left, ast->data);
 	else if (ast->type == AST_WORD)
 	{
-		fd = open(ast->data, O_CREAT, 0644);
-		close(fd);
+		if (!ft_strequ(redirect_op, ">&") && ft_strequ(ast->data, "-"))
+		{
+			fd = open(ast->data, O_CREAT, 0644);
+			close(fd);
+		}
 	}
 }
 
 void	find_iofile(t_astnode *ast)
 {
 	if (ast->type == AST_io_redirect)
-		open_iofile(ast->right);
+		open_iofile(ast->right, NULL);
 	else if (ast->type == AST_pipe_sequence)
 	{
 		find_iofile(ast->left);

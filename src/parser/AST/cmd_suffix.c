@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 12:58:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:33:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_astnode *cmd_suffix3(t_token **token)
 	t_astnode *lnode;
 	t_astnode *rnode;
 
-	if ((lnode = word(token, TOKEN_SPECIFIER_NOT_HIPHEN)) == NULL)
+	if ((lnode = word(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
@@ -65,7 +65,7 @@ t_astnode *cmd_suffix3(t_token **token)
 
 t_astnode *cmd_suffix4(t_token **token)
 {
-	return (word(token, TOKEN_SPECIFIER_NOT_HIPHEN));
+	return (word(token));
 }
 
 t_astnode *cmd_suffix(t_token **token)

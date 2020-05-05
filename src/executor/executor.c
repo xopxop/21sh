@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 01:55:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 01:24:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,59 +37,59 @@ static void		run_builtin(t_exe *coms)
 	 	ft_unsetenv(coms);
 }
 
-void redirect_great(t_exe exe, int nb)
+void redirect_great(t_redirect *trav)
 {
 	int fd;
 
-	if (!ft_strequ(exe.redirect_des[nb], "-"))
+	if (!ft_strequ(trav->redirect_des, "-"))
 	{
-		fd = open(exe.redirect_des[nb], O_WRONLY | O_TRUNC);
+		fd = open(trav->redirect_des, O_WRONLY | O_TRUNC);
 		// need to handle error
-		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+		dup2(fd, ft_atoi(trav->redirect_src));
 	}
 	else
-		close(ft_atoi(exe.redirect_src[nb]));
+		close(ft_atoi(trav->redirect_src));
 }
 
-void redirect_dgreat(t_exe exe, int nb)
+void redirect_dgreat(t_redirect *trav)
 {
 	int fd;
 
-	if (!ft_strequ(exe.redirect_des[nb], "-"))
+	if (!ft_strequ(trav->redirect_des, "-"))
 	{
-		fd = open(exe.redirect_des[nb], O_WRONLY | O_APPEND);
+		fd = open(trav->redirect_des, O_WRONLY | O_APPEND);
 		// need to handle error
-		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+		dup2(fd, ft_atoi(trav->redirect_src));
 	}
 	else
-		close(ft_atoi(exe.redirect_src[nb]));
+		close(ft_atoi(trav->redirect_src));
 }
 
-void redirect_less(t_exe exe, int nb)
+void redirect_less(t_redirect *trav)
 {
 	int fd;
 
-	fd = open(exe.redirect_src[nb], O_RDONLY);
+	fd = open(trav->redirect_src, O_RDONLY);
 	if (fd == -1)
-		error_monitor(SHELL_ENOENT, exe.redirect_src[nb], NULL, \
+		error_monitor(SHELL_ENOENT, trav->redirect_src, NULL, \
 			NULL, 0, EXIT_FAILURE);
 	dup2(fd, STDIN_FILENO);
 }
 
-void redirect_greatand(t_exe exe, int nb)
+void redirect_greatand(t_redirect *trav)
 {
 	int fd;
 
-	if (!is_made_of_digits(exe.redirect_des[nb]) && \
-		!ft_strequ("-", exe.redirect_des[nb]))
+	if (!is_made_of_digits(trav->redirect_des) && \
+		!ft_strequ("-", trav->redirect_des))
 	{
-		fd = open(exe.redirect_des[nb], O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		dup2(fd, ft_atoi(exe.redirect_src[nb]));
+		fd = open(trav->redirect_des, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		dup2(fd, ft_atoi(trav->redirect_src));
 	}
-	else if (is_made_of_digits(exe.redirect_des[nb]))
-		dup2(ft_atoi(exe.redirect_des[nb]), ft_atoi(exe.redirect_src[nb]));
+	else if (is_made_of_digits(trav->redirect_des))
+		dup2(ft_atoi(trav->redirect_des), ft_atoi(trav->redirect_src));
 	else
-		close(ft_atoi(exe.redirect_src[nb]));
+		close(ft_atoi(trav->redirect_src));
 }
 
 void redirect_dless(t_exe *exe)
@@ -109,21 +109,22 @@ void redirect_dless(t_exe *exe)
 
 void handle_redirect(t_exe exe)
 {
-	int nb;
+	t_redirect *traverse;
 
-	nb = -1;
-	while (++nb < REDI_MAX && exe.redirect_op[nb])
+	traverse = exe.redi;
+	while (traverse)
 	{
-		if (ft_strequ(exe.redirect_op[nb], ">"))
-			redirect_great(exe, nb);
-		else if (ft_strequ(exe.redirect_op[nb], ">>"))
-			redirect_dgreat(exe, nb);
-		else if (ft_strequ(exe.redirect_op[nb], "<"))
-			redirect_less(exe, nb);
-		else if (ft_strequ(exe.redirect_op[nb], "<<"))
+		if (ft_strequ(traverse->redirect_op, ">"))
+			redirect_great(traverse);
+		else if (ft_strequ(traverse->redirect_op, ">>"))
+			redirect_dgreat(traverse);
+		else if (ft_strequ(traverse->redirect_op, "<"))
+			redirect_less(traverse);
+		else if (ft_strequ(traverse->redirect_op, "<<"))
 			redirect_dless(&exe);
-		else if (ft_strequ(exe.redirect_op[nb], ">&"))
-			redirect_greatand(exe, nb);
+		else if (ft_strequ(traverse->redirect_op, ">&"))
+			redirect_greatand(traverse);
+		traverse = traverse->next;
 	}
 }
 
@@ -136,7 +137,7 @@ void run (t_exe *c)
 		return (run_builtin(c));
 	if (fork() == 0)
 	{
-		if (c->redirect_op != NULL)
+		if (c->redi != NULL)
 			handle_redirect(*c);
 		if (!ft_strcmp(c->av[0], "echo"))
 		{

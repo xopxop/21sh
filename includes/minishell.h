@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 14:31:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 22:51:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define VAL 0//For get_env
 # define NORM 0
 # define CHILD_FAILURE 1
-# define REDI_MAX 50
 /* NORM and CHILD_FAILURE
 ** For ft_exit function,
 ** NORM, when a user types 'exit' and
@@ -55,13 +54,19 @@ typedef struct 			s_heredoc
 	struct s_heredoc	*next;
 }						t_heredoc;
 
+typedef struct 			s_redirect
+{
+	char				*redirect_op;
+	char				*redirect_src;
+	char				*redirect_des;
+	struct s_redirect	*next;
+}						t_redirect;
+
 typedef struct	s_exe
 {
 	int			ac;
 	char		**av;
-	char		**redirect_op;
-	char		**redirect_des;
-	char		**redirect_src;
+	t_redirect	*redi;
 	t_heredoc	*heredoc;
 }				t_exe;
 
@@ -146,6 +151,6 @@ void execute_simple_command(t_astnode *ast, t_exe *exe);
 void	find_heredoc(t_astnode *ast, t_exe *exe);
 void	run (t_exe *exec);
 void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
-void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt, int *redi_lv);
+void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt);
 
 #endif

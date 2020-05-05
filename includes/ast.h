@@ -6,16 +6,13 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 13:17:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:35:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 # include "token.h"
-
-# define TOKEN_SPECIFIER_HIPHEN 1 		//for word func by ihwang
-# define TOKEN_SPECIFIER_NOT_HIPHEN 0
 
 typedef enum
 {
@@ -111,7 +108,7 @@ t_astnode *cmd_suffix(t_token **token);
 t_astnode *redirect_list(t_token **token);
 t_astnode *io_redirect(t_token **token);
 t_astnode *io_file(t_token **token);
-t_astnode *filename(t_token **token, int opt);
+t_astnode *filename(t_token **token);
 t_astnode *io_here(t_token **token);
 t_astnode *here_end(t_token **token);
 t_astnode *newline_list(t_token **token);
@@ -120,7 +117,7 @@ t_astnode *separator_op(t_token **token);
 t_astnode *separotor(t_token **token);
 t_astnode *sequential_sep(t_token **token);
 
-t_astnode *word(t_token **token, int opt);
+t_astnode *word(t_token **token);
 
 
 // tools

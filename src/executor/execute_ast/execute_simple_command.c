@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 02:02:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:08:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 static void exchange_src_des_for_less(t_exe *exe)
 {
 	char *temp;
-	int nb;
+	t_redirect *traverse;
 
-	nb = -1;
-	while (++nb < REDI_MAX)
+	traverse = exe->redi;
+	while(traverse)
 	{
-		if (ft_strequ(exe->redirect_op[nb], "<") || \
-			ft_strequ(exe->redirect_op[nb], "<<"))
-		{
-			temp = exe->redirect_des[nb];
-			exe->redirect_des[nb] = exe->redirect_src[nb];
-			exe->redirect_src[nb] = temp;
-		}
+		if (ft_strequ(traverse->redirect_op, "<") || \
+			ft_strequ(traverse->redirect_op, "<<"))
+			{
+				temp = traverse->redirect_des;
+				traverse->redirect_des = traverse->redirect_src;
+				traverse->redirect_src = temp;
+			}
+		traverse = traverse->next;
 	}
 }
 
+/*
 static void init_redirect_elements(t_exe *exe)
 {
 	int redi_max;
@@ -45,7 +47,9 @@ static void init_redirect_elements(t_exe *exe)
 		exe->redirect_src[redi_max] = NULL;
 	}
 }
+*/
 
+/*
 void clear_exe(t_exe *exe)
 {
 	free(exe->redirect_op);
@@ -55,21 +59,19 @@ void clear_exe(t_exe *exe)
 	if (exe->heredoc)
 		free(exe->heredoc);
 }
+*/
 
 void execute_simple_command(t_astnode *ast, t_exe *exe)
 {
-	int redirect_level;
-
 	if (ast->type == AST_simple_command)
 	{
-		redirect_level = 0;
-		init_redirect_elements(exe);
 		get_av_cmd_name(ast->left, exe);
-		get_av_cmd_suffix(ast->right, exe, 0, &redirect_level);
+		get_av_cmd_suffix(ast->right, exe, 0);
 		exchange_src_des_for_less(exe);
 	}
 	else
 		get_av_cmd_name(ast, exe);
 	run(exe);
-	clear_exe(exe);
+//	clear_exe(exe);
+// should be added later
 }

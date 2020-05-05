@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 23:39:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:30:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void			change_token_type_for_redirection( \
 	if (target_token->next)
 		while (target_token->next->next)
 			target_token = target_token->next;
-	if (ft_strequ(tail_token->data, "-") && target_token->type >= TOKEN_GREAT)
-		tail_token->type = TOKEN_HIPHEN;
-	if (tail_token->type == TOKEN_WORD && target_token->type >= TOKEN_GREAT &&
-		(is_made_of_digits(tail_token->data) || is_hiphen(tail_token->data)))
-		tail_token->type = TOKEN_IO_NUMBER;
-	else if (tail_token->type >= TOKEN_GREAT && !ft_isspace(input[head - 1]) && \
+//	if (ft_strequ(tail_token->data, "-") && target_token->type >= TOKEN_GREAT)
+//		tail_token->type = TOKEN_HIPHEN;
+//	if (tail_token->type == TOKEN_WORD && target_token->type >= TOKEN_GREAT &&
+//		(is_made_of_digits(tail_token->data) || is_hiphen(tail_token->data)))
+//		tail_token->type = TOKEN_IO_NUMBER;
+	if (tail_token->type >= TOKEN_GREAT && !ft_isspace(input[head - 1]) && \
 		is_made_of_digits(target_token->data))
 		target_token->type = TOKEN_IO_NUMBER;
 	else if (tail_token->type >= TOKEN_GREAT)

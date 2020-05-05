@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 23:40:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:28:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef enum
 	// TOKEN_Bang,
 	// TOKEN_In,
 	//add new token from here
-	TOKEN_HIPHEN,   // '-' closing fd
+//	TOKEN_HIPHEN,   // '-' closing fd
 	TOKEN_OR,		// '|'
 	TOKEN_SEMI,		// ';'
 	TOKEN_AND,		// '&'

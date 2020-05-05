@@ -6,14 +6,14 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 10:13:47 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 01:42:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:36:55 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 #include "../../../includes/ast.h"
 
-t_astnode	*filename(t_token **token, int opt)
+t_astnode	*filename(t_token **token)
 {
-	return (word(token, opt));
+	return (word(token));
 }

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 12:58:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/05 23:36:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@
 
 t_astnode *cmd_name(t_token **token)
 {
-	return (word(token, TOKEN_SPECIFIER_NOT_HIPHEN));
+	return (word(token));
 }
