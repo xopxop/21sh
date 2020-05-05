@@ -44,6 +44,13 @@ t_astnode *io_number_or_hiphen(t_token **token)
 	return (node);
 }
 
+/*
+** Note from dudu: in here the word() function will take the token word only, if
+** not token word then it will return NULL, because you didn't restrict the
+** TOKEN_WORD type so the ';' get through and it will build the node for the 
+** cmd_suffix
+*/
+
 t_astnode *word(t_token **token, int opt)
 {
 	t_astnode *node;
