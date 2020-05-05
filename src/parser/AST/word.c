@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:32:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 01:37:55 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,9 @@ t_astnode *word(t_token **token)
 
 	if (*token == NULL)
 		return (NULL);
-//	if ((*token)->type == TOKEN_IO_NUMBER || \
-//		((*token)->type == TOKEN_HIPHEN && opt == TOKEN_SPECIFIER_HIPHEN))
-//		return (io_number_or_hiphen(token));
-	if ((*token)->type == TOKEN_IO_NUMBER)
+	if ((*token)->type != TOKEN_WORD)
+		return (NULL);
+	else if ((*token)->type == TOKEN_IO_NUMBER)
 		return (io_number(token));
 	node = build_node(AST_WORD);
 	node->data = ft_strdup((*token)->data);
