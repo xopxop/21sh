@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 01:24:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/07 11:56:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,7 @@ void redirect_dgreat(t_redirect *trav)
 		close(ft_atoi(trav->redirect_src));
 }
 
-void redirect_less(t_redirect *trav)
-{
-	int fd;
 
-	fd = open(trav->redirect_src, O_RDONLY);
-	if (fd == -1)
-		error_monitor(SHELL_ENOENT, trav->redirect_src, NULL, \
-			NULL, 0, EXIT_FAILURE);
-	dup2(fd, STDIN_FILENO);
-}
 
 void redirect_greatand(t_redirect *trav)
 {
@@ -92,6 +83,44 @@ void redirect_greatand(t_redirect *trav)
 		close(ft_atoi(trav->redirect_src));
 }
 
+void redirect_lessand(t_redirect *trav, t_exe exe)
+{
+	t_stat sb;
+	int fd;
+
+	fd = ft_atoi(trav->redirect_src);
+	if (!is_made_of_digits(trav->redirect_src) && !ft_strequ(trav->redirect_src, "-"))
+	{
+		error_monitor(SYNTAX_AMBIG_REDI, trav->redirect_src, NULL, NULL, 1, 0);
+		ft_exit(&exe, CHILD_FAILURE);
+	}
+	else if (ft_strequ(trav->redirect_src, "-"))
+		close(ft_atoi(trav->redirect_des));
+	else if ((fstat(fd, &sb)) < 0)
+	{
+		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, NULL, 1, 0);
+		ft_exit(&exe, CHILD_FAILURE);
+	}
+	else if (!(sb.st_mode & S_IRUSR))
+	{
+		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, NULL, 1, 0);
+		ft_exit(&exe, CHILD_FAILURE);
+	}
+	else
+		dup2(fd, ft_atoi(trav->redirect_des));
+}
+
+void redirect_less(t_redirect *trav)
+{
+	int fd;
+
+	fd = open(trav->redirect_src, O_RDONLY);
+	if (fd == -1)
+		error_monitor(SHELL_ENOENT, trav->redirect_src, NULL, \
+			NULL, 0, EXIT_FAILURE);
+	dup2(fd, ft_atoi(trav->redirect_des));
+}
+
 void redirect_dless(t_exe *exe)
 {
 	int fd[2];
@@ -106,6 +135,8 @@ void redirect_dless(t_exe *exe)
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 }
+
+
 
 void handle_redirect(t_exe exe)
 {
@@ -124,6 +155,8 @@ void handle_redirect(t_exe exe)
 			redirect_dless(&exe);
 		else if (ft_strequ(traverse->redirect_op, ">&"))
 			redirect_greatand(traverse);
+		else if (ft_strequ(traverse->redirect_op, "<&"))
+			redirect_lessand(traverse, exe);
 		traverse = traverse->next;
 	}
 }

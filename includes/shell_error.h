@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 06:09:01 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/04 00:43:22 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 15:05:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define CD_ENOPWD "cd: string not in pwd: "
 # define SYNTAX_UNEXPECTED_TOKEN "21sh: syntax error near unexpected token `"
 # define SYNTAX_CMDNF "21sh : command not found : "
+# define SYNTAX_AMBIG_REDI "21sh : ambiguous redirect: "
+# define SYNTAX_BAD_FD "21sh : Bad file descriptor: "
 # define SHELL_ENOENT "21sh: no such file or directory: "
 
 void			ft_error_malloc(void);

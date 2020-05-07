@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:08:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 15:50:54 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void exchange_src_des_for_less(t_exe *exe)
 	while(traverse)
 	{
 		if (ft_strequ(traverse->redirect_op, "<") || \
-			ft_strequ(traverse->redirect_op, "<<"))
+			ft_strequ(traverse->redirect_op, "<<") || \
+			ft_strequ(traverse->redirect_op, "<&"))
 			{
 				temp = traverse->redirect_des;
 				traverse->redirect_des = traverse->redirect_src;

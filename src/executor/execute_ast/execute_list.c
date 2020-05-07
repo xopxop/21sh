@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 01:16:55 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 23:33:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	open_iofile(t_astnode *ast, char *redirect_op)
 		open_iofile(ast->left, ast->data);
 	else if (ast->type == AST_WORD)
 	{
-		if (!ft_strequ(redirect_op, ">&") && ft_strequ(ast->data, "-"))
+		if (!(ft_strequ(redirect_op, ">&") && (ft_strequ(ast->data, "-") || \
+			is_made_of_digits(ast->data))))
 		{
 			fd = open(ast->data, O_CREAT, 0644);
 			close(fd);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:30:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/06 15:45:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void			get_additional_preceding_token_for_redirect
 	additional_token = (t_token*)malloc(sizeof(t_token));
 	additional_token->type = TOKEN_IO_NUMBER;
 	additional_token->next = tail_token;
-	if (ft_strequ(tail_token->data, "<") || ft_strequ(tail_token->data, "<<"))
+	if (ft_strequ(tail_token->data, "<") || ft_strequ(tail_token->data, "<<") \
+		|| ft_strequ(tail_token->data, "<&"))
 		additional_token->data = ft_strdup("0");
 	else
 		additional_token->data = ft_strdup("1");
