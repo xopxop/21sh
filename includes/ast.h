@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/07 07:06:14 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/05 23:35:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef enum
 	AST_io_redirect = (1 << 11),
 	AST_io_file = (1 << 12),
 	AST_filename = (1 << 13),
+	AST_io_fd = (1 << 14),
 	// AST_io_here,
 	// AST_here_end,
 	// AST_newline_list,

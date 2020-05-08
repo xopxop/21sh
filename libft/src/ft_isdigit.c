@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_name.c                                         :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:36:14 by ihwang           ###   ########.fr       */
+/*   Created: 2019/10/22 14:46:43 by ihwang            #+#    #+#             */
+/*   Updated: 2020/05/05 15:38:01 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "libft.h"
 
-/*
-** cmd_name : WORD     //Apply rule 7a
-*/
-
-t_astnode *cmd_name(t_token **token)
+int	ft_isdigit(int c)
 {
-	return (word(token));
+	if ('0' <= c && c <= '9')
+		return (1);
+	else
+		return (0);
 }

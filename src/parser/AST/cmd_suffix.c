@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_suffix.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 09:02:28 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/05 23:33:09 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "../../../includes/ast.h"
 
 /*
-** cmd_suffix :            io_redirect
-**            | cmd_suffix io_redirect
-**            |            WORD       
-**            | cmd_suffix WORD       
+** cmd_suffix :            io_redirect 2
+**            | cmd_suffix io_redirect 1
+**            |            WORD        4
+**            | cmd_suffix WORD        3
 */
 
 t_astnode *cmd_suffix1(t_token **token)

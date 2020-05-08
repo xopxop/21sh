@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/07 07:58:27 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/05 23:28:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ typedef enum
 	TOKEN_AND_IF,
 	TOKEN_OR_IF,
 	TOKEN_DSEMI,
-	TOKEN_DLESS,
-	TOKEN_DGREAT,
+/*
 	TOKEN_LESSAND,
 	TOKEN_GREATAND,
-	TOKEN_LESSGREAT,
-	TOKEN_DLESSDASH,
 	TOKEN_CLOBBER,
+	TOKEN_LESSGREAT,
+	TOKEN_DLESSDASH,  /intaek moved these to the bottom
+*/
 	// TOKEN_If,
 	// TOKEN_Then,
 	// TOKEN_Else,
@@ -45,13 +45,22 @@ typedef enum
 	// TOKEN_Lbrace,
 	// TOKEN_Rbrace,
 	// TOKEN_Bang,
-	// TOKEN_In, 
+	// TOKEN_In,
 	//add new token from here
+//	TOKEN_HIPHEN,   // '-' closing fd
 	TOKEN_OR,		// '|'
 	TOKEN_SEMI,		// ';'
 	TOKEN_AND,		// '&'
+	//redirection from here
 	TOKEN_GREAT,	// '>'
+	TOKEN_DGREAT,
 	TOKEN_LESS,		// '<'
+	TOKEN_DLESS,
+	TOKEN_LESSAND,
+	TOKEN_GREATAND,
+	TOKEN_LESSGREAT,
+	TOKEN_DLESSDASH,
+	TOKEN_CLOBBER,
 }	t_token_type;
 
 typedef struct			s_token
@@ -63,10 +72,11 @@ typedef struct			s_token
 
 t_token	*get_token(char *input);
 void	deltoken(t_token **lst);
-void	push_node_into_ltoken(t_token *node, t_token **head);
+void	push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_tokens);
 void	print_token(t_token *token);
 void	ft_delete_dquote(char **tokens);
-int		is_separator_operator(char c);
-int		is_redirection_operator(char c);
+int		is_separator_operator(char *input, int i);
+int		is_redirection_operator(char *input, int i);
+char	*is_pipe_operator(char *input, int i);
 
 #endif

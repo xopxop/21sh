@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:24:37 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 09:24:40 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/03 21:54:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_astnode *io_redirect1(t_token **token)
 	if ((childnode = io_file(token)) == NULL)
 		return (NULL);
 	node = build_node(AST_io_redirect);
-	node->data = ionumber;
+	node->data = ft_strdup(ionumber);//modified by ihwang
 	node->right = childnode;
 	return (node);
 }

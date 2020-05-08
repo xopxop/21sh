@@ -6,21 +6,34 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:51:05 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/06 23:33:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	open_iofile(t_astnode *ast, char *redirect_op)
+{
+	int fd;
+
+	if (ast->type == AST_io_file && (ft_strequ(">", ast->data) || \
+		ft_strequ(">&", ast->data) || ft_strequ(">>", ast->data)))
+		open_iofile(ast->left, ast->data);
+	else if (ast->type == AST_WORD)
+	{
+		if (!(ft_strequ(redirect_op, ">&") && (ft_strequ(ast->data, "-") || \
+			is_made_of_digits(ast->data))))
+		{
+			fd = open(ast->data, O_CREAT, 0644);
+			close(fd);
+		}
+	}
+}
+
 void	find_iofile(t_astnode *ast)
 {
-	if (ast->type == AST_io_file && \
-	(ft_strequ(">", ast->data) || ft_strequ(">>", ast->data)))
-	{
-		int fd = open(ast->left->data, O_CREAT, \
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		close(fd);
-	}
+	if (ast->type == AST_io_redirect)
+		open_iofile(ast->right, NULL);
 	else if (ast->type == AST_pipe_sequence)
 	{
 		find_iofile(ast->left);
