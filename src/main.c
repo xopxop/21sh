@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/03 21:32:25 by tango            ###   ########.fr       */
+/*   Updated: 2020/05/07 20:29:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ static char	**set_env(char **sample)
 ** ================= NEW=====================================
 */
 
-static void	ft_execute(char *input)
+static void	ft_execute(char **input)
 {
 	t_token	*tokens;
 	t_astnode *ast;
 	char	*trimmed_input;
 
 	ast = NULL;
-	trimmed_input = ft_strtrim(input);
+	trimmed_input = ft_strtrim(*input);
+	ft_strdel(input); //freeing for *line of t_l struct
 	if (trimmed_input)
 	{
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
@@ -115,7 +116,7 @@ static int	minishell(void)
 		ft_get_line(&l, &g_h);
 		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
 		//is_eof(input) ? ft_execute(input) : 0;
-		is_eof(l.line) ? ft_execute(l.line) : 0;
+		is_eof(l.line) ? ft_execute(&l.line) : 0;
 	}
 	return (0);
 }

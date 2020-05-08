@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_sequence.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 08:33:29 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/07 20:55:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ t_astnode *pipe_sequence1(t_token **token)
 		return (NULL);
 	if (!*token || ft_strcmp((*token)->data, "|") != 0)
 	{
-		ft_delast(lnode);
+		//ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	operator = (*token)->data;
 	*token = (*token)->next;
 	if ((rnode = pipe_sequence(token)) == NULL)
 	{
-		ft_delast(lnode);
+		//ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	node = build_node(AST_pipe_sequence);

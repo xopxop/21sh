@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/27 13:28:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/08 01:45:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void execute_pipe_sequence(t_astnode *ast, t_exe *exec)
 		close(pipefd[1]);
 		waitpid(pid[0], &status, 0);
 		waitpid(pid[1], &status, 0);
+		clear_ast(ast);
+		clear_exe(exec);
 	}
 	else
 		execute_command(ast, exec);

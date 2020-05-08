@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:28:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:12:21 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ typedef enum
 	TOKEN_AND_IF,
 	TOKEN_OR_IF,
 	TOKEN_DSEMI,
-/*
-	TOKEN_LESSAND,
-	TOKEN_GREATAND,
-	TOKEN_CLOBBER,
-	TOKEN_LESSGREAT,
-	TOKEN_DLESSDASH,  /intaek moved these to the bottom
-*/
 	// TOKEN_If,
 	// TOKEN_Then,
 	// TOKEN_Else,
@@ -47,7 +40,6 @@ typedef enum
 	// TOKEN_Bang,
 	// TOKEN_In,
 	//add new token from here
-//	TOKEN_HIPHEN,   // '-' closing fd
 	TOKEN_OR,		// '|'
 	TOKEN_SEMI,		// ';'
 	TOKEN_AND,		// '&'
@@ -78,5 +70,7 @@ void	ft_delete_dquote(char **tokens);
 int		is_separator_operator(char *input, int i);
 int		is_redirection_operator(char *input, int i);
 char	*is_pipe_operator(char *input, int i);
+void	interpret_tild(char *str);
+void	interpret_dollar(t_token *node);
 
 #endif

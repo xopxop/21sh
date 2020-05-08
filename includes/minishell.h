@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 22:51:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/08 01:46:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,5 @@ void	run (t_exe *exec);
 void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
 void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt);
 
+void clear_exe(t_exe *exe);
 #endif

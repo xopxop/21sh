@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 01:34:19 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/08 01:27:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static char	*prompt_heredoc(char *end_word)
 	if (get_next_line(STDOUT_FILENO, &line) <= 0)
 		return (NULL); //it should be return an error here
 	if (ft_strequ(line, end_word))
+	{
+		ft_strdel(&line);
 		return (NULL);
+	}
 	else
 	{
 		line = ft_strjoin_and_free_string1(line, "\n");
@@ -37,7 +40,7 @@ static char	*prompt_heredoc(char *end_word)
 	return (line);
 }
 
-static void	push_node_into_lheredoc(t_heredoc *node, t_heredoc **head)
+static void	push_node_into_heredoc(t_heredoc *node, t_heredoc **head)
 {
 	t_heredoc *p;
 
@@ -59,7 +62,7 @@ static void	apply_heredoc(t_astnode *heredoc, t_exe *exe)
 	node = (t_heredoc*)malloc(sizeof(t_heredoc)); 
 	node->heredoc = prompt_heredoc(heredoc->data);
 	node->next = NULL;
-	push_node_into_lheredoc(node, &exe->heredoc);
+	push_node_into_heredoc(node, &exe->heredoc);
 }
 
 void	find_heredoc(t_astnode *ast, t_exe *exe)

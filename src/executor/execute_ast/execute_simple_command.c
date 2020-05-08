@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 15:50:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/08 02:26:21 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,37 @@ static void exchange_src_des_for_less(t_exe *exe)
 	}
 }
 
-/*
-static void init_redirect_elements(t_exe *exe)
+void clear_ast(t_astnode *ast)
 {
-	int redi_max;
-
-	redi_max = REDI_MAX;
-	exe->redirect_op = (char**)malloc(sizeof(char*) * redi_max);
-	exe->redirect_des = (char**)malloc(sizeof(char*) * redi_max);
-	exe->redirect_src = (char**)malloc(sizeof(char*) * redi_max);
-	while (--redi_max >= 0)
-	{
-		exe->redirect_op[redi_max] = NULL;
-		exe->redirect_des[redi_max] = NULL;
-		exe->redirect_src[redi_max] = NULL;
-	}
+	if (ast->left)
+		clear_ast(ast->left);
+	if (ast->right)
+		clear_ast(ast->right);
+	ft_delast(ast);
 }
-*/
 
-/*
 void clear_exe(t_exe *exe)
 {
-	free(exe->redirect_op);
-	free(exe->redirect_des);
-	free(exe->redirect_src);
-	ft_strdel(&exe->heredoc->heredoc);
-	if (exe->heredoc)
-		free(exe->heredoc);
+	void *ptr;
+
+	while (exe->heredoc)
+	{
+		ft_strdel(&exe->heredoc->heredoc);
+		ptr = exe->heredoc;
+		exe->heredoc = exe->heredoc->next;
+		free(ptr);
+	}
+	while (exe->redi)
+	{
+		ft_strdel(&exe->redi->redirect_op);
+		ft_strdel(&exe->redi->redirect_src);
+		ft_strdel(&exe->redi->redirect_des);
+		ptr = exe->redi;
+		exe->redi = exe->redi->next;
+		free(ptr);
+	}
+	ft_strlst_del(&exe->av, exe->ac + 1);
 }
-*/
 
 void execute_simple_command(t_astnode *ast, t_exe *exe)
 {
@@ -72,7 +74,8 @@ void execute_simple_command(t_astnode *ast, t_exe *exe)
 	}
 	else
 		get_av_cmd_name(ast, exe);
+	clear_ast(ast);
 	run(exe);
-//	clear_exe(exe);
+	clear_exe(exe);
 // should be added later
 }

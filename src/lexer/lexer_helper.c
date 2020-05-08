@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 15:45:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/07 19:28:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,6 @@ void			change_token_type_for_redirection( \
 	if (target_token->next)
 		while (target_token->next->next)
 			target_token = target_token->next;
-//	if (ft_strequ(tail_token->data, "-") && target_token->type >= TOKEN_GREAT)
-//		tail_token->type = TOKEN_HIPHEN;
-//	if (tail_token->type == TOKEN_WORD && target_token->type >= TOKEN_GREAT &&
-//		(is_made_of_digits(tail_token->data) || is_hiphen(tail_token->data)))
-//		tail_token->type = TOKEN_IO_NUMBER;
 	if (tail_token->type >= TOKEN_GREAT && !ft_isspace(input[head - 1]) && \
 		is_made_of_digits(target_token->data))
 		target_token->type = TOKEN_IO_NUMBER;
@@ -95,31 +90,21 @@ void push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_t
 			p = p->next;
 		p->next = node;
 	}
+	if (node->type == TOKEN_WORD)
+	{
+		interpret_tild(node->data);
+		interpret_dollar(node);
+	}
 	change_token_type_for_redirection(input, head, lst_tokens);
 }
-
-/*
-////////////OLD//////////
-int is_separator_operator(char c)
-{
-	return ((ft_strchr("&;", c)) ? 1 : 0);
-}
-
-int	is_redirection_operator(char c)
-{
-	return ((ft_strchr("><", c)) ? 1 : 0);
-}
-*/
 
 int is_separator_operator(char *input, int i)
 {
 	int front;
-//	int back;
 
 	front = i == 0 ? i : i - 1;
-//	back = (int)ft_strlen(input) == i + 1 ? i : i + 1;
 	if ((input[i] == '&' && input[front] != '>' && input[front] != '<')
-		|| ft_strchr(";", input[i]))
+		|| input[i] == ';') //ft_strchr(";", input[i]))
 		return (1);
 	return (0);
 }
@@ -127,12 +112,10 @@ int is_separator_operator(char *input, int i)
 int	is_redirection_operator(char *input, int i)
 {
 	int front;
-//	int back;
 
 	front = i == 0 ? i : i - 1;
-//	back = (int)ft_strlen(input) == i + 1 ? 1 : i + 1;
 	if ((input[i] == '&' && (input[front] == '>' || input[front] == '<'))
-		|| ft_strchr("><", input[i]))
+		|| input[i] == '<' || input[i] == '>') //ft_strchr("><", input[i]))
 		return (1);
 	return (0);
 }

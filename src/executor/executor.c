@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 11:56:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/07 20:49:21 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,8 @@ void run (t_exe *c)
 **		+ A linked list of heredoc in case there is heredoc
 */
 
+
+
 void executor(t_astnode *ast)
 {
 	t_exe exec;
@@ -206,4 +208,5 @@ void executor(t_astnode *ast)
 	exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
 	find_heredoc(ast, &exec);
 	execute_complete_command(ast, &exec);
+
 }
