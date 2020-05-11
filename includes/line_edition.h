@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/27 17:18:51 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 13:41:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
-# define PMPT 2
 
 typedef struct termios	t_term;
 
@@ -41,6 +40,7 @@ typedef struct			s_l
 	int					x;
 	int					y;
 	int					curr;
+	int					pmpt;
 }						t_l;
 
 typedef struct			s_h
@@ -88,6 +88,7 @@ void					get_history(t_h **g_h, int fd);
 void					init_term(t_l *l);
 t_term					get_set_default_term(t_term *t);
 void					restore_term(t_l *l);
+void					get_new_term_cursor(t_l *l);
 
 /*
 ** Utilities

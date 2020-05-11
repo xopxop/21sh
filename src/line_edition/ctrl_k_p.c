@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:43:39 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static void			ctrl_k_edit_line(t_l *l, int i, int j)
 
 static void			ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
 {
-	if (l->x < l->x + (l->y * l->co) - PMPT - i)
+	if (l->x < l->x + (l->y * l->co) - l->pmpt - i)
 	{
 		l->y -= y_dec;
 		while (y_dec--)
 			apply_termcap_str("up", 0, 0);
 	}
-	apply_termcap_str("ch", 0, (i + PMPT) % l->co);
-	l->x = (i + PMPT) % l->co;
+	apply_termcap_str("ch", 0, (i + l->pmpt) % l->co);
+	l->x = (i + l->pmpt) % l->co;
 	apply_termcap_str("cd", 0, 0);
 	apply_termcap_str("sc", 0, 0);
 	ft_putstr(&l->line[i]);
@@ -58,7 +58,7 @@ int					ctrl_p(t_l *l, int clip_len, int i)
 	if (!(clip = clipboard(NULL, CLIP_TAKE)))
 		return (1);
 	clip_len = ft_strlen(clip);
-	i = l->x + (l->y * l->co) - PMPT;
+	i = l->x + (l->y * l->co) - l->pmpt;
 	ctrl_p_apply_screen(l, clip, i);
 	tmp = ft_strnew(l->nb + clip_len);
 	if (l->line)
@@ -85,7 +85,7 @@ int					ctrl_k(t_l *l, int y_dec)
 	int				i;
 	int				j;
 
-	i = l->x + (l->y * l->co) - PMPT;
+	i = l->x + (l->y * l->co) - l->pmpt;
 	curr = i;
 	while (i >= 0)
 	{
@@ -101,7 +101,7 @@ int					ctrl_k(t_l *l, int y_dec)
 			ctrl_k_apply_to_screen(l, i, j, y_dec);
 			break ;
 		}
-		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
+		(i + l->pmpt) % l->co == 0 ? y_dec++ : 0;
 		i--;
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:32:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/13 11:32:30 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/11 16:56:01 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,18 @@ static t_token_type	get_token_type(char *input)
 // 	return (node);
 // }
 
-t_token			*get_token(char *input)
+
+
+t_token			*get_token(char *input, char quote)
 {
 	t_token *node;
 
 	node = (t_token*)malloc(sizeof(t_token));
-	node->data = input;
 	node->type = get_token_type(input);
+	if (quote)
+		node->data = creat_non_quoted_string(input, quote, ft_strlen(input));
+	else
+		node->data = input;
 	node->next = NULL;
 	return (node);
 }

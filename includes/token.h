@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 17:12:21 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 16:52:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct			s_token
 	struct s_token		*next;
 }						t_token;
 
-t_token	*get_token(char *input);
+t_token	*get_token(char *input, char quote);
 void	deltoken(t_token **lst);
 void	push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_tokens);
 void	print_token(t_token *token);
@@ -72,5 +72,6 @@ int		is_redirection_operator(char *input, int i);
 char	*is_pipe_operator(char *input, int i);
 void	interpret_tild(char *str);
 void	interpret_dollar(t_token *node);
+char	*creat_non_quoted_string(char *input, char quote, size_t len);
 
 #endif

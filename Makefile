@@ -126,7 +126,8 @@ home_end_key.o \
 left_right_bs_key.o \
 term_attr.o \
 up_down_key.o \
-ft_get_line.o
+ft_get_line.o \
+interpret.o
 
 OBJS_PATH = obj/
 

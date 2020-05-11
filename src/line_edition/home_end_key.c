@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:10:13 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:44:00 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int					home_key(t_l *l)
 	i = l->y;
 	while (i--)
 		apply_termcap_str("up", 0, 0);
-	apply_termcap_str("ch", 0, PMPT);
-	l->x = PMPT;
+	apply_termcap_str("ch", 0, l->pmpt);
+	l->x = l->pmpt;
 	l->y = 0;
 	return (1);
 }
@@ -30,8 +30,8 @@ int					end_key(t_l *l)
 	int				i;
 
 	home_key(l);
-	l->y = (l->nb + PMPT) / l->co;
-	l->x = (l->nb + PMPT) % l->co;
+	l->y = (l->nb + l->pmpt) / l->co;
+	l->x = (l->nb + l->pmpt) % l->co;
 	i = l->y;
 	while (i--)
 		apply_termcap_str("do", 0, 0);

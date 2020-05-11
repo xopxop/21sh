@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/08 01:27:30 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 00:05:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** doesnt know how heredoc work, it needs to free all the memory allocation?
 */
 
-static char	*prompt_heredoc(char *end_word)
+/*static char	*prompt_heredoc(char *end_word)
 {
 	char *line;
 
@@ -38,6 +38,28 @@ static char	*prompt_heredoc(char *end_word)
 		line = ft_strjoin_and_free_string2(line, prompt_heredoc(end_word));
 	}
 	return (line);
+}
+*/
+
+static char	*prompt_heredoc(char *end_word)
+{
+	t_l l;
+
+	ft_memset(&l, 0, sizeof(t_l));
+	l.pmpt = 9;
+	ft_putstr("heredoc> ");
+	ft_get_line(&l, &g_h);
+	if (ft_strequ(l.line, end_word))
+	{
+		ft_strdel(&l.line);
+		return (NULL);
+	}
+	else
+	{
+		l.line = ft_strjoin_and_free_string1(l.line, "\n");
+		l.line = ft_strjoin_and_free_string2(l.line, prompt_heredoc(end_word));
+	}
+	return (l.line);
 }
 
 static void	push_node_into_heredoc(t_heredoc *node, t_heredoc **head)

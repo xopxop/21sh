@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/27 17:37:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 01:07:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		make_child_binary(t_exe *c)
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, CHILD_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &g_status, 0);
@@ -46,7 +46,7 @@ static void	make_child_path_sub(t_exe *c, char buf[])
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(c, CHILD_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &g_status, 0);
@@ -73,5 +73,5 @@ void		make_child_path(t_exe *c, char *path)
 		ft_putstr_fd(buf, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
-	ft_exit(c, NORM);
+	ft_exit(EXIT_SUCCESS);
 }

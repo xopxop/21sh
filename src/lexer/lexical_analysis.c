@@ -1,22 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexical_analysis_ihwang.c                          :+:      :+:    :+:   */
+/*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/02 20:58:51 by tango            ###   ########.fr       */
+/*   Updated: 2020/05/11 16:51:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+char			*creat_non_quoted_string(char *input, char quote, size_t len)
+{
+	char		*start;
+	char		*end;
+	char		*new;
+	int			i;
+	int			j;
+
+	start = ft_strchr(input, quote);
+	end = ft_strrchr(input, quote);
+	new = ft_strnew(len - 2);
+	i = 0;
+	j = 0;
+	while (len > 0)
+	{
+		if (&input[j] != start && &input[j] != end)
+			new[i++] = input[j];
+		j++;
+		len--;
+	}
+	ft_strdel(&input);
+	return (new);
+}
+
+char			jump_single_or_double_quote(char *input, int *tail, char quote)
+{
+	while (input[++(*tail)])
+		if (input[*tail] == quote)
+			break ;
+	return (quote);
+}
+
 static void 	word_jump(char *input, int *tail, t_token **lst_tokens)
 {
 	int head;
 	t_token *node;
+	char quote;
 
+	quote = 0;
 	head = *tail;
 	while (input[*tail] && !ft_isspace(input[*tail]) && \
 			!is_separator_operator(input, *tail) && \
@@ -24,14 +58,18 @@ static void 	word_jump(char *input, int *tail, t_token **lst_tokens)
 			!is_pipe_operator(input, *tail))
 	{
 		if (input[*tail] == '"')
+			quote = jump_single_or_double_quote(input, tail, '"');
+		else if (input[*tail] == '\'')
+			quote = jump_single_or_double_quote(input, tail, '\'');
+		/*if (input[*tail] == '"')
 		{
 			while (input[++(*tail)])
 				if (input[*tail] == '"')
 					break ;
-		}
+		}*/
 		(*tail)++;
 	}
-	node = get_token(ft_strndup(&input[head], *tail - head));
+	node = get_token(ft_strndup(&input[head], *tail - head), quote);
 	push_node_into_ltoken(input, head, node, lst_tokens);
 }
 
@@ -43,7 +81,7 @@ static void	separator_operator_jump(char *input, int *tail, t_token **lst_tokens
 	head = *tail;
 	while (input[*tail] && is_separator_operator(input, *tail))
 		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head));
+	node = get_token(ft_strndup(&input[head], *tail - head), 0);
 	push_node_into_ltoken(input, head, node, lst_tokens);
 }
 
@@ -55,7 +93,7 @@ static void	redirection_operator_jump(char *input, int *tail, t_token **lst_toke
 	head = *tail;
 	while (input[*tail] && is_redirection_operator(input, *tail))
 		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head));
+	node = get_token(ft_strndup(&input[head], *tail - head), 0);
 	push_node_into_ltoken(input, head, node, lst_tokens);
 }
 
@@ -67,7 +105,7 @@ static void pipe_operator_jump(char *input, int *tail, t_token **lst_tokens)
 	head = *tail;
 	while (input[*tail] && is_pipe_operator(input, *tail))
 		(*tail)++;
-	node = get_token(ft_strndup(&input[head], *tail - head));
+	node = get_token(ft_strndup(&input[head], *tail - head), 0);
 	push_node_into_ltoken(input, head, node, lst_tokens);
 }
 

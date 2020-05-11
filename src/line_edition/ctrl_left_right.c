@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:43:45 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,35 @@ void				ctrl_right(t_l *l)
 	int				y_inc;
 
 	y_inc = 0;
-	i = l->x + (l->y * l->co) - PMPT;
+	i = l->x + (l->y * l->co) - l->pmpt;
 	(ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
 	while (i <= l->nb)
 	{
 		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
 				|| i == l->nb)
 		{
-			if (i + PMPT - (l->x + (l->y * l->co)) >= l->co - l->x)
+			if (i + l->pmpt - (l->x + (l->y * l->co)) >= l->co - l->x)
 			{
 				l->y += y_inc;
 				while (y_inc--)
 					apply_termcap_str("do", 0, 0);
 			}
-			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
-			l->x = (i + PMPT) % l->co;
+			apply_termcap_str("ch", 0, (i + l->pmpt) % l->co);
+			l->x = (i + l->pmpt) % l->co;
 			break ;
 		}
-		((i + PMPT) % l->co == l->co - 1) ? y_inc++ : 0;
+		((i + l->pmpt) % l->co == l->co - 1) ? y_inc++ : 0;
 		i++;
 	}
 }
 
 static void			ctrl_left_for_zero(t_l *l, int y_dec)
 {
-	l->x = PMPT;
+	l->x = l->pmpt;
 	l->y = 0;
 	while (y_dec--)
 		apply_termcap_str("up", 0, 0);
-	apply_termcap_str("ch", 0, PMPT);
+	apply_termcap_str("ch", 0, l->pmpt);
 }
 
 void				ctrl_left(t_l *l, int y_dec)
@@ -54,7 +54,7 @@ void				ctrl_left(t_l *l, int y_dec)
 	int				i;
 	int				curr;
 
-	i = l->x + (l->y * l->co) - PMPT;
+	i = l->x + (l->y * l->co) - l->pmpt;
 	curr = i;
 	ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i ? i-- : 0;
 	while (i >= 0)
@@ -69,11 +69,11 @@ void				ctrl_left(t_l *l, int y_dec)
 				while (y_dec--)
 					apply_termcap_str("up", 0, 0);
 			}
-			apply_termcap_str("ch", 0, (i + PMPT) % l->co);
-			l->x = (i + PMPT) % l->co;
+			apply_termcap_str("ch", 0, (i + l->pmpt) % l->co);
+			l->x = (i + l->pmpt) % l->co;
 			break ;
 		}
-		(i + PMPT) % l->co == 0 ? y_dec++ : 0;
+		(i + l->pmpt) % l->co == 0 ? y_dec++ : 0;
 		i--;
 	}
 }

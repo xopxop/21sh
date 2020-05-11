@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:27 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:43:49 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void				ctrl_up(t_l *l)
 {
 	if (l->y == 0)
 	{
-		apply_termcap_str("ch", 0, PMPT);
-		l->x = PMPT;
+		apply_termcap_str("ch", 0, l->pmpt);
+		l->x = l->pmpt;
 	}
 	else if (l->y == 1 && l->x < 3)
 	{
 		apply_termcap_str("up", 0, 0);
-		apply_termcap_str("ch", 0, PMPT);
+		apply_termcap_str("ch", 0, l->pmpt);
 		l->y = 0;
-		l->x = PMPT;
+		l->x = l->pmpt;
 	}
 	else
 	{
@@ -35,15 +35,15 @@ void				ctrl_up(t_l *l)
 
 void				ctrl_down(t_l *l)
 {
-	if ((l->co * (l->y + 1)) + l->x > l->nb + PMPT)
+	if ((l->co * (l->y + 1)) + l->x > l->nb + l->pmpt)
 	{
-		if (l->co - l->x < l->nb + PMPT - (l->x + (l->y * l->co)))
+		if (l->co - l->x < l->nb + l->pmpt - (l->x + (l->y * l->co)))
 		{
 			apply_termcap_str("do", 0, 0);
 			l->y++;
 		}
-		apply_termcap_str("ch", 0, (l->nb + PMPT) - (l->y * l->co));
-		l->x = (l->nb + PMPT) - (l->y * l->co);
+		apply_termcap_str("ch", 0, (l->nb + l->pmpt) - (l->y * l->co));
+		l->x = (l->nb + l->pmpt) - (l->y * l->co);
 	}
 	else
 	{

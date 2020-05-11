@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/08 02:26:21 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 00:44:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void exchange_src_des_for_less(t_exe *exe)
 {
 	char *temp;
-	t_redirect *traverse;
+	t_redirect *trav;
 
-	traverse = exe->redi;
-	while(traverse)
+	trav = exe->redi;
+	while(trav)
 	{
-		if (ft_strequ(traverse->redirect_op, "<") || \
-			ft_strequ(traverse->redirect_op, "<<") || \
-			ft_strequ(traverse->redirect_op, "<&"))
+		if (ft_strequ(trav->redirect_op, "<") || \
+			ft_strequ(trav->redirect_op, "<<") || \
+			ft_strequ(trav->redirect_op, "<&"))
 			{
-				temp = traverse->redirect_des;
-				traverse->redirect_des = traverse->redirect_src;
-				traverse->redirect_src = temp;
+				temp = trav->redirect_des;
+				trav->redirect_des = trav->redirect_src;
+				trav->redirect_src = temp;
 			}
-		traverse = traverse->next;
+		trav = trav->next;
 	}
 }
 
@@ -54,14 +54,11 @@ void clear_exe(t_exe *exe)
 	}
 	while (exe->redi)
 	{
-		ft_strdel(&exe->redi->redirect_op);
-		ft_strdel(&exe->redi->redirect_src);
-		ft_strdel(&exe->redi->redirect_des);
 		ptr = exe->redi;
 		exe->redi = exe->redi->next;
 		free(ptr);
 	}
-	ft_strlst_del(&exe->av, exe->ac + 1);
+	free(exe->av);
 }
 
 void execute_simple_command(t_astnode *ast, t_exe *exe)
@@ -74,8 +71,5 @@ void execute_simple_command(t_astnode *ast, t_exe *exe)
 	}
 	else
 		get_av_cmd_name(ast, exe);
-	clear_ast(ast);
 	run(exe);
-	clear_exe(exe);
-// should be added later
 }

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/07 20:29:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 17:16:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	**set_env(char **sample)
 	while (sample[++i])
 	{
 		env[i] = (char*)malloc(sizeof(char) * PATH_MAX);
-		ft_strcat(env[i], sample[i]);
+		ft_strcpy(env[i], sample[i]);
 	}
 	env[i] = NULL;
 	return (env);
@@ -61,7 +61,18 @@ static char	**set_env(char **sample)
 /*
 ** ================= NEW=====================================
 */
+void	clear_token(t_token *token)
+{
+	t_token *temp;
 
+	while (token)
+	{
+		ft_strdel(&token->data);
+		temp = token;
+		token = token->next;
+		free(temp);
+	}
+}
 static void	ft_execute(char **input)
 {
 	t_token	*tokens;
@@ -76,6 +87,7 @@ static void	ft_execute(char **input)
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
 			if ((ast = syntax_analysis(tokens)) != NULL)
 				executor(ast);
+		clear_token(tokens);
 		ft_strdel(&trimmed_input); // need to free tokens after, i can free them all at executor
 	}
 }
@@ -102,8 +114,53 @@ static void	ft_execute(char **input)
 
 // NEW
 
+/*static char	*get_input(int level)
+{
+	char *line;
+	if ((get_next_line(STDOUT_FILENO, &line)) <= 0)
+		return (NULL);
+	if (is_open_dquote(line, level))
+	{
+		ft_putstr("dquote> ");
+		line = ft_strjoin_and_free_string1(line, "\n");
+		line = ft_strjoin_and_free_string2(line, get_input((int)2));
+	}
+	return (line);
+}*/
+static char	*get_input(int level, int count_pmpt)
+{
+	t_l l;
+
+	//if ((get_next_line(STDOUT_FILENO, &l)) <= 0)
+	ft_memset(&l, 0, sizeof(t_l));
+	l.pmpt = count_pmpt;
+	ft_get_line(&l, &g_h);
+	if (is_open_dquote(l.line, level))
+	{
+		ft_putstr("dquote> ");
+		l.line = ft_strjoin_and_free_string1(l.line, "\n");
+		l.line = ft_strjoin_and_free_string2(l.line, get_input((int)2, 8));
+	}
+	return (l.line);
+}
 
 static int	minishell(void)
+{
+	char *line;
+
+	get_history(&g_h, 0);
+	while (1)
+	{
+		sig_controller(PARENT); 
+		WIFSIGNALED(g_status) ? 0 : get_prompt();
+		g_status = 0;
+		line = get_input(1, 2);
+		is_eof(line) ? ft_execute(&line) : 0;
+	}
+	return (0);
+}
+
+/*static int	minishell(void)
 {
 	t_l		l;
 
@@ -113,6 +170,7 @@ static int	minishell(void)
 		// sig_controller(PARENT); turn off signal for now
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
+		get_input(1);
 		ft_get_line(&l, &g_h);
 		// is_eof(input) ? ft_execute(input) : ft_exit(NULL, PRINT);
 		//is_eof(input) ? ft_execute(input) : 0;
@@ -120,12 +178,26 @@ static int	minishell(void)
 	}
 	return (0);
 }
+*/
+
+void		increment_shlvl()
+{
+	char	*shlvl;
+	int		nb;
+
+	shlvl = get_env("SHLVL", VAL);
+	shlvl++;
+	nb = ft_atoi(shlvl);
+	nb++;
+	ft_strcpy(shlvl, ft_itoa(nb));
+}
 
 int			main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	g_env = set_env(envp);
+	increment_shlvl();
 	if (!(getenv("TERM")))
 	{
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
