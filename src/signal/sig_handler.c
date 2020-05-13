@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/01 14:55:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 15:27:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ int			is_eof(char *line)
 
 static void	sig_int_handler(int sig)
 {
-//	int		a;
-
-//	a = sig;
-// using (void)sign to turn off unused parameter warning
 	(void)sig;
 	ft_putchar('\n');
 	get_prompt();
@@ -33,10 +29,6 @@ static void	sig_int_handler(int sig)
 
 static void	sig_tstp_handler(int sig)
 {
-//	int		a;
-
-//	a = sig;
-// using (void)sign to turn off unused parameter warning
 	(void)sig;
 	ft_putchar('\n');
 	get_prompt();

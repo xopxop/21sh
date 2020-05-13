@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 22:51:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 01:06:43 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@
 # define F_TYPE_MASK 0170000 //For ft_cd
 # define KEY 1//For get_env
 # define VAL 0//For get_env
-# define NORM 0
-# define CHILD_FAILURE 1
 /* NORM and CHILD_FAILURE
 ** For ft_exit function,
 ** NORM, when a user types 'exit' and
@@ -118,7 +116,7 @@ void					get_prompt(void);
 void		ft_env(void);
 void		ft_pwd(void);
 void		ft_echo(t_exe *c);
-void		ft_exit(t_exe *coms, int opt);
+void		ft_exit(int opt);
 void		ft_cd(t_exe *c);
 void		ft_setenv(t_exe *c);
 void		ft_unsetenv(t_exe *c);
@@ -153,4 +151,5 @@ void	run (t_exe *exec);
 void	get_av_cmd_name(t_astnode *ast, t_exe *exe);
 void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt);
 
+void clear_exe(t_exe *exe);
 #endif

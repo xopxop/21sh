@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 15:50:54 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 00:44:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,51 @@
 static void exchange_src_des_for_less(t_exe *exe)
 {
 	char *temp;
-	t_redirect *traverse;
+	t_redirect *trav;
 
-	traverse = exe->redi;
-	while(traverse)
+	trav = exe->redi;
+	while(trav)
 	{
-		if (ft_strequ(traverse->redirect_op, "<") || \
-			ft_strequ(traverse->redirect_op, "<<") || \
-			ft_strequ(traverse->redirect_op, "<&"))
+		if (ft_strequ(trav->redirect_op, "<") || \
+			ft_strequ(trav->redirect_op, "<<") || \
+			ft_strequ(trav->redirect_op, "<&"))
 			{
-				temp = traverse->redirect_des;
-				traverse->redirect_des = traverse->redirect_src;
-				traverse->redirect_src = temp;
+				temp = trav->redirect_des;
+				trav->redirect_des = trav->redirect_src;
+				trav->redirect_src = temp;
 			}
-		traverse = traverse->next;
+		trav = trav->next;
 	}
 }
 
-/*
-static void init_redirect_elements(t_exe *exe)
+void clear_ast(t_astnode *ast)
 {
-	int redi_max;
-
-	redi_max = REDI_MAX;
-	exe->redirect_op = (char**)malloc(sizeof(char*) * redi_max);
-	exe->redirect_des = (char**)malloc(sizeof(char*) * redi_max);
-	exe->redirect_src = (char**)malloc(sizeof(char*) * redi_max);
-	while (--redi_max >= 0)
-	{
-		exe->redirect_op[redi_max] = NULL;
-		exe->redirect_des[redi_max] = NULL;
-		exe->redirect_src[redi_max] = NULL;
-	}
+	if (ast->left)
+		clear_ast(ast->left);
+	if (ast->right)
+		clear_ast(ast->right);
+	ft_delast(ast);
 }
-*/
 
-/*
 void clear_exe(t_exe *exe)
 {
-	free(exe->redirect_op);
-	free(exe->redirect_des);
-	free(exe->redirect_src);
-	ft_strdel(&exe->heredoc->heredoc);
-	if (exe->heredoc)
-		free(exe->heredoc);
+	void *ptr;
+
+	while (exe->heredoc)
+	{
+		ft_strdel(&exe->heredoc->heredoc);
+		ptr = exe->heredoc;
+		exe->heredoc = exe->heredoc->next;
+		free(ptr);
+	}
+	while (exe->redi)
+	{
+		ptr = exe->redi;
+		exe->redi = exe->redi->next;
+		free(ptr);
+	}
+	free(exe->av);
 }
-*/
 
 void execute_simple_command(t_astnode *ast, t_exe *exe)
 {
@@ -73,6 +72,4 @@ void execute_simple_command(t_astnode *ast, t_exe *exe)
 	else
 		get_av_cmd_name(ast, exe);
 	run(exe);
-//	clear_exe(exe);
-// should be added later
 }

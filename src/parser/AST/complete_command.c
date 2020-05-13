@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_analyzer.c                                  :+:      :+:    :+:   */
+/*   complete_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 11:17:31 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/07 11:17:32 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/07 20:55:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_astnode	*complete_command1(t_token **token)
 	if (!*token || ((ft_strcmp((*token)->data, ";") != 0) \
 				&& (ft_strcmp((*token)->data, "&") != 0)))
 	{	
-		ft_delast(lnode);
+	//	ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	operator = (*token)->data;

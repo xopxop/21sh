@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:33:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/07 20:55:44 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_astnode *cmd_suffix1(t_token **token)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
-		ft_delast(lnode);
+		//ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	node = build_node(AST_cmd_suffix);

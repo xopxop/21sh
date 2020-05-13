@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:06:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:35:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/08 01:46:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct			s_astnode
 {
 	int					type;
 	char				*data;
-	struct s_astnode	*right;
 	struct s_astnode	*left;
+	struct s_astnode	*right;
 }						t_astnode;
 
 t_astnode *complete_command(t_token **token);
@@ -123,6 +123,7 @@ t_astnode *word(t_token **token);
 // tools
 t_astnode	*build_node(t_astnode_type type);
 void ft_delast(t_astnode *node);
+void clear_ast(t_astnode *ast);
 void printBinaryTree(t_astnode * t);
 
 #endif

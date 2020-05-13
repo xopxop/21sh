@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 11:56:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/11 01:10:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		is_builtin(char *comm)
 static void		run_builtin(t_exe *coms)
 {
 	if (!ft_strcmp(coms->av[0], "exit"))
-	 	ft_exit(coms, NORM); // Not done. need more 'free'
+	 	ft_exit(EXIT_SUCCESS); // Not done. need more 'free'
 	if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(coms->av[0], "cd"))
@@ -83,7 +83,7 @@ void redirect_greatand(t_redirect *trav)
 		close(ft_atoi(trav->redirect_src));
 }
 
-void redirect_lessand(t_redirect *trav, t_exe exe)
+void redirect_lessand(t_redirect *trav)
 {
 	t_stat sb;
 	int fd;
@@ -92,19 +92,19 @@ void redirect_lessand(t_redirect *trav, t_exe exe)
 	if (!is_made_of_digits(trav->redirect_src) && !ft_strequ(trav->redirect_src, "-"))
 	{
 		error_monitor(SYNTAX_AMBIG_REDI, trav->redirect_src, NULL, NULL, 1, 0);
-		ft_exit(&exe, CHILD_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	else if (ft_strequ(trav->redirect_src, "-"))
 		close(ft_atoi(trav->redirect_des));
 	else if ((fstat(fd, &sb)) < 0)
 	{
 		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, NULL, 1, 0);
-		ft_exit(&exe, CHILD_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	else if (!(sb.st_mode & S_IRUSR))
 	{
 		error_monitor(SYNTAX_BAD_FD, trav->redirect_src, NULL, NULL, 1, 0);
-		ft_exit(&exe, CHILD_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	else
 		dup2(fd, ft_atoi(trav->redirect_des));
@@ -124,19 +124,12 @@ void redirect_less(t_redirect *trav)
 void redirect_dless(t_exe *exe)
 {
 	int fd[2];
-	t_heredoc *temp;
 
 	pipe(fd);
 	ft_putstr_fd(exe->heredoc->heredoc, fd[WRITE_END]);
-	temp = exe->heredoc;
-	exe->heredoc = exe->heredoc->next;
-	ft_strdel(&temp->heredoc);
-	free(temp);
 	close(fd[WRITE_END]);
 	dup2(fd[READ_END], STDIN_FILENO);
 }
-
-
 
 void handle_redirect(t_exe exe)
 {
@@ -156,7 +149,7 @@ void handle_redirect(t_exe exe)
 		else if (ft_strequ(traverse->redirect_op, ">&"))
 			redirect_greatand(traverse);
 		else if (ft_strequ(traverse->redirect_op, "<&"))
-			redirect_lessand(traverse, exe);
+			redirect_lessand(traverse);
 		traverse = traverse->next;
 	}
 }
@@ -184,7 +177,7 @@ void run (t_exe *c)
 		else if (c->av[0][0] != '.' && c->av[0][0] != '/')
 			error_monitor(c->av[0], ": command not found", \
 			NULL, NULL, EXIT_FAILURE, 0);
-		ft_exit(c, NORM);
+		ft_exit(EXIT_SUCCESS);
 	}
 	else
 		wait(NULL);
@@ -197,6 +190,8 @@ void run (t_exe *c)
 **		+ A linked list of heredoc in case there is heredoc
 */
 
+
+
 void executor(t_astnode *ast)
 {
 	t_exe exec;
@@ -206,4 +201,6 @@ void executor(t_astnode *ast)
 	exec.av = (char**)malloc(sysconf(_SC_ARG_MAX));
 	find_heredoc(ast, &exec);
 	execute_complete_command(ast, &exec);
+	clear_ast(ast);
+	clear_exe(&exec);
 }

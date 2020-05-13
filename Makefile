@@ -9,6 +9,7 @@ SRCS = src/main.c \
 src/lexer/lexical_analysis.c \
 src/lexer/get_token_info.c \
 src/lexer/lexer_helper.c \
+src/lexer/interpret.c \
 src/parser/syntax_analysis.c \
 src/parser/AST/and_or.c \
 src/parser/AST/ast_tool.c \
@@ -125,7 +126,8 @@ home_end_key.o \
 left_right_bs_key.o \
 term_attr.o \
 up_down_key.o \
-ft_get_line.o
+ft_get_line.o \
+interpret.o
 
 OBJS_PATH = obj/
 

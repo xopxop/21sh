@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:44:05 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void			bs_key_str(t_l *l)
 
 	if (l->y == 0)
 	{
-		ft_putstr(&l->line[l->x - PMPT]);
-		i = l->x - 2 - PMPT;
+		ft_putstr(&l->line[l->x - l->pmpt]);
+		i = l->x - 2 - l->pmpt;
 		l->x--;
 	}
 	else
 	{
-		ft_putstr(&l->line[l->x + (l->co * l->y) - PMPT]);
-		i = l->x + (l->co * l->y) - 2 - PMPT;
+		ft_putstr(&l->line[l->x + (l->co * l->y) - l->pmpt]);
+		i = l->x + (l->co * l->y) - 2 - l->pmpt;
 		if (l->x == 0)
 		{
 			l->x = l->co - 1;
@@ -41,7 +41,7 @@ static void			bs_key_str(t_l *l)
 
 int					bs_key(t_l *l)
 {
-	if (l->y == 0 && l->x == PMPT)
+	if (l->y == 0 && l->x == l->pmpt)
 		return (1);
 	if (l->x == 0 && l->y != 0)
 	{
@@ -59,7 +59,7 @@ int					bs_key(t_l *l)
 
 void				left_key(t_l *l)
 {
-	if (l->x == PMPT && l->y == 0)
+	if (l->x == l->pmpt && l->y == 0)
 		return ;
 	if (l->x == 0 && l->y != 0)
 	{
@@ -77,7 +77,7 @@ void				left_key(t_l *l)
 
 void				right_key(t_l *l)
 {
-	if (l->x + (l->y * l->co) - PMPT == l->nb)
+	if (l->x + (l->y * l->co) - l->pmpt == l->nb)
 		return ;
 	if (l->x != l->co - 1)
 	{

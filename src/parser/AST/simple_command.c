@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 08:49:50 by dthan            ###   ########.fr       */
+/*   Updated: 2020/05/07 20:53:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_astnode *simple_command1(t_token **token)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
-		ft_delast(lnode);
+		//ft_delast(lnode);
+		clear_ast(lnode);
 		return (NULL);
 	}
 	node = build_node(AST_simple_command);

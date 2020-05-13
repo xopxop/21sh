@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/10 23:44:14 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void			up_down_key_apply_statuses(t_l *l)
 	i = l->y;
 	while (i--)
 		apply_termcap_str("up", 0, 0);
-	apply_termcap_str("ch", 0, PMPT);
+	apply_termcap_str("ch", 0, l->pmpt);
 	apply_termcap_str("cd", 0, 0);
 	l->nb = ft_strlen(l->line);
-	l->y = (l->nb + PMPT) / l->co;
-	l->x = (l->nb + PMPT) % l->co;
+	l->y = (l->nb + l->pmpt) / l->co;
+	l->x = (l->nb + l->pmpt) % l->co;
 	ft_putstr(l->line);
 }
 
