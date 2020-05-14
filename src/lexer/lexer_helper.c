@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 19:28:30 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/14 12:42:59 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_t
 	}
 	if (node->type == TOKEN_WORD)
 	{
-		interpret_tild(node->data);
+		interpret_tild(&node->data);
 		interpret_dollar(node);
 	}
 	change_token_type_for_redirection(input, head, lst_tokens);

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 07:58:26 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/11 16:52:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/14 12:44:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_delete_dquote(char **tokens);
 int		is_separator_operator(char *input, int i);
 int		is_redirection_operator(char *input, int i);
 char	*is_pipe_operator(char *input, int i);
-void	interpret_tild(char *str);
+void	interpret_tild(char **str);
 void	interpret_dollar(t_token *node);
 char	*creat_non_quoted_string(char *input, char quote, size_t len);
 

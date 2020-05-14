@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/11 17:16:33 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/14 13:08:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,19 +127,18 @@ static void	ft_execute(char **input)
 	}
 	return (line);
 }*/
-static char	*get_input(int level, int count_pmpt)
+static char	*get_input(int level, int count_pmpt, char *quote)
 {
 	t_l l;
 
-	//if ((get_next_line(STDOUT_FILENO, &l)) <= 0)
 	ft_memset(&l, 0, sizeof(t_l));
 	l.pmpt = count_pmpt;
 	ft_get_line(&l, &g_h);
-	if (is_open_dquote(l.line, level))
+	if (is_open_dquote(l.line, level, quote))
 	{
 		ft_putstr("dquote> ");
 		l.line = ft_strjoin_and_free_string1(l.line, "\n");
-		l.line = ft_strjoin_and_free_string2(l.line, get_input((int)2, 8));
+		l.line = ft_strjoin_and_free_string2(l.line, get_input((int)2, 8, quote));
 	}
 	return (l.line);
 }
@@ -147,6 +146,7 @@ static char	*get_input(int level, int count_pmpt)
 static int	minishell(void)
 {
 	char *line;
+	char quote;
 
 	get_history(&g_h, 0);
 	while (1)
@@ -154,7 +154,8 @@ static int	minishell(void)
 		sig_controller(PARENT); 
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
-		line = get_input(1, 2);
+		quote = '\0';
+		line = get_input(1, 2, &quote);
 		is_eof(line) ? ft_execute(&line) : 0;
 	}
 	return (0);
@@ -180,16 +181,19 @@ static int	minishell(void)
 }
 */
 
-void		increment_shlvl()
+void		increment_shlvl(void)
 {
 	char	*shlvl;
 	int		nb;
+	char	*ascii;
 
 	shlvl = get_env("SHLVL", VAL);
 	shlvl++;
 	nb = ft_atoi(shlvl);
 	nb++;
-	ft_strcpy(shlvl, ft_itoa(nb));
+	ascii = ft_itoa(nb);
+	ft_strcpy(shlvl, ascii);
+	ft_strdel(&ascii);
 }
 
 int			main(int ac, char **av, char **envp)

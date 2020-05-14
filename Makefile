@@ -147,6 +147,7 @@ $(NAME):
 
 clean:
 	@make -C ./libft clean
+	@/bin/rm -rf $(OBJS_NAME)
 	@/bin/rm -rf $(OBJS_PATH)
 
 fclean: clean

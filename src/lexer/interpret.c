@@ -6,24 +6,25 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/07 19:27:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/05/14 12:46:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		interpret_tild(char *str)
+void		interpret_tild(char **str)
 {
 	char		*home;
-	char		temp[PATH_MAX];
+	char		*new_str;
 
-	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
+	if (str[0][0] == '~' && (str[0][1] == '\0' || str[0][1] == '/'))
 	{
 		home = get_env("HOME=", VAL);
-		ft_bzero(temp, PATH_MAX);
-		ft_strcat(temp, &str[1]);
-		ft_strcpy(str, home);
-		ft_strcat(str, temp);
+		new_str = (char*)malloc(ft_strlen(home) + ft_strlen(*str) + 1);
+		ft_strcpy(new_str, home);
+		ft_strcat(new_str, &str[0][1]);
+		ft_strdel(str);
+		*str = new_str;
 	}
 }
 
