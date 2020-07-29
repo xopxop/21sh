@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dthan <dthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/29 01:13:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/29 21:13:51 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ static void	ft_execute(char **input)
 	if (trimmed_input)
 	{
 		if ((tokens = lexical_analysis(trimmed_input)) != NULL)
+		{
 			if ((ast = syntax_analysis(tokens)) != NULL)
 				executor(ast);
-		clear_token(tokens);
+			clear_token(tokens);
+		}
 		ft_strdel(&trimmed_input); // need to free tokens after, i can free them all at executor
 	}
 }

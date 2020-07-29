@@ -6,7 +6,7 @@
 /*   By: dthan <dthan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 08:37:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/07/29 21:03:41 by dthan            ###   ########.fr       */
+/*   Updated: 2020/07/29 21:19:16 by dthan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	check_syntax(t_token *lst_tokens)
 
 	ptr = lst_tokens;
 	ft_bzero(buf, 3);
-	if (ptr->type == TOKEN_SEMI)
+	if (ptr && ptr->type == TOKEN_SEMI)
 		return (error_monitor(SYNTAX_UNEXPECTED_TOKEN, ";", "'", NULL, EXIT_FAILURE, 0));
 	while (ptr)
 	{
