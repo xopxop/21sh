@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/11 01:06:43 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:32:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/signal.h>
+# include <sys/ioctl.h>
 # include <dirent.h>
 # include <fcntl.h>
 # include <term.h>
@@ -126,6 +127,7 @@ void		ft_unsetenv(t_exe *c);
 */
 
 void					sig_controller(int option);
+void					post_signal(t_l *l);
 
 /*
 ** Executor

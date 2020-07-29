@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/14 13:08:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:13:29 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,8 @@ static int	minishell(void)
 	while (1)
 	{
 		sig_controller(PARENT); 
-		WIFSIGNALED(g_status) ? 0 : get_prompt();
+		//WIFSIGNALED(g_status) ? 0 : get_prompt();
+		get_prompt();
 		g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);

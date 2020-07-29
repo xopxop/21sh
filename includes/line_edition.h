@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/14 13:35:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:02:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
+
+int g_prompt;
 
 typedef struct termios	t_term;
 

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/14 13:35:05 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:43:03 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ void				ft_get_line(t_l *l, t_h **h)
 	{
 		ft_bzero(tmp, sizeof(tmp));
 		read(0, tmp, sizeof(tmp));
+		if (g_prompt)
+		{
+			post_signal(l);
+			continue ;
+		}
 		if (tmp[0] == '\n')
 		{
 			append_history(l, h);
