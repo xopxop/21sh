@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/07/29 01:09:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/01 22:22:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,18 +157,19 @@ void handle_redirect(t_exe exe)
 void run (t_exe *c)
 {
 	char *path;
+	pid_t pid;
 
 	path = NULL;
 	if (is_builtin(c->av[0]))
 		return (run_builtin(c));
-	if (fork() == 0)
+	if ((pid = fork()) == 0)
 	{
 		if (c->redi != NULL)
 			handle_redirect(*c);
 		if (!ft_strcmp(c->av[0], "echo"))
 		{
 		 	ft_echo(c);
-			exit(EXIT_SUCCESS);
+			ft_exit(EXIT_SUCCESS);
 		}
 		if ((path = is_in_path(c)))
 	 		return (make_child_path(c, path));
@@ -180,7 +181,8 @@ void run (t_exe *c)
 		ft_exit(EXIT_SUCCESS);
 	}
 	else
-		wait(NULL);
+		waitpid(pid, NULL, 0);
+		//wait(NULL);
 }
 
 /*

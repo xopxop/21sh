@@ -35,6 +35,7 @@ src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
+src/utilities/set_OLDPWD.c \
 src/prompt/dquote.c \
 src/signal/sig_handler.c \
 src/signal/eof_handler.c \
@@ -131,7 +132,8 @@ up_down_key.o \
 ft_get_line.o \
 interpret.o \
 eof_handler.o \
-carriage_return.o
+carriage_return.o \
+set_OLDPWD.o 
 
 OBJS_PATH = obj/
 
