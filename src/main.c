@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/29 01:13:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 02:57:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ static char	*get_input(int level, int count_pmpt, char *quote)
 	t_l l;
 
 	ft_memset(&l, 0, sizeof(t_l));
+	if (level != 1)
+		l.type = LINE_TYPE_DQUOTE;
 	l.pmpt = count_pmpt;
 	ft_get_line(&l, &g_h);
 	if (is_open_dquote(l.line, level, quote))
@@ -157,7 +159,9 @@ static int	minishell(void)
 		g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);
-		is_eof(line) ? ft_execute(&line) : 0;
+		if (!iseof_in_line(line))
+			ft_execute(&line);
+		//is_eof(line) ? ft_execute(&line) : 0;
 	}
 	return (0);
 }
