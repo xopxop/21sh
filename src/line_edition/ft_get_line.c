@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/29 01:43:03 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 17:05:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void			parse_key_arrow(char t[], t_l *l, t_h **h)
 		ctrl_right(l);
 	else if (!ft_strcmp(t, "\x1b[1;5D"))
 		ctrl_left(l, 0);
-	else if (ft_isprint(t[0]))
+	else if (ft_isprint(t[0]) || (t[0] == '\x04' && l->nb == 0))
 		add_key(t, l);
 }
 
@@ -92,13 +92,10 @@ void				ft_get_line(t_l *l, t_h **h)
 			continue ;
 		}
 		if (tmp[0] == '\n')
-		{
-			append_history(l, h);
-			up_down(l, h, NULL);
-			restore_term(l);
-			return ;
-		}
+			return (carriage_return_key(l, h));
 		if (!parse_key(tmp, l))
 			parse_key_arrow(tmp, l, h);
+		if (l->line && (l->line[0] == '\x04' && l->line[1] == '\0'))
+			return (eof_handler(l));
 	}
 }

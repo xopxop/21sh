@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 22:17:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/11 00:05:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 19:32:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ static char	*prompt_heredoc(char *end_word)
 	t_l l;
 
 	ft_memset(&l, 0, sizeof(t_l));
+	l.type = LINE_TYPE_HEREDOC;
 	l.pmpt = 9;
 	ft_putstr("heredoc> ");
 	ft_get_line(&l, &g_h);
-	if (ft_strequ(l.line, end_word))
+	if (ft_strequ(l.line, end_word) || ft_strequ(l.line, "\x04"))
 	{
 		ft_strdel(&l.line);
 		return (NULL);

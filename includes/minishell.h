@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/07/29 01:32:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 03:15:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void		make_child_path(t_exe *c, char *path);
 void		make_child_binary(t_exe *c);
 int			possible_to_access_dir(t_exe *c);
 int			possible_to_access_file(t_exe *c);
-int						is_eof(char *line);
 
 /*
 ** Prompt
@@ -128,6 +127,8 @@ void		ft_unsetenv(t_exe *c);
 
 void					sig_controller(int option);
 void					post_signal(t_l *l);
+int						iseof_in_line(char * line);
+void					eof_handler(t_l *l);
 
 /*
 ** Executor

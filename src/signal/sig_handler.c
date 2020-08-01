@@ -6,18 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/29 01:41:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 02:15:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int is_eof(char *line)
-{
-	if (line)
-		return (1);
-	return (0);
-}
 
 void post_signal(t_l *l)
 {

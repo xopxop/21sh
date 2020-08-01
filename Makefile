@@ -35,8 +35,10 @@ src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
 src/utilities/ft_strjoin_and_free.c \
+src/utilities/set_OLDPWD.c \
 src/prompt/dquote.c \
 src/signal/sig_handler.c \
+src/signal/eof_handler.c \
 src/executor/executor.c \
 src/executor/children.c \
 src/executor/check_path.c \
@@ -65,7 +67,8 @@ src/line_edition/history.c \
 src/line_edition/home_end_key.c \
 src/line_edition/left_right_bs_key.c \
 src/line_edition/term_attr.c \
-src/line_edition/up_down_key.c
+src/line_edition/up_down_key.c \
+src/line_edition/carriage_return.c
 
 OBJS_NAME = main.o \
 lexical_analysis.o \
@@ -127,7 +130,9 @@ left_right_bs_key.o \
 term_attr.o \
 up_down_key.o \
 ft_get_line.o \
-interpret.o
+interpret.o \
+eof_handler.o \
+carriage_return.o
 
 OBJS_PATH = obj/
 

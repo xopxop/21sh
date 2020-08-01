@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/29 01:02:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/07/30 19:22:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 #  define OS "not_apple"
 # endif
 
+# define LINE_TYPE_SINGLE 0
+# define LINE_TYPE_DQUOTE 1
+# define LINE_TYPE_HEREDOC 2
+# define ERR_EOF 1
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
@@ -43,6 +47,8 @@ typedef struct			s_l
 	int					y;
 	int					curr;
 	int					pmpt;
+	int					type;
+	int					eof_flag;
 }						t_l;
 
 typedef struct			s_h
@@ -74,6 +80,7 @@ void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);
 void					ctrl_down(t_l *l);
+void					carriage_return_key(t_l *l, t_h **h);
 
 /*
 ** History
