@@ -132,8 +132,7 @@ up_down_key.o \
 ft_get_line.o \
 interpret.o \
 eof_handler.o \
-carriage_return.o \
-set_OLDPWD.o 
+carriage_return.o
 
 OBJS_PATH = obj/
 
