@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/30 19:22:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/03 01:30:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct			s_l
 {
 	char				*line;
 	int					co;
+	int					row;
 	int					nb;
 	int					x;
 	int					y;
@@ -75,7 +76,7 @@ void					add_key(char t[], t_l *l);
 int						home_key(t_l *l);
 int						end_key(t_l *l);
 int						ctrl_k(t_l *l, int y_dec);
-int						ctrl_p(t_l *l, int clip_len, int i);
+int						ctrl_l(t_l *l, int clip_len, int i);
 void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);

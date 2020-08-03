@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:54:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 22:34:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,15 @@ static void			insert_char(char t[], t_l *l)
 	apply_termcap_str("sc", 0, 0);
 	ft_putstr(&l->line[l->x + (l->y * l->co) - l->pmpt + 1]);
 	apply_termcap_str("rc", 0, 0);
+	if (l->y == l->row)
+		apply_termcap_str("up", 0, 0);
 	if (l->x != l->co - 1)
 		l->x++;
 	else
 	{
 		l->x = 0;
-		l->y++;
+		if (l->y < l->row)
+			l->y++;
 	}
 	l->nb++;
 }

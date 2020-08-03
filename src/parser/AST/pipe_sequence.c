@@ -6,24 +6,23 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 20:55:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 15:57:31 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
 /*
 ** pipe_sequence :                             command	1
 **               | pipe_sequence '|' linebreak command	2
 */
 
-t_astnode *pipe_sequence2(t_token **token)
+t_astnode		*pipe_sequence2(t_token **token)
 {
 	return (command(token));
 }
 
-t_astnode *pipe_sequence1(t_token **token)
+t_astnode		*pipe_sequence1(t_token **token)
 {
 	t_astnode	*node;
 	t_astnode	*lnode;
@@ -34,7 +33,6 @@ t_astnode *pipe_sequence1(t_token **token)
 		return (NULL);
 	if (!*token || ft_strcmp((*token)->data, "|") != 0)
 	{
-		//ft_delast(lnode);
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -42,7 +40,6 @@ t_astnode *pipe_sequence1(t_token **token)
 	*token = (*token)->next;
 	if ((rnode = pipe_sequence(token)) == NULL)
 	{
-		//ft_delast(lnode);
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -53,15 +50,15 @@ t_astnode *pipe_sequence1(t_token **token)
 	return (node);
 }
 
-t_astnode *pipe_sequence(t_token **token)
+t_astnode		*pipe_sequence(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;
-	
+
 	reset = *token;
 	if ((node = pipe_sequence1(token)) != NULL)
 		return (node);
-	*token =reset;
+	*token = reset;
 	if ((node = pipe_sequence2(token)) != NULL)
 		return (node);
 	return (NULL);

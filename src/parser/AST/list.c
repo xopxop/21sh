@@ -6,24 +6,23 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:38:19 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 20:56:25 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 15:34:26 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
 /*
 ** list : list separator_op and_or	1
 **    	|                   and_or	2
 */
 
-t_astnode	*list2(t_token **token)
+t_astnode		*list2(t_token **token)
 {
 	return (and_or(token));
 }
 
-t_astnode *list1(t_token **token)
+t_astnode		*list1(t_token **token)
 {
 	t_astnode	*node;
 	t_astnode	*lnode;
@@ -34,8 +33,7 @@ t_astnode *list1(t_token **token)
 		return (NULL);
 	if (!*token || ((ft_strcmp((*token)->data, ";") != 0) \
 				&& (ft_strcmp((*token)->data, "&") != 0)))
-	{	
-		//ft_delast(lnode);
+	{
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -43,7 +41,6 @@ t_astnode *list1(t_token **token)
 	*token = (*token)->next;
 	if ((rnode = list(token)) == NULL)
 	{
-		//ft_delast(lnode);
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -54,7 +51,7 @@ t_astnode *list1(t_token **token)
 	return (node);
 }
 
-t_astnode *list(t_token **token)
+t_astnode		*list(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/11 01:07:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:54:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void		make_child_binary(t_exe *c)
 	lstat(c->av[0], &sb);
 	if ((sb.st_mode & F_TYPE_MASK) != S_IFREG)
 	{
-		error_monitor(c->av[0], ": is a directory", NULL, \
-		NULL, EXIT_FAILURE, 0);
+		error_monitor(c->av[0], ": is a directory", NULL, 0);
 		return ;
 	}
 	ft_strcpy(buf, c->av[0]);

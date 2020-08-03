@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/01 20:23:03 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 20:06:08 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	cd_path_finder(t_exe *c)
 	if (c->av[1][0] == '/')
 	{
 		if ((old = get_env("OLDPWD=", VAL)))
-			ft_strcpy(old, pwd);
+			ft_strcpy(old, getcwd(pwd, PATH_MAX));
 		else
-			set_OLDPWD(pwd);
+			set_oldpwd(pwd);
 		ft_strcpy(pwd, c->av[1]);
 		chdir(pwd);
 		if ((var_pwd = get_env("PWD=", VAL)))
@@ -65,7 +65,7 @@ static void	cd_path_finder(t_exe *c)
 		if ((old = get_env("OLDPWD=", VAL)))
 			old = ft_strcpy(old, getcwd(pwd, PATH_MAX));
 		else
-			set_OLDPWD(pwd);
+			set_oldpwd(pwd);
 		cd_shaping_env(c->av[1]);
 	}
 }

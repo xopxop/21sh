@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/16 00:18:11 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:50:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		ft_unsetenv(t_exe *c)
 			NULL;
 		if (c->av[i][j] != '\0')
 			error_monitor("unsetenv: '", c->av[i], \
-					"': not a valid identifier", NULL, EXIT_FAILURE, 0);
+					"': not a valid identifier", EXIT_FAILURE);
 		else if ((index = is_env(c->av[i])))
 			del_replace(index);
 	}

@@ -6,96 +6,55 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:32:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/11 16:56:01 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 15:19:06 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-static t_token_type	get_token_type(char *input)
+static	t_token_type	get_token_type2(char *input)
 {
-	// if (!ft_strcmp(input, "&&"))		//not in use
-	// 	return (TOKEN_AND_IF);
-	if (!ft_strcmp(input, "||"))
-		return (TOKEN_OR_IF);
-	// if (!ft_strcmp(input, ";;"))		//not in use
-	// 	return (TOKEN_DSEMI);
-	if (!ft_strcmp(input, "<<"))
-		return (TOKEN_DLESS);
-	if (!ft_strcmp(input, ">>"))
-		return (TOKEN_DGREAT);
-	if (!ft_strcmp(input, "<&"))
-		return (TOKEN_LESSAND);
-	if (!ft_strcmp(input, ">&"))
-		return (TOKEN_GREATAND);
-	if (!ft_strcmp(input, "<>"))
-		return (TOKEN_LESSGREAT);
-	if (!ft_strcmp(input, "<<-"))
-		return (TOKEN_DLESSDASH);
 	if (!ft_strcmp(input, ">|"))
 		return (TOKEN_CLOBBER);
-	// if (!ft_strcmp(input, "if")) //there must be sth strange here because what abt ls if? , it is revered word
-	// 	return (TOKEN_If);
-	// if (!ft_strcmp(input, "then"))
-	// 	return (TOKEN_Then);
-	// if (!ft_strcmp(input, "else"))
-	// 	return (TOKEN_Else);
-	// if (!ft_strcmp(input, "fi"))
-	// 	return (TOKEN_Fi);
-	// if (!ft_strcmp(input, "do"))
-	// 	return (TOKEN_Do);
-	// if (!ft_strcmp(input, "done"))
-	// 	return (TOKEN_Done);
-	// if (!ft_strcmp(input, "case"))
-	// 	return (TOKEN_Case);
-	// if (!ft_strcmp(input, "esac"))
-	// 	return (TOKEN_Esac);
-	// if (!ft_strcmp(input, "while"))
-	// 	return (TOKEN_While);
-	// if (!ft_strcmp(input, "until"))
-	// 	return (TOKEN_Until);
-	// if (!ft_strcmp(input, "for"))
-	// 	return (TOKEN_For);
-	// if (!ft_strcmp(input, "{"))
-	// 	return (TOKEN_Lbrace);
-	// if (!ft_strcmp(input, "}"))
-	// 	return (TOKEN_Rbrace);
-	// if (!ft_strcmp(input, "!"))
-	// 	return (TOKEN_Bang);
-	// if (!ft_strcmp(input, "in"))
-	// 	return (TOKEN_In);
-	if (!ft_strcmp(input, "|")) // add new token here
+	else if (!ft_strcmp(input, "|"))
 		return (TOKEN_OR);
-	if (!ft_strcmp(input, ";"))
+	else if (!ft_strcmp(input, ";"))
 		return (TOKEN_SEMI);
-	if (!ft_strcmp(input, "&"))
+	else if (!ft_strcmp(input, "&"))
 		return (TOKEN_AND);
-	if (!ft_strcmp(input, ">"))
+	else if (!ft_strcmp(input, ">"))
 		return (TOKEN_GREAT);
-	if (ft_strequ(input, "<"))
+	else if (ft_strequ(input, "<"))
 		return (TOKEN_LESS);
-	return (TOKEN_WORD); // also token assignment word, name, new_line, IO_number
+	return (TOKEN_WORD);
 }
 
-// t_token			*get_token(char *input)
-// {
-// 	t_token *node;
-
-// 	node = (t_token*)malloc(sizeof(t_token));
-// 	node->data = ft_strdup(input);
-// 	node->type = get_token_type(input);
-// 	node->next = NULL;
-// 	return (node);
-// }
-
-
-
-t_token			*get_token(char *input, char quote)
+static	t_token_type	get_token_type1(char *input)
 {
-	t_token *node;
+	if (!ft_strcmp(input, "||"))
+		return (TOKEN_OR_IF);
+	else if (!ft_strcmp(input, "<<"))
+		return (TOKEN_DLESS);
+	else if (!ft_strcmp(input, ">>"))
+		return (TOKEN_DGREAT);
+	else if (!ft_strcmp(input, "<&"))
+		return (TOKEN_LESSAND);
+	else if (!ft_strcmp(input, ">&"))
+		return (TOKEN_GREATAND);
+	else if (!ft_strcmp(input, "<>"))
+		return (TOKEN_LESSGREAT);
+	else if (!ft_strcmp(input, "<<-"))
+		return (TOKEN_DLESSDASH);
+	else
+		return (get_token_type2(input));
+}
+
+t_token					*get_token(char *input, char quote)
+{
+	t_token				*node;
 
 	node = (t_token*)malloc(sizeof(t_token));
-	node->type = get_token_type(input);
+	node->type = get_token_type1(input);
 	if (quote)
 		node->data = creat_non_quoted_string(input, quote, ft_strlen(input));
 	else

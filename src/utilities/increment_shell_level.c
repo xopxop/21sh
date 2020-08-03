@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_complete_command.c                         :+:      :+:    :+:   */
+/*   increment_shell_level.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/16 08:30:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 02:28:20 by tango            ###   ########.fr       */
+/*   Created: 2020/08/02 17:56:58 by tango             #+#    #+#             */
+/*   Updated: 2020/08/02 17:57:02 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_complete_command(t_astnode *ast, t_exe *exe)
+void		increment_shlvl(void)
 {
-	if (ast->type == AST_complete_command)
-		execute_list(ast->left, exe);
-	else
-		execute_list(ast, exe);
+	char	*shlvl;
+	int		nb;
+	char	*ascii;
+
+	shlvl = get_env("SHLVL", VAL);
+	shlvl++;
+	nb = ft_atoi(shlvl);
+	nb++;
+	ascii = ft_itoa(nb);
+	ft_strcpy(shlvl, ascii);
+	ft_strdel(&ascii);
 }

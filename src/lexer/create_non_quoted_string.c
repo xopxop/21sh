@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   carriage_return.c                                  :+:      :+:    :+:   */
+/*   create_non_quoted_string.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 15:29:56 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 15:30:26 by tango            ###   ########.fr       */
+/*   Created: 2020/08/02 15:21:33 by tango             #+#    #+#             */
+/*   Updated: 2020/08/02 15:21:41 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	carriage_return_key(t_l *l, t_h **h)
+char			*creat_non_quoted_string(char *input, char quote, size_t len)
 {
-	append_history(l, h);
-	up_down(l, h, NULL);
-	restore_term(l);
+	char		*start;
+	char		*end;
+	char		*new;
+	int			i;
+	int			j;
+
+	start = ft_strchr(input, quote);
+	end = ft_strrchr(input, quote);
+	new = ft_strnew(len - 2);
+	i = 0;
+	j = 0;
+	while (len > 0)
+	{
+		if (&input[j] != start && &input[j] != end)
+			new[i++] = input[j];
+		j++;
+		len--;
+	}
+	ft_strdel(&input);
+	return (new);
 }

@@ -6,15 +6,15 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 11:14:52 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/05 23:23:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 01:59:16 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
-t_redirect *get_last_redi_node(t_exe *exe)
+t_redirect			*get_last_redi_node(t_exe *exe)
 {
-	t_redirect *p;
+	t_redirect		*p;
 
 	if (exe->redi == NULL)
 	{
@@ -31,9 +31,9 @@ t_redirect *get_last_redi_node(t_exe *exe)
 	return (p);
 }
 
-t_redirect *new_redi_node(t_redirect *last_node)
+t_redirect			*new_redi_node(t_redirect *last_node)
 {
-	t_redirect *new_node;
+	t_redirect		*new_node;
 
 	new_node = (t_redirect*)malloc(sizeof(t_redirect));
 	ft_bzero(new_node, sizeof(t_redirect));
@@ -41,9 +41,9 @@ t_redirect *new_redi_node(t_redirect *last_node)
 	return (new_node);
 }
 
-void	get_redi_data(t_astnode *ast, t_exe *exe)
+void				get_redi_data(t_astnode *ast, t_exe *exe)
 {
-	t_redirect *last_node;
+	t_redirect		*last_node;
 
 	last_node = get_last_redi_node(exe);
 	if (last_node->redirect_op && last_node->redirect_src && \
@@ -57,7 +57,7 @@ void	get_redi_data(t_astnode *ast, t_exe *exe)
 		last_node->redirect_des = ast->data;
 }
 
-void	get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt)
+void				get_av_cmd_suffix(t_astnode *ast, t_exe *exe, int opt)
 {
 	if (ast->type == AST_WORD && opt == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/30 17:05:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 21:22:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int			parse_key(char t[], t_l *l)
 		return (bs_key(l));
 	else if (t[0] == '\v' && t[1] == '\0')
 		return (ctrl_k(l, 0));
-	else if (t[0] == 16 && t[1] == '\0')
-		return (ctrl_p(l, 0, 0));
+	else if (t[0] == '\f' && t[1] == '\0')
+		return (ctrl_l(l, 0, 0));
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'H')
 		return (home_key(l));
 	else if (t[0] == 27 && t[1] == 91 && t[2] == 'F')
@@ -55,27 +55,6 @@ static void			parse_key_arrow(char t[], t_l *l, t_h **h)
 	else if (ft_isprint(t[0]) || (t[0] == '\x04' && l->nb == 0))
 		add_key(t, l);
 }
-
-/*void				ft_get_line(t_l *l, t_h **h)
-{
-	char			tmp[8];
-
-	init_term(l);
-	while (1)
-	{
-		ft_bzero(tmp, sizeof(tmp));
-		read(0, tmp, sizeof(tmp));
-		if (tmp[0] == '\n')
-		{
-			append_history(l, h);
-			up_down(l, h, NULL);
-			restore_term(l);
-			return ;
-		}
-		if (!parse_key(tmp, l))
-			parse_key_arrow(tmp, l, h);
-	}
-}*/
 
 void				ft_get_line(t_l *l, t_h **h)
 {

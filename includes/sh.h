@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 14:52:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/30 02:16:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:04:48 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@
 
 int						g_status;
 
-
-
-// void					print_semicolon_error(char *line);
-// void					print_is_dir(char *str);
-// void					print_no_cmd(char *str);
-// void					print_set_unset(char *str, int opt);
-//int						is_eof(char *line);
 void					sig_controller(int option);
 char					*get_env(char *name, int keyval);
 void					get_prompt(void);

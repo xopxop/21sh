@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_end.c                                         :+:      :+:    :+:   */
+/*   clear_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
+/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/11 14:55:16 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 14:55:17 by dthan            ###   ########.fr       */
+/*   Created: 2020/08/02 17:56:39 by tango             #+#    #+#             */
+/*   Updated: 2020/08/02 17:56:45 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
-// t_astnode *here_end(t_token **token)
-// {
-// 	return (word(token));
-// }
+void	clear_token(t_token *token)
+{
+	t_token *temp;
+
+	while (token)
+	{
+		ft_strdel(&token->data);
+		temp = token;
+		token = token->next;
+		free(temp);
+	}
+}

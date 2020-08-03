@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_left_right.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:43:45 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/02 21:43:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void				ctrl_right(t_l *l)
 
 	y_inc = 0;
 	i = l->x + (l->y * l->co) - l->pmpt;
-	(ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
+	(ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
 	while (i <= l->nb)
 	{
-		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) && i)
+		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) && i)
 				|| i == l->nb)
 		{
 			if (i + l->pmpt - (l->x + (l->y * l->co)) >= l->co - l->x)

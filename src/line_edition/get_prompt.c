@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_oldpwd.c                                       :+:      :+:    :+:   */
+/*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 16:11:35 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 16:11:58 by tango            ###   ########.fr       */
+/*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
+/*   Updated: 2020/08/02 15:31:10 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		set_oldpwd(char pwd[PATH_MAX])
+void		get_prompt(void)
 {
-	t_exe	*cmd;
+	char	*usr;
+	char	*home;
+	char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
-	cmd = (t_exe*)ft_memalloc(sizeof(t_exe));
-	cmd->av = (char**)ft_memalloc(sizeof(char*) * 2);
-	cmd->av[0] = ft_strdup("setenv");
-	cmd->av[1] = ft_strnew(7 + ft_strlen(pwd));
-	cmd->av[1] = ft_strcpy(cmd->av[1], "OLDPWD=");
-	cmd->av[1] = ft_strcat(cmd->av[1], pwd);
-	cmd->ac = 2;
-	ft_setenv(cmd);
-	ft_strlst_del(&cmd->av, 2);
-	free(cmd);
+	ft_putstr("21sh ");
+	(usr = get_env("USER=", VAL)) ? ft_putstr(usr) : 0;
+	ft_putstr(" ");
+	if ((home = get_env("HOME=", VAL)))
+	{
+		if (!ft_strcmp(pwd, home))
+			ft_putstr(pwd);
+		else if (ft_strstr(pwd, home))
+		{
+			ft_putstr("~");
+			ft_putstr(ft_strstr_e(pwd, home));
+		}
+		else
+			ft_putstr(pwd);
+	}
+	else
+		ft_putstr(pwd);
+	ft_putstr("\n> ");
 }

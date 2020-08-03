@@ -1,0 +1,25 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    print_token.c.debug                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tango <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/08/02 18:02:30 by tango             #+#    #+#              #
+#    Updated: 2020/08/02 18:03:09 by tango            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "minishell.h"
+
+void print_token(t_token *token)
+{
+	while (token)
+	{
+		ft_putchar('[');
+		ft_putstr(token->data);
+		ft_putstr("]->");
+		token = token->next;
+	}
+	ft_putstr("NULL\n");
+}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_k_p.c                                         :+:      :+:    :+:   */
+/*   ctrl_k_l.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:43:39 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/02 21:43:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void			ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
 	l->nb -= (j - i);
 }
 
-static void			ctrl_p_apply_screen(t_l *l, char *clip, int i)
+static void			ctrl_l_apply_screen(t_l *l, char *clip, int i)
 {
 	apply_termcap_str("cd", 0, 0);
 	ft_putstr(clip);
@@ -50,7 +50,7 @@ static void			ctrl_p_apply_screen(t_l *l, char *clip, int i)
 	apply_termcap_str("rc", 0, 0);
 }
 
-int					ctrl_p(t_l *l, int clip_len, int i)
+int					ctrl_l(t_l *l, int clip_len, int i)
 {
 	char			*clip;
 	char			*tmp;
@@ -59,7 +59,7 @@ int					ctrl_p(t_l *l, int clip_len, int i)
 		return (1);
 	clip_len = ft_strlen(clip);
 	i = l->x + (l->y * l->co) - l->pmpt;
-	ctrl_p_apply_screen(l, clip, i);
+	ctrl_l_apply_screen(l, clip, i);
 	tmp = ft_strnew(l->nb + clip_len);
 	if (l->line)
 		tmp = ft_strncpy(tmp, l->line, i);
@@ -89,7 +89,7 @@ int					ctrl_k(t_l *l, int y_dec)
 	curr = i;
 	while (i >= 0)
 	{
-		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) &&
+		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) &&
 		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
 		{
 			j = i - 1;

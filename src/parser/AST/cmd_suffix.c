@@ -6,12 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:02:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 20:55:44 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 16:01:49 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
 /*
 ** cmd_suffix :            io_redirect 2
@@ -20,17 +19,16 @@
 **            | cmd_suffix WORD        3
 */
 
-t_astnode *cmd_suffix1(t_token **token)
+t_astnode		*cmd_suffix1(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *lnode;
-	t_astnode *rnode;
+	t_astnode	*node;
+	t_astnode	*lnode;
+	t_astnode	*rnode;
 
 	if ((lnode = io_redirect(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
-		//ft_delast(lnode);
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -40,16 +38,16 @@ t_astnode *cmd_suffix1(t_token **token)
 	return (node);
 }
 
-t_astnode *cmd_suffix2(t_token **token)
+t_astnode		*cmd_suffix2(t_token **token)
 {
 	return (io_redirect(token));
 }
 
-t_astnode *cmd_suffix3(t_token **token)
+t_astnode		*cmd_suffix3(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *lnode;
-	t_astnode *rnode;
+	t_astnode	*node;
+	t_astnode	*lnode;
+	t_astnode	*rnode;
 
 	if ((lnode = word(token)) == NULL)
 		return (NULL);
@@ -64,16 +62,16 @@ t_astnode *cmd_suffix3(t_token **token)
 	return (node);
 }
 
-t_astnode *cmd_suffix4(t_token **token)
+t_astnode		*cmd_suffix4(t_token **token)
 {
 	return (word(token));
 }
 
-t_astnode *cmd_suffix(t_token **token)
+t_astnode		*cmd_suffix(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;
-	
+
 	reset = *token;
 	if ((node = cmd_suffix1(token)) != NULL)
 		return (node);

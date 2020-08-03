@@ -6,12 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/07 20:53:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 16:02:22 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
 /*
 ** simple_command : cmd_prefix cmd_word cmd_suffix		//not
@@ -21,22 +20,21 @@
 **                | cmd_name						2
 */
 
-t_astnode *simple_command2(t_token **token)
+t_astnode		*simple_command2(t_token **token)
 {
 	return (cmd_name(token));
 }
 
-t_astnode *simple_command1(t_token **token)
+t_astnode		*simple_command1(t_token **token)
 {
-	t_astnode *node;
-	t_astnode *lnode;
-	t_astnode *rnode;
+	t_astnode	*node;
+	t_astnode	*lnode;
+	t_astnode	*rnode;
 
 	if ((lnode = cmd_name(token)) == NULL)
 		return (NULL);
 	if ((rnode = cmd_suffix(token)) == NULL)
 	{
-		//ft_delast(lnode);
 		clear_ast(lnode);
 		return (NULL);
 	}
@@ -46,7 +44,7 @@ t_astnode *simple_command1(t_token **token)
 	return (node);
 }
 
-t_astnode *simple_command(t_token **token)
+t_astnode		*simple_command(t_token **token)
 {
 	t_astnode	*node;
 	t_token		*reset;

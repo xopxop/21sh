@@ -6,12 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:30:42 by dthan             #+#    #+#             */
-/*   Updated: 2020/04/11 08:30:43 by dthan            ###   ########.fr       */
+/*   Updated: 2020/08/02 15:59:09 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
-#include "../../../includes/ast.h"
+#include "minishell.h"
 
 /*
 ** and_or	:                         pipeline
@@ -19,7 +18,7 @@
 **        	| and_or OR_IF  linebreak pipeline    //not
 */
 
-t_astnode *and_or(t_token **token)
+t_astnode	*and_or(t_token **token)
 {
 	return (pipeline(token));
 }

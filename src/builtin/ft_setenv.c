@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/16 00:11:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 17:54:22 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void		ft_setenv(t_exe *c)
 		if (c->av[i][j] == '\0')
 			;
 		else if (c->av[i][j] != '=' || j == 0)
-			error_monitor("setenv: '", c->av[i], \
-					"'; not a valid identifier", NULL, EXIT_FAILURE, 0);
+			error_monitor("setenv: '", c->av[i],\
+			"'; not a valid identifier", 1);
 		else
 			ft_setenv_sub(c->av[i]);
 	}

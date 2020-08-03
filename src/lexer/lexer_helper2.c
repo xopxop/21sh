@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_helper.c                                     :+:      :+:    :+:   */
+/*   lexer_helper2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/13 11:40:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/14 12:42:59 by ihwang           ###   ########.fr       */
+/*   Created: 2020/08/02 03:00:12 by tango             #+#    #+#             */
+/*   Updated: 2020/08/02 03:06:24 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-void deltoken(t_token **lst)
+void			deltoken(t_token **lst)
 {
-	t_token *ptr;
+	t_token		*ptr;
 
 	while (*lst)
 	{
@@ -36,13 +36,8 @@ int				is_made_of_digits(char *data)
 	return (1);
 }
 
-int				is_hiphen(char *data)
-{
-	return (ft_strlen(data) == 1 && data[0] == '-');
-}
-
-void			get_additional_preceding_token_for_redirect
-(t_token *tail_token, t_token *target_token)
+void			get_additional_preceding_token_for_redirect(\
+		t_token *tail_token, t_token *target_token)
 {
 	t_token		*additional_token;
 
@@ -57,7 +52,7 @@ void			get_additional_preceding_token_for_redirect
 	target_token->next = additional_token;
 }
 
-void			change_token_type_for_redirection( \
+void			change_token_type_for_redirection(\
 	char *input, int head, t_token **lst_tokens)
 {
 	t_token		*tail_token;
@@ -77,9 +72,10 @@ void			change_token_type_for_redirection( \
 		get_additional_preceding_token_for_redirect(tail_token, target_token);
 }
 
-void push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_tokens)
+void			push_node_into_ltoken(char *input, \
+		int head, t_token *node, t_token **lst_tokens)
 {
-	t_token *p;
+	t_token		*p;
 
 	if (*lst_tokens == NULL)
 		*lst_tokens = node;
@@ -97,64 +93,3 @@ void push_node_into_ltoken(char *input, int head, t_token *node, t_token **lst_t
 	}
 	change_token_type_for_redirection(input, head, lst_tokens);
 }
-
-int is_separator_operator(char *input, int i)
-{
-	int front;
-
-	front = i == 0 ? i : i - 1;
-	if ((input[i] == '&' && input[front] != '>' && input[front] != '<')
-		|| input[i] == ';') //ft_strchr(";", input[i]))
-		return (1);
-	return (0);
-}
-
-int	is_redirection_operator(char *input, int i)
-{
-	int front;
-
-	front = i == 0 ? i : i - 1;
-	if ((input[i] == '&' && (input[front] == '>' || input[front] == '<'))
-		|| input[i] == '<' || input[i] == '>') //ft_strchr("><", input[i]))
-		return (1);
-	return (0);
-}
-
-char *is_pipe_operator(char *input, int i)
-{
-	return (ft_strchr("|", input[i]));
-}
-
-/*
-** print token stream, for debugging purpose only
-*/
-
-void print_token(t_token *token)
-{
-	while (token)
-	{
-		ft_putchar('[');
-		ft_putstr(token->data);
-		ft_putstr("]->");
-		token = token->next;
-	}
-	ft_putstr("NULL\n");
-}
-
-// void		ft_delete_dquote(char **tokens)     //OPEN LATER
-// {
-// 	int i;
-// 	int j;
-
-// 	i = -1;
-// 	while (tokens[++i])
-// 	{
-// 		j = -1;
-// 		while (tokens[i][++j])
-// 			if (tokens[i][j] == '"')
-// 			{
-// 				ft_strcpy(&tokens[i][j], &tokens[i][j + 1]);
-// 				j = -1;
-// 			}
-// 	}
-// }

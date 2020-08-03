@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:35:21 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 23:33:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 01:59:57 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	find_iofile(t_astnode *ast)
 	}
 }
 
-void execute_list(t_astnode *ast, t_exe *exe)
+void	execute_list(t_astnode *ast, t_exe *exe)
 {
 	if (ast->type == AST_list)
 	{
