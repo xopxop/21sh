@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:33:28 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:57:31 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:45:03 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** pipe_sequence :                             command	1

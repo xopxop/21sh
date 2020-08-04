@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/02 02:53:42 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:58:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static char		**set_env(char **sample)
 {
@@ -71,7 +71,7 @@ static char		*get_input(int level, int count_pmpt, char *quote)
 	return (l.line);
 }
 
-static int		minishell(void)
+static int		shell(void)
 {
 	char *line;
 	char quote;
@@ -80,7 +80,8 @@ static int		minishell(void)
 	while (1)
 	{
 		sig_controller(PARENT);
-		get_prompt();
+		if (!g_prompt)
+			get_prompt();
 		g_status = 0;
 		quote = '\0';
 		line = get_input(1, 2, &quote);
@@ -101,5 +102,5 @@ int				main(int ac, char **av, char **envp)
 		ft_putstr_fd("Environment variable 'TERM' not set\n", 2);
 		return (-1);
 	}
-	return (minishell());
+	return (shell());
 }

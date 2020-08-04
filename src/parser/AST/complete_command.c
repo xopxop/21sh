@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 11:17:31 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:32:58 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:31 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** complete_command : list separator	1

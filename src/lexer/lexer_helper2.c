@@ -6,11 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 03:00:12 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 03:06:24 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:28 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void			deltoken(t_token **lst)
 {

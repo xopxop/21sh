@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/03 16:45:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:43:11 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void				restore_term(t_l *l)
 {
@@ -33,7 +33,7 @@ t_term				get_set_default_term(t_term *t)
 	return (old);
 }
 
-static size_t		get_current_row(void)
+size_t				get_current_row(void)
 {
 	int				fd_tty;
 	char			answer[16];
@@ -44,7 +44,10 @@ static size_t		get_current_row(void)
 	ft_memset(answer, 0, sizeof(answer));
 	answerlen = 0;
 	while ((read(fd_tty, answer + answerlen, 1)) == 1)
-		if (answer[answerlen++] == 'R') break ;
+	{
+		if (answer[answerlen++] == 'R')
+			break ;
+	}
 	answer[answerlen] = '\0';
 	close(fd_tty);
 	return (ft_atoi(&answer[2]));
@@ -65,5 +68,6 @@ void				init_term(t_l *l)
 		ft_exit(EXIT_FAILURE);
 	}
 	l->co = tgetnum("co");
-	l->row = tgetnum("li") - get_current_row();
+	l->total_row = tgetnum("li");
+	l->starting_row = l->total_row - get_current_row();
 }

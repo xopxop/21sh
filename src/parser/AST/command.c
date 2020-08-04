@@ -6,11 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:45:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:54:16 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:29 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** command : simple_command

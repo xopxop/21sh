@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:24:37 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 16:00:15 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:59 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** io_redirect:           io_file

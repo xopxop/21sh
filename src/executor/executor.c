@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 08:06:41 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 17:53:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:41:49 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static int		is_builtin(char *comm)
 {
@@ -64,11 +64,6 @@ void			run(t_exe *c)
 	else
 		wait(NULL);
 }
-
-/*
-** printBinaryTree(ast);
-** for debugging in executor
-*/
 
 void			executor(t_astnode *ast)
 {

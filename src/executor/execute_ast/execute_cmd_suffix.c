@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 11:14:52 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 01:59:16 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:49:02 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 t_redirect			*get_last_redi_node(t_exe *exe)
 {

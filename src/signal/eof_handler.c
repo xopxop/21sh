@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 16:09:25 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 17:50:53 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:45:31 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 int			iseof_in_line(char *line)
 {

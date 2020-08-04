@@ -56,7 +56,8 @@ src/builtin/ft_setenv.c \
 src/builtin/ft_unsetenv.c \
 src/line_edition/add_key.c \
 src/line_edition/clipping.c \
-src/line_edition/ctrl_k_l.c \
+src/line_edition/ctrl_k.c \
+src/line_edition/ctrl_l.c \
 src/line_edition/ctrl_left_right.c \
 src/line_edition/ctrl_up_down.c \
 src/line_edition/ft_get_line.c \
@@ -69,7 +70,6 @@ src/line_edition/carriage_return.c \
 src/line_edition/get_prompt.c \
 src/utilities/tool_for_checking.c \
 src/utilities/get_env.c \
-src/utilities/ft_isspace.c \
 src/utilities/ft_strndup.c \
 src/utilities/ft_arraydel.c \
 src/utilities/error.c \
@@ -102,7 +102,6 @@ pipeline.o \
 simple_command.o \
 tool_for_checking.o \
 get_env.o \
-ft_isspace.o \
 ft_strndup.o \
 ft_arraydel.o \
 error.o \
@@ -128,7 +127,8 @@ check_path.o \
 heredoc.o \
 add_key.o \
 clipping.o \
-ctrl_k_l.o \
+ctrl_k.o \
+ctrl_l.o \
 ctrl_left_right.o \
 ctrl_up_down.o \
 history.o \

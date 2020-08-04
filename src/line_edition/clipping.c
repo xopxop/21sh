@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:20:27 by ihwang            #+#    #+#             */
-/*   Updated: 2020/04/20 00:28:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:45 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char				*clipboard(char *str, int opt)
 {

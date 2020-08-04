@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 11:22:29 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 18:16:59 by tango            ###   ########.fr       */
+/*   Created: 2020/08/05 05:54:54 by tango             #+#    #+#             */
+/*   Updated: 2020/08/05 05:54:55 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "../libft/includes/libft.h"
+#ifndef SHELL_H
+# define SHELL_H
+# include "libft.h"
 # include <limits.h>
 # include <unistd.h>
 # include <sys/wait.h>

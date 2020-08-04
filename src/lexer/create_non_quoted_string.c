@@ -6,11 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:21:33 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 15:21:41 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:18 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char			*creat_non_quoted_string(char *input, char quote, size_t len)
 {

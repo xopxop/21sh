@@ -6,11 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:13:02 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:44:05 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:43:09 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static void			bs_key_str(t_l *l)
 {

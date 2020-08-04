@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 11:32:27 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:19:06 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:20 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static	t_token_type	get_token_type2(char *input)
 {

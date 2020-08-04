@@ -3,25 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 15:31:10 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:56 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
-void		get_prompt(void)
+static void	print_21sh_usr(void)
 {
-	char	*usr;
-	char	*home;
-	char	pwd[PATH_MAX];
+	char *usr;
+
+	ft_putstr(MGTA);
+	ft_putstr(BOLD);
+	ft_putstr("21sh ");
+	if ((usr = get_env("USER=", VAL)))
+	{
+		ft_putstr(INIT);
+		ft_putstr(SKYB);
+		ft_putstr(usr);
+	}
+	ft_putstr(" ");
+}
+
+static void	print_cwd(void)
+{
+	char pwd[PATH_MAX];
+	char *home;
 
 	getcwd(pwd, PATH_MAX);
-	ft_putstr("21sh ");
-	(usr = get_env("USER=", VAL)) ? ft_putstr(usr) : 0;
-	ft_putstr(" ");
+	ft_putstr(YELW);
+	ft_putstr("[");
 	if ((home = get_env("HOME=", VAL)))
 	{
 		if (!ft_strcmp(pwd, home))
@@ -36,5 +50,13 @@ void		get_prompt(void)
 	}
 	else
 		ft_putstr(pwd);
+	ft_putstr("]");
+}
+
+void		get_prompt(void)
+{
+	print_21sh_usr();
+	print_cwd();
+	ft_putstr(INIT);
 	ft_putstr("\n> ");
 }

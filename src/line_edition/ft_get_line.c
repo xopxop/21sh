@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/02 21:22:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:54 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void				apply_termcap_str(char *str, int x, int y)
 {
@@ -64,8 +64,9 @@ void				ft_get_line(t_l *l, t_h **h)
 	while (1)
 	{
 		ft_bzero(tmp, sizeof(tmp));
-		read(0, tmp, sizeof(tmp));
-		if (g_prompt)
+		if (!g_prompt)
+			read(0, tmp, sizeof(tmp));
+		else
 		{
 			post_signal(l);
 			continue ;

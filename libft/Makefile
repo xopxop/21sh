@@ -6,7 +6,7 @@
 #    By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 19:29:47 by ihwang            #+#    #+#              #
-#    Updated: 2020/05/02 21:16:19 by ihwang           ###   ########.fr        #
+#    Updated: 2020/08/05 06:02:03 by tango            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libft.a
 OBJS_PATH = obj/
 SRCS_PATH = src/
 
-SRCS_NAME = ft_atoi.c ft_bzero.c  \
+SRCS_NAME = ft_atoi.c ft_bzero.c ft_isspace.c \
 			ft_isascii.c ft_isalnu.c ft_isprint.c ft_isdigit.c \
 			ft_itoa.c ft_itoh.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c \
 			ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_memalloc.c ft_memccpy.c \

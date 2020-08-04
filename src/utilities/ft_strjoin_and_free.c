@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 08:09:40 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/08 01:30:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:46:02 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char	*ft_strjoin_and_free_string2(char *string1, char *string2)
 {

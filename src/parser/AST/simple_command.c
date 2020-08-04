@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:49:46 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 16:02:22 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:45:17 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** simple_command : cmd_prefix cmd_word cmd_suffix		//not

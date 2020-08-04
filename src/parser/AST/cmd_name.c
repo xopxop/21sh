@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:58:06 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:58:45 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:26 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** cmd_name : WORD     //Apply rule 7a

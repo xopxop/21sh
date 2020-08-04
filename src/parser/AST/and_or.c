@@ -6,11 +6,11 @@
 /*   By: dthan <dthan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 08:30:42 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:59:09 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:22 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 /*
 ** and_or	:                         pipeline

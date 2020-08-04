@@ -6,11 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 02:26:01 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 02:28:05 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:41:52 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void			handle_redirect(t_exe exe)
 {

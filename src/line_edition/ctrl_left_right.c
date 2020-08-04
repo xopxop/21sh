@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:15:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/02 21:43:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:50 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void				ctrl_right(t_l *l)
 {
@@ -19,7 +19,8 @@ void				ctrl_right(t_l *l)
 
 	y_inc = 0;
 	i = l->x + (l->y * l->co) - l->pmpt;
-	(ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) && i) ? i++ : 0;
+	if (ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) && i)
+		i++;
 	while (i <= l->nb)
 	{
 		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) && i)

@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 09:17:44 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:58:23 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:45:19 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 t_astnode		*io_number(t_token **token)
 {

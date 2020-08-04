@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 23:35:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/02 17:50:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:41:06 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 int				possible_to_access_dir(t_exe *c)
 {

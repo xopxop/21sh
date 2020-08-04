@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/04 06:21:11 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/14 12:59:24 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:46:13 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 int	is_open_dquote(char *input, int level, char *quote)
 {

@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 07:29:09 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 15:52:53 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:44:24 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 t_astnode		*build_node(t_astnode_type type)
 {

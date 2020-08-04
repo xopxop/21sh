@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:22:31 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 17:52:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:14 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 int			check_syntax(t_token *lst_tokens)
 {

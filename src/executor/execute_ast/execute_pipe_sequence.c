@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:37:39 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 02:31:02 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:49:08 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static void	execute_pipe_left(t_astnode *ast,\
 t_exe *exec, pid_t pid[2], int pipefd[2])

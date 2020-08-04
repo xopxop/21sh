@@ -6,11 +6,11 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 16:11:35 by tango             #+#    #+#             */
-/*   Updated: 2020/08/02 16:11:58 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:46:11 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void		set_oldpwd(char pwd[PATH_MAX])
 {

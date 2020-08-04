@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/06 00:18:18 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/02 17:56:24 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:46:04 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char		*ft_strndup(char *str, size_t len)
 {

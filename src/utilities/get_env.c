@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/02 02:32:28 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:46:06 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char		*get_env(char *name, int keyval)
 {
