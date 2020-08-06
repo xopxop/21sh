@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:14:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/06 18:18:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ void					apply_termcap_str(char *str, int x, int y);
 void					ctrl_k_clipping(t_l *l, int i, int j);
 char					*clipboard(char *str, int opt);
 size_t					get_current_row(void);
+size_t					get_current_column(void);
 
 #endif

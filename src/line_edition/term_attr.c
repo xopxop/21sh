@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:14:04 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:43:11 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 18:17:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,33 @@ size_t				get_current_row(void)
 	answer[answerlen] = '\0';
 	close(fd_tty);
 	return (ft_atoi(&answer[2]));
+}
+
+size_t				get_current_column(void)
+{
+	int				fd_tty;
+	char			answer[16];
+	size_t			answerlen;
+	int				row;
+	int				column;
+
+	fd_tty = open("/dev/tty", O_RDWR);
+	write(fd_tty, "\x1B[6n", 4);
+	ft_memset(answer, 0, sizeof(answer));
+	answerlen = 0;
+	while ((read(fd_tty, answer + answerlen, 1)) == 1)
+	{
+		if (answer[answerlen++] == 'R')
+			break ;
+	}
+	answer[answerlen] = '\0';
+	close(fd_tty);
+	row = ft_atoi(&answer[2]);
+	if (ft_nbrlen(row) == 1)
+		column = ft_atoi(&answer[4]);
+	else
+		column = ft_atoi(&answer[5]);
+	return (column);
 }
 
 void				init_term(t_l *l)

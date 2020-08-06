@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 16:49:17 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 17:34:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void				ft_get_line(t_l *l, t_h **h)
 		ft_bzero(tmp, sizeof(tmp));
 		if (!g_prompt)
 			read(0, tmp, sizeof(tmp));
-		else
+		if (g_prompt)
 		{
 			post_signal(l);
 			continue ;
