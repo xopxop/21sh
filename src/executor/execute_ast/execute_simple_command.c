@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/06 22:59:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/06 23:30:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,15 @@ void			clear_exe(t_exe *exe)
 static void		clear_redi(t_exe *exe)
 {
 	t_redirect	*trav;
+	t_redirect	*temp_trav;
 
 	trav = exe->redi;
+	temp_trav = NULL;
 	while (trav)
 	{
-		free(trav);
+		temp_trav = trav;
 		trav = trav->next;
+		free(temp_trav);
 	}
 	exe->redi = NULL;
 }
