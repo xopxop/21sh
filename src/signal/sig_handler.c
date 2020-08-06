@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/06 18:39:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/06 18:48:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,9 @@ void			post_signal(t_l *l)
 {
 	int tmp_pmpt;
 	int current_row;
-	int column_to_go;
 
 	tmp_pmpt = l->pmpt;
 	current_row = get_current_row();
-	if (l->line)
-		column_to_go = l->x;
-	else
-		column_to_go = get_current_column();
 	apply_termcap_str("cm", l->x, current_row - 1);
 	apply_termcap_str("cd", 0, 0);
 	ft_strdel(&l->line);

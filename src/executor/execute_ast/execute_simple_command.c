@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 08:39:32 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:49:12 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 22:59:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ void			clear_exe(t_exe *exe)
 
 static void		clear_redi(t_exe *exe)
 {
+	t_redirect	*trav;
+
+	trav = exe->redi;
+	while (trav)
+	{
+		free(trav);
+		trav = trav->next;
+	}
 	exe->redi = NULL;
 }
 
@@ -70,8 +78,6 @@ void			execute_simple_command(t_astnode *ast, t_exe *exe)
 {
 	if (ast->type == AST_simple_command)
 	{
-		if (exe->redi)
-			clear_redi(exe);
 		get_av_cmd_name(ast->left, exe);
 		get_av_cmd_suffix(ast->right, exe, 0);
 		exchange_src_des_for_less(exe);
@@ -79,4 +85,6 @@ void			execute_simple_command(t_astnode *ast, t_exe *exe)
 	else
 		get_av_cmd_name(ast, exe);
 	run(exe);
+	if (exe->redi)
+		clear_redi(exe);
 }
