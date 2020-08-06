@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/02 15:30:45 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:56 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 06:11:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void	print_21sh_usr(void)
 	ft_putstr(MGTA);
 	ft_putstr(BOLD);
 	ft_putstr("21sh ");
+	ft_putstr(INIT);
 	if ((usr = get_env("USER=", VAL)))
 	{
-		ft_putstr(INIT);
 		ft_putstr(SKYB);
 		ft_putstr(usr);
 	}

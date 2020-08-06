@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_up_down.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:52 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 16:45:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void				ctrl_down(t_l *l)
 {
 	if ((l->co * (l->y + 1)) + l->x > l->nb + l->pmpt)
 	{
-		if (l->co - l->x < l->nb + l->pmpt - (l->x + (l->y * l->co)))
+		if (l->co - l->x <= l->nb + l->pmpt - (l->x + (l->y * l->co)))
 		{
 			apply_termcap_str("do", 0, 0);
 			l->y++;

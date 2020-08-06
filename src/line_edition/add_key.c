@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:41 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 02:15:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ static void			append_char(char t[], t_l *l)
 		l->x++;
 	else
 	{
-		if (ft_strcmp(OS, "sierra"))
-			apply_termcap_str("do", 0, 0);
 		l->x = 0;
 		l->y++;
+		if (get_current_row() == (size_t)l->total_row)
+		{
+			ft_putchar('\n');
+			l->starting_row++;
+		}
+		apply_termcap_str("cm", 0, get_current_row());
 	}
 	l->nb++;
-	if (((l->nb + l->pmpt) / l->co) > l->down && \
-			l->starting_row < (l->nb + l->pmpt) / l->co)
-		l->down++;
 }
 
 static void			store_cursor_position(t_l *l)

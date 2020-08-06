@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:13:18 by ihwang            #+#    #+#             */
-/*   Updated: 2020/08/05 05:42:54 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 16:49:17 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void				apply_termcap_str(char *str, int x, int y)
 {
-	if (!ft_strcmp(str, "ch"))
-		tputs(tgoto(tgetstr("ch", NULL), x, y), 1, ft_putchar);
+	if (!ft_strcmp(str, "ch") || !ft_strcmp(str, "cm"))
+		tputs(tgoto(tgetstr(str, NULL), x, y), 1, ft_putchar);
 	else
 		tputs(tgetstr(str, NULL), 1, ft_putchar);
 }
