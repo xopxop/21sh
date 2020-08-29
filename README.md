@@ -4,8 +4,8 @@
 Written in C and developed based on bash-like shells pre-exist.
 
 ### Overview
-
-
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/47879168/91644838-dd6c6680-ea7a-11ea-9730-7ac8c6676c06.gif)
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/47879168/91644839-e0675700-ea7a-11ea-988c-bc9d5cba9662.gif)
 ### Dependency
 - GCC 4.2.1
 - GNU make 3.81
@@ -36,23 +36,23 @@ cd /tmp; sort << HEREDOC | cat -e > foo; sed -e 's/s/SIERA/' < foo > bar; cd -; 
 
 ### Main features
  ###### Functionalities
- -- Redirections `>`,`>>`,`<`,`>&` and `<&`
- -- Piping `|`
- -- Heredoc `<<`
- -- Separator `;`
- -- Interpretations of `~` and `$` for env variables
- -- Inhibitors `"` and `'`
-  -- Builtin commands `echo`,`cd`,`setenv`,`unsetenv`, `env`, `exit`
- --  External simple commands
- -- Command Combination of all of these features
+ - Redirections `>`,`>>`,`<`,`>&` and `<&`
+ - Piping `|`
+ - Heredoc `<<`
+ - Separator `;`
+ - Interpretations of `~` and `$` for env variables
+ - Inhibitors `"` and `'`
+ - Builtin commands `echo`,`cd`,`setenv`,`unsetenv`, `env`, `exit`
+ - External simple commands
+ - Command Combination of all of these features
  
  ###### Line editions
- -- History navigating with `↑`or`↓`
- -- Moving cursor on to the left or right word `ctrl`+`←`or`→`
- -- Moving cursor on to the upper or lower line `ctrl`+`↑`or`↓`
- -- Moving cursor to where the line starts or ends `home`, `end`
- -- Cutting a word `ctrl` + `k`
- -- Pasting a word `ctrl` + `l`
+ - History navigating with `↑`or`↓`
+ - Moving cursor on to the left or right word `ctrl`+`←`or`→`
+ - Moving cursor on to the upper or lower line `ctrl`+`↑`or`↓`
+ - Moving cursor to where the line starts or ends `home`, `end`
+ - Cutting a word `ctrl` + `k`
+ - Pasting a word `ctrl` + `l`
 
 
 ##### Todo
