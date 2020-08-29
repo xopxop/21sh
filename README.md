@@ -1,5 +1,5 @@
 # Welcome to 21shell 👋
-## Creating my own shell program from scratch.
+## Creating my own shell program from scratch
 > This project is the second hurdle in the sequence of three of shell projects of Hive(ecole42 Helsinki branch) to enlarge understanding of UNIX-like systems' basis.
 Written in C and developed based on bash-like shells pre-exist.
 
@@ -28,7 +28,7 @@ You can run the program with this simple command and use it like your daily shel
 
 ### Run tests
 ```sh
-$> base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g
+base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g
 ```
 ```sh
 mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi
@@ -61,6 +61,8 @@ cd /tmp; sort << HEREDOC | cat -e > foo; sed -e 's/s/SIERA/' < foo > bar; cd -; 
 ##### Todo
  - Command Auto-completion
  - Pasting command lines from external program
+ 
+ 
 ## Author
 
 👤 **dthan**
