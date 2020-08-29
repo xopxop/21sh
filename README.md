@@ -4,12 +4,15 @@
 Written in C and developed based on bash-like shells pre-exist.
 
 ### Overview
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/47879168/91644838-dd6c6680-ea7a-11ea-9730-7ac8c6676c06.gif)
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/47879168/91644839-e0675700-ea7a-11ea-988c-bc9d5cba9662.gif)
+![ezgif com-resize](https://user-images.githubusercontent.com/47879168/91644997-561ff280-ea7c-11ea-9409-c1fb90396dcd.gif)
+![ezgif com-resize (1)](https://user-images.githubusercontent.com/47879168/91644995-53250200-ea7c-11ea-872b-5344eec8938b.gif)
+
+
 ### Dependency
 - GCC 4.2.1
 - GNU make 3.81
 - Xterm terminal emulator
+
 
 ### Install
 ```sh
@@ -56,8 +59,8 @@ cd /tmp; sort << HEREDOC | cat -e > foo; sed -e 's/s/SIERA/' < foo > bar; cd -; 
 
 
 ##### Todo
- -- Command Auto-completion
- -- Pasting command lines from external program
+ - Command Auto-completion
+ - Pasting command lines from external program
 ## Author
 
 👤 **dthan**
