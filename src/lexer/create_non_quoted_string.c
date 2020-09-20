@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_oldpwd.c                                       :+:      :+:    :+:   */
+/*   create_non_quoted_string.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/02 16:11:35 by tango             #+#    #+#             */
-/*   Updated: 2020/08/05 05:46:11 by tango            ###   ########.fr       */
+/*   Created: 2020/08/02 15:21:33 by tango             #+#    #+#             */
+/*   Updated: 2020/08/05 05:42:18 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		set_oldpwd(char pwd[PATH_MAX])
+char			*creat_non_quoted_string(char *input, char quote, size_t len)
 {
-	t_exe	*cmd;
+	char		*start;
+	char		*end;
+	char		*new;
+	int			i;
+	int			j;
 
-	getcwd(pwd, PATH_MAX);
-	cmd = (t_exe*)ft_memalloc(sizeof(t_exe));
-	cmd->av = (char**)ft_memalloc(sizeof(char*) * 2);
-	cmd->av[0] = ft_strdup("setenv");
-	cmd->av[1] = ft_strnew(7 + ft_strlen(pwd));
-	cmd->av[1] = ft_strcpy(cmd->av[1], "OLDPWD=");
-	cmd->av[1] = ft_strcat(cmd->av[1], pwd);
-	cmd->ac = 2;
-	ft_setenv(cmd);
-	ft_strlst_del(&cmd->av, 2);
-	free(cmd);
+	start = ft_strchr(input, quote);
+	end = ft_strrchr(input, quote);
+	new = ft_strnew(len - 2);
+	i = 0;
+	j = 0;
+	while (len > 0)
+	{
+		if (&input[j] != start && &input[j] != end)
+			new[i++] = input[j];
+		j++;
+		len--;
+	}
+	ft_strdel(&input);
+	return (new);
 }

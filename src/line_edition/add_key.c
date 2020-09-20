@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:11:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:54:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/06 02:15:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static void			append_char(char t[], t_l *l)
 {
@@ -27,8 +27,24 @@ static void			append_char(char t[], t_l *l)
 		l->x++;
 	else
 	{
-		if (ft_strcmp(OS, "sierra"))
-			apply_termcap_str("do", 0, 0);
+		l->x = 0;
+		l->y++;
+		if (get_current_row() == (size_t)l->total_row)
+		{
+			ft_putchar('\n');
+			l->starting_row++;
+		}
+		apply_termcap_str("cm", 0, get_current_row());
+	}
+	l->nb++;
+}
+
+static void			store_cursor_position(t_l *l)
+{
+	if (l->x != l->co - 1)
+		l->x++;
+	else
+	{
 		l->x = 0;
 		l->y++;
 	}
@@ -53,14 +69,13 @@ static void			insert_char(char t[], t_l *l)
 	apply_termcap_str("sc", 0, 0);
 	ft_putstr(&l->line[l->x + (l->y * l->co) - l->pmpt + 1]);
 	apply_termcap_str("rc", 0, 0);
-	if (l->x != l->co - 1)
-		l->x++;
-	else
+	if ((l->nb + l->pmpt) % l->co == 0 && \
+			l->starting_row < (l->nb + l->pmpt) / l->co)
 	{
-		l->x = 0;
-		l->y++;
+		l->starting_row++;
+		apply_termcap_str("up", 0, 0);
 	}
-	l->nb++;
+	store_cursor_position(l);
 }
 
 void				add_key(char t[], t_l *l)

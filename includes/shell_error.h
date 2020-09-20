@@ -6,15 +6,16 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 06:09:01 by dthan             #+#    #+#             */
-/*   Updated: 2020/05/06 15:05:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:07:20 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_ERROR_H
 # define SHELL_ERROR_H
+
 # include <unistd.h>
 # include <stdlib.h>
-# include "../libft/includes/libft.h"
+# include "libft.h"
 
 # define MY_ENOMEM "Out of memory"
 # define CD_ENOTDIR "cd: not a directory: "
@@ -29,7 +30,7 @@
 # define SHELL_ENOENT "21sh: no such file or directory: "
 
 void			ft_error_malloc(void);
-int	error_monitor(char *first, char *second, char *third, char *fourth, \
-					int ret_value, int exit_value);
+int				error_monitor(char *first, char *second, char *third,\
+		int ret_value);
 
 #endif

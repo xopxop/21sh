@@ -6,11 +6,11 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/14 12:46:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:22 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void		interpret_tild(char **str)
 {

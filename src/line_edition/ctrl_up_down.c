@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_up_down.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:16:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:43:49 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 16:45:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 void				ctrl_up(t_l *l)
 {
@@ -37,7 +37,7 @@ void				ctrl_down(t_l *l)
 {
 	if ((l->co * (l->y + 1)) + l->x > l->nb + l->pmpt)
 	{
-		if (l->co - l->x < l->nb + l->pmpt - (l->x + (l->y * l->co)))
+		if (l->co - l->x <= l->nb + l->pmpt - (l->x + (l->y * l->co)))
 		{
 			apply_termcap_str("do", 0, 0);
 			l->y++;

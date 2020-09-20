@@ -57,7 +57,6 @@ cd /tmp; sort << HEREDOC | cat -e > foo; sed -e 's/s/SIERA/' < foo > bar; cd -; 
 
 ##### Todo
  -- Command Auto-completion
- -- Pasting command lines from external program
 ## Author
 
 👤 **dthan**

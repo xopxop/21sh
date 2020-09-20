@@ -6,7 +6,7 @@
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:44:40 by ihwang            #+#    #+#             */
-/*   Updated: 2020/07/30 19:22:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/09/21 03:53:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #  define OS "not_apple"
 # endif
 
+# define BUFF_LINE_EDITION 8
 # define LINE_TYPE_SINGLE 0
 # define LINE_TYPE_DQUOTE 1
 # define LINE_TYPE_HEREDOC 2
@@ -33,6 +34,17 @@
 # define CLIP_SAVE 0
 # define CLIP_TAKE 1
 # define CLIP_DELT 2
+# define INIT "\033[0m"
+# define BOLD "\033[1m"
+# define RED "\033[31m"
+# define GREN "\033[32m"
+# define YELW "\033[33m"
+# define BLUE "\033[34m"
+# define MGTA "\033[35m"
+# define CYAN "\033[36m"
+# define GRSS "\033[92m"
+# define TMGT "\033[95m"
+# define SKYB "\033[96m"
 
 int g_prompt;
 
@@ -42,9 +54,12 @@ typedef struct			s_l
 {
 	char				*line;
 	int					co;
+	int					starting_row;
+	int					total_row;
 	int					nb;
 	int					x;
 	int					y;
+	int					down;
 	int					curr;
 	int					pmpt;
 	int					type;
@@ -75,7 +90,8 @@ void					add_key(char t[], t_l *l);
 int						home_key(t_l *l);
 int						end_key(t_l *l);
 int						ctrl_k(t_l *l, int y_dec);
-int						ctrl_p(t_l *l, int clip_len, int i);
+int						paste(t_l *l, char raw_clip[], int clip_len, int i);
+void					paste_background(t_l *l, int clip_len);
 void					ctrl_left(t_l *l, int y_dec);
 void					ctrl_right(t_l *l);
 void					ctrl_up(t_l *l);
@@ -106,5 +122,7 @@ void					get_new_term_cursor(t_l *l);
 void					apply_termcap_str(char *str, int x, int y);
 void					ctrl_k_clipping(t_l *l, int i, int j);
 char					*clipboard(char *str, int opt);
+size_t					get_current_row(void);
+size_t					get_current_column(void);
 
 #endif

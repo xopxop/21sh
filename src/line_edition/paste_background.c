@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_complete_command.c                         :+:      :+:    :+:   */
+/*   paste_background.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/16 08:30:58 by dthan             #+#    #+#             */
-/*   Updated: 2020/08/05 05:49:05 by tango            ###   ########.fr       */
+/*   Created: 2020/09/21 03:36:24 by marvin            #+#    #+#             */
+/*   Updated: 2020/09/21 03:54:28 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	execute_complete_command(t_astnode *ast, t_exe *exe)
+void				paste_background(t_l *l, int clip_len)
 {
-	if (ast->type == AST_complete_command)
-		execute_list(ast->left, exe);
-	else
-		execute_list(ast, exe);
+	l->y += (l->x + clip_len) / l->co;
+	l->x = (l->x + clip_len) % l->co;
+	if (l->x == 0)
+		 tputs(tgoto(tgetstr("cm", NULL), 0, \
+		 			get_current_row() - 1), 1, ft_putchar);
+	l->nb += clip_len;
 }

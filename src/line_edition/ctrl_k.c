@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctrl_k_p.c                                         :+:      :+:    :+:   */
+/*   ctrl_k.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:18:39 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:43:39 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/05 05:42:47 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
-static void			ctrl_k_edit_line(t_l *l, int i, int j)
+static void			edit_line(t_l *l, int i, int j)
 {
 	char			*tmp;
 
@@ -23,7 +23,7 @@ static void			ctrl_k_edit_line(t_l *l, int i, int j)
 	l->line = tmp;
 }
 
-static void			ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
+static void			apply_to_screen(t_l *l, int i, int j, int y_dec)
 {
 	if (l->x < l->x + (l->y * l->co) - l->pmpt - i)
 	{
@@ -40,43 +40,11 @@ static void			ctrl_k_apply_to_screen(t_l *l, int i, int j, int y_dec)
 	l->nb -= (j - i);
 }
 
-static void			ctrl_p_apply_screen(t_l *l, char *clip, int i)
+static void			clip_edit_apply(t_l *l, int i, int j, int y_dec)
 {
-	apply_termcap_str("cd", 0, 0);
-	ft_putstr(clip);
-	apply_termcap_str("sc", 0, 0);
-	if (l->line)
-		ft_putstr(&l->line[i]);
-	apply_termcap_str("rc", 0, 0);
-}
-
-int					ctrl_p(t_l *l, int clip_len, int i)
-{
-	char			*clip;
-	char			*tmp;
-
-	if (!(clip = clipboard(NULL, CLIP_TAKE)))
-		return (1);
-	clip_len = ft_strlen(clip);
-	i = l->x + (l->y * l->co) - l->pmpt;
-	ctrl_p_apply_screen(l, clip, i);
-	tmp = ft_strnew(l->nb + clip_len);
-	if (l->line)
-		tmp = ft_strncpy(tmp, l->line, i);
-	tmp = ft_strcat(tmp, clip);
-	if (l->line)
-		tmp = ft_strcat(tmp, &l->line[i]);
-	ft_strdel(&l->line);
-	l->line = tmp;
-	if (l->x + clip_len > l->co - 1)
-	{
-		l->y += (l->x + clip_len) / l->co;
-		l->x = (l->x + clip_len) % l->co;
-	}
-	else
-		l->x += clip_len;
-	l->nb += clip_len;
-	return (1);
+	ctrl_k_clipping(l, i, j);
+	edit_line(l, i, j);
+	apply_to_screen(l, i, j, y_dec);
 }
 
 int					ctrl_k(t_l *l, int y_dec)
@@ -89,16 +57,16 @@ int					ctrl_k(t_l *l, int y_dec)
 	curr = i;
 	while (i >= 0)
 	{
-		if ((ft_iswhite(l->line[i - 1]) && !ft_iswhite(l->line[i]) &&
+		if (!l->line)
+			return (1);
+		if ((ft_iswhite(l->line[i ? i - 1 : 0]) && !ft_iswhite(l->line[i]) &&
 		!ft_iswhite(l->line[curr])) || (i == 0 && !ft_iswhite(l->line[curr])))
 		{
 			j = i - 1;
 			while (++j < l->nb)
 				if (ft_iswhite(l->line[j]))
 					break ;
-			ctrl_k_clipping(l, i, j);
-			ctrl_k_edit_line(l, i, j);
-			ctrl_k_apply_to_screen(l, i, j, y_dec);
+			clip_edit_apply(l, i, j, y_dec);
 			break ;
 		}
 		(i + l->pmpt) % l->co == 0 ? y_dec++ : 0;

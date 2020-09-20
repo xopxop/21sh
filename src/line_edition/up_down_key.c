@@ -3,28 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   up_down_key.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ihwang <ihwang@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/20 00:21:14 by ihwang            #+#    #+#             */
-/*   Updated: 2020/05/10 23:44:14 by tango            ###   ########.fr       */
+/*   Updated: 2020/08/06 02:03:24 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static void			up_down_key_apply_statuses(t_l *l)
 {
 	int				i;
+	int				line_rows;
+	int				starting_row_from_top;
+	int				new_starting_row;
 
-	i = l->y;
-	while (i--)
+	l->nb = ft_strlen(l->line);
+	line_rows = (l->nb + l->pmpt) / l->co;
+	new_starting_row = l->starting_row;
+	if (l->starting_row < line_rows)
+		new_starting_row = line_rows;
+	starting_row_from_top = l->total_row - l->starting_row;
+	i = get_current_row() - starting_row_from_top;
+	while (i-- > 0)
 		apply_termcap_str("up", 0, 0);
 	apply_termcap_str("ch", 0, l->pmpt);
 	apply_termcap_str("cd", 0, 0);
-	l->nb = ft_strlen(l->line);
 	l->y = (l->nb + l->pmpt) / l->co;
 	l->x = (l->nb + l->pmpt) % l->co;
+	l->starting_row = new_starting_row;
 	ft_putstr(l->line);
+	if (l->x == 0)
+		ft_putchar('\n');
 }
 
 static void			up_key(t_l *l, t_h **h)
