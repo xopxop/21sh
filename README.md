@@ -1,7 +1,7 @@
 # Welcome to 21shell 👋
 ## Creating my own shell program from scratch
 > This project is the second hurdle in the sequence of three of shell projects of Hive(ecole42 Helsinki branch) to enlarge understanding of UNIX-like systems' basis.
-Written in C and developed based on bash-like shells pre-exist.
+Written in pure C and developed based on bash and the POSIX standards.
 
 ### Overview
 ![ezgif com-resize](https://user-images.githubusercontent.com/47879168/91644997-561ff280-ea7c-11ea-9409-c1fb90396dcd.gif)
@@ -11,7 +11,8 @@ Written in C and developed based on bash-like shells pre-exist.
 ### Dependency
 - GCC 4.2.1
 - GNU make 3.81
-- Xterm terminal emulator
+
+> Note: Some of text-editing feature would possibly not support on gnome-terminal emulator.
 
 
 ### Install
